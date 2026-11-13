@@ -1,0 +1,21 @@
+Run started   : 2026-11-13T18:11:22+00:00
+Run finished  : 2026-11-13T18:11:24+00:00
+Mode          : LIVE
+Kibo host     : tp3.mozu.com
+Files read    : 1
+Records       : 1 (1 succeeded, 0 skipped, 0 failed)
+
+==============================================================================
+FILE 20261113-181106__wadih__shipment.csv
+  records: 1
+
+  SUCCEEDED (1)
+    row 2: shipmentOrderNumber=LN-CTA1929340322-4 orderNumber=- productId=-
+      -> cancel_shipment shipment=683097 tenant=29917 line=- qty=- via=bigquery outcome=success
+
+  SKIPPED (nothing to do) (0)
+    -
+
+  FAILED (0)
+    -
+
