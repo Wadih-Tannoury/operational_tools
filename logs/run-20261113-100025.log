@@ -1,0 +1,21 @@
+Run started   : 2026-11-13T10:00:25+00:00
+Run finished  : 2026-11-13T10:00:27+00:00
+Mode          : LIVE
+Kibo host     : tp3.mozu.com
+Files read    : 1
+Records       : 1 (1 succeeded, 0 skipped, 0 failed)
+
+==============================================================================
+FILE Book1.csv
+  records: 1
+
+  SUCCEEDED (1)
+    row 2: shipmentOrderNumber=LN-CTA1929075002-4 orderNumber=LN-CT-1929075002-4 productId=094260461356337
+      -> cancel_items shipment=680454 tenant=29917 line=1 qty=1 via=kibo_fallback outcome=success
+
+  SKIPPED (nothing to do) (0)
+    -
+
+  FAILED (0)
+    -
+
