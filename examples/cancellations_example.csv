@@ -1,0 +1,4 @@
+shipmentOrderNumber,productId,orderNumber,quantity,reasonCode,moreInfo
+OW-USA00037769,518055266024613,,,CustomerChangedTheirMind,Unspecified
+OW-USA00037770,,,,No Inventory,Out of stock at the warehouse
+,,OW-US-00037771,,CustomerChangedTheirMind,Whole order cancelled by the customer

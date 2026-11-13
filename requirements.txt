@@ -1,0 +1,4 @@
+# Dependencies for the GitHub Actions worker (scripts/process_cancellations.py)
+requests==2.32.3
+google-cloud-bigquery==3.27.0
+google-auth==2.36.0
