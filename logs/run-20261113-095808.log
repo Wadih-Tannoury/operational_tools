@@ -1,0 +1,22 @@
+Run started   : 2026-11-13T09:58:08+00:00
+Run finished  : 2026-11-13T09:58:11+00:00
+Mode          : DRY RUN - nothing was sent to Kibo
+Kibo host     : tp3.mozu.com
+Files read    : 1
+Records       : 1 (0 succeeded, 1 skipped, 0 failed)
+
+==============================================================================
+FILE Book1.csv
+  records: 1
+
+  SUCCEEDED (0)
+    -
+
+  SKIPPED (nothing to do) (1)
+    row 2: shipmentOrderNumber=LN-CTA1929075002-4 orderNumber=LN-CT-1929075002-4 productId=-
+      -> cancel_shipment shipment=680454 tenant=29917 line=- qty=- via=bigquery outcome=dry_run
+         note: would cancel the whole shipment (current status READY)
+
+  FAILED (0)
+    -
+

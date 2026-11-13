@@ -1,0 +1,2 @@
+﻿source_file,row_number,shipment_order_number,order_number,product_id,tenant_id,site_id,oms_shipment_number,line_id,quantity,action,resolved_via,outcome,status_code,reason_code,error,response_excerpt,correlation_id
+Book1.csv,2,LN-CTA1929075002-4,LN-CT-1929075002-4,,29917,49804,680454,,,cancel_shipment,bigquery,dry_run,,CustomerChangedTheirMind,would cancel the whole shipment (current status READY),,a6aaea14014e43509ee1b4d2557da08a
