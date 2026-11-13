@@ -5,9 +5,6 @@ name: Cancellations
 # adds a file to input/, and on demand.
 
 on:
-  schedule:
-    # Every 15 minutes. Scheduled runs on GitHub are best effort and can be late.
-    - cron: "*/15 * * * *"
   push:
     paths:
       - "input/**"
