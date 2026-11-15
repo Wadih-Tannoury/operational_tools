@@ -1,0 +1,25 @@
+Run started   : 2026-11-15T12:15:33+00:00
+Run finished  : 2026-11-15T12:15:36+00:00
+Mode          : LIVE
+GXO endpoint  : https://prdedi.gxo.com:4084/sync/mft/tlg_it/shipmentStatusUpdate
+Product check : on (Kibo getShipments)
+Files read    : 1
+Records       : 1 (1 sent to the warehouse, 0 cancelled in Kibo instead, 0 skipped, 0 failed)
+
+==============================================================================
+FILE 20261115-121519__Wadih__shipment.csv
+  records: 1
+
+  SENT TO THE WAREHOUSE (1)
+    row 2: shipmentOrderNumber=CV-USA00044668 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=CV148130 location=TLITGX0050 brand=CV/50 outcome=success HTTP 200
+
+  CANCELLED IN KIBO INSTEAD (warehouse not told) (0)
+    -
+
+  SKIPPED (nothing was done) (0)
+    -
+
+  FAILED (0)
+    -
+
