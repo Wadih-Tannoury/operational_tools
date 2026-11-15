@@ -257,7 +257,7 @@ The workflow reads it and, for each row:
 |---|---|
 | `shipmentOrderNumber`, no `productId` | The whole shipment is cancelled at the warehouse. Kibo is never called. |
 | `shipmentOrderNumber` + `productId`, that product is the **only** product on the shipment | The warehouse cancellation is sent, exactly as above. |
-| `shipmentOrderNumber` + `productId`, the shipment holds **other products too** | The warehouse is told **nothing**. Only that product is cancelled in Kibo, with `PUT /api/commerce/shipments/{shipmentNumber}/canceledItems`, so the rest of the shipment goes out as planned. Outcome `item_canceled_in_kibo`. |
+| `shipmentOrderNumber` + `productId`, the shipment holds **other products too** | **Nothing happens**, at the warehouse or in Kibo. The record is reported as `has_other_products` and left for a human. |
 | Whenever the whole shipment is to be cancelled | `tlg-wlfs-prd.til.prd_orders` (joined to `til.prd_brandConfig`) supplies `logisticOrderNumber`, `locationName`, `brand` and `brandCode` for the `%GX%` locations, and one event is POSTed per matching row. |
 
 Then it writes `warehouse/logs/run-<stamp>.log` and `warehouse/logs/run-<stamp>.csv`, and moves the
@@ -274,9 +274,9 @@ stop the shipment, never *what* to stop inside it.
 That leaves one sensible rule, and it is the rule the worker follows: if the
 product is the whole shipment, stopping the shipment and cancelling the product
 are the same act, so the warehouse gets the event. If the shipment holds
-anything else, the warehouse must not hear about it — the cancellation is
-applied in Kibo at item level instead, and the remaining lines ship untouched.
-A record therefore ends in exactly one of the two systems, never both.
+anything else, nothing is sent and the record is reported, because cancelling
+would also stop products nobody asked about. This worker only reads from Kibo;
+it never writes there.
 
 The sent payload:
 
@@ -303,9 +303,8 @@ The sent payload:
 
 **Upload a CSV.** Column names are matched ignoring case, spaces and
 underscores: `shipmentOrderNumber` (required), `productId`, `orderNumber`,
-`quantity`, `reasonCode`, `reasonMessage`, `tenantId`, `siteId`. `quantity` and
-`reasonCode` only matter on the Kibo item path. The *Warehouse cancellations*
-page shows what it parsed before anything is committed.
+`reasonMessage`, `tenantId`, `siteId`. The *Warehouse cancellations* page shows
+what it parsed before anything is committed.
 
 **One-off cancellation.** The *Single cancellation* tab turns one shipment —
 with or without a product condition — into the same one-row CSV.
@@ -316,18 +315,14 @@ with or without a product condition — into the same one-row CSV.
 
 `Actions → Warehouse cancellations → Run workflow`. The useful input is **dry
 run**: it resolves every record, runs the product check, and reports exactly
-what it would do — which events would go to GXO and which lines would be
-cancelled in Kibo — without a single write to either. Worth doing the first
-time.
+what it would send, without a single POST to GXO. Worth doing the first time.
 
 ## How a record is judged
 
 | Outcome | Meaning | File goes to |
 |---|---|---|
 | `success` | GXO accepted the event | archive |
-| `item_canceled_in_kibo` | The shipment held other products; only the named product was cancelled in Kibo and nothing went to the warehouse | archive |
-| `item_already_canceled` | The product is already in `canceledItems` | archive |
-| `already_terminal` | The Kibo shipment is already CANCELED, FULFILLED, SHIPPED… | archive |
+| `has_other_products` | The shipment holds products beyond the one named; nothing was sent | archive |
 | `dry_run` | Nothing was sent | warehouse/input (nothing moves on a dry run) |
 | `failed` | No GX row in BigQuery, the product is not on the shipment, no tenant, an HTTP error, a malformed row | error |
 
@@ -358,15 +353,9 @@ rows. Resolution order: a `tenantId` column, the prefix through `BRAND_TENANTS`,
 then `--default-tenant-id` (empty by default). An unknown prefix fails the
 record rather than reading another brand's tenant.
 
-**One record, one system.** A row never cancels in Kibo *and* at the warehouse.
-When the product turns out to be the whole shipment, only the warehouse event is
-sent; Kibo is left to its own flow, as it was before this tool existed.
-
-**The Kibo item cancellation** uses the items from the same `getShipments`
-response the check read, so no second read is made: `lineId` and the available
-`quantity` come from there, and a `quantity` column on the row caps it. A
-shipment already in a terminal state, or a product already in `canceledItems`,
-is reported and left alone.
+**Read-only in Kibo.** The product check is a `GET`. Cancelling an item in Kibo
+is the other tool's job, so a shipment that holds other products is reported
+here and dealt with there if that is what you want.
 
 **Several GX rows per shipment.** `prd_orders` can hold more than one `%GX%`
 location row for one `shipmentOrderNumber`. One event is sent per row, as the
@@ -389,8 +378,7 @@ python scripts/process_warehouse_cancellations.py --dry-run
 ```
 
 Useful flags: `--limit N`, `--dry-run`, `--no-product-check`,
-`--no-derive-external-order-id`, `--reason-message`, `--reason-code`,
-`--no-send-notifications`, `--update-reason`,
+`--no-derive-external-order-id`, `--reason-message`, `--update-reason`,
 `--gxo-url`, `--host`, `--max-retries`, `--sleep-between-requests`,
 `--tenant-map`, `--default-tenant-id`, `--default-site-id`.
 
