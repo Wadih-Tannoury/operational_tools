@@ -1,0 +1,58 @@
+Run started   : 2026-11-15T12:23:42+00:00
+Run finished  : 2026-11-15T12:23:55+00:00
+Mode          : LIVE
+GXO endpoint  : https://prdedi.gxo.com:4084/sync/mft/tlg_it/shipmentStatusUpdate
+Product check : on (Kibo getShipments)
+Files read    : 1
+Records       : 17 (15 sent to the warehouse, 0 cancelled in Kibo instead, 0 skipped, 2 failed)
+
+==============================================================================
+FILE 20261115-122326__Wadih__Book1.csv
+  records: 17
+
+  SENT TO THE WAREHOUSE (15)
+    row 2: shipmentOrderNumber=LN-CTA1929307730-4 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=LN682963 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    row 3: shipmentOrderNumber=LN-CTA1929580519-4 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=LN682980 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    row 4: shipmentOrderNumber=LN-CTA1929900537-4 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=LN682987 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    row 5: shipmentOrderNumber=LN-CTA1929127033-4 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=LN682938 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    row 6: shipmentOrderNumber=LN-CTA1929420310-4 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=LN683070 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    row 7: shipmentOrderNumber=LN-CTA1929470911-4 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=LN683150 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    row 8: shipmentOrderNumber=LN-CTA1929340322-4 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=LN683097 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    row 9: shipmentOrderNumber=LN-CTA1929840462-4 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=LN683140 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    row 10: shipmentOrderNumber=LN-CTA1929170200-4 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=LN683508 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    row 11: shipmentOrderNumber=LN-IMAP26111325800 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=LN683578 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    row 12: shipmentOrderNumber=LN-IMAP26111326418 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=LN683618 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    row 13: shipmentOrderNumber=HE-EUB00137842 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=HE112150 location=TLITGX0033 brand=HE/33 outcome=success HTTP 200
+    row 14: shipmentOrderNumber=HE-EUA00140132 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=HE111858 location=TLITGX0033 brand=HE/33 outcome=success HTTP 200
+    row 15: shipmentOrderNumber=HE-EUA00136490 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=HE111538 location=TLITGX0033 brand=HE/33 outcome=success HTTP 200
+    row 16: shipmentOrderNumber=HE-EUB00137477 productId=-
+      -> cancel_at_warehouse logisticOrderNumber=HE111371 location=TLITGX0033 brand=HE/33 outcome=success HTTP 200
+
+  CANCELLED IN KIBO INSTEAD (warehouse not told) (0)
+    -
+
+  SKIPPED (nothing was done) (0)
+    -
+
+  FAILED (2)
+    row 17: shipmentOrderNumber=SW-EUG00828299 productId=40196034649756
+      -> cancel_at_warehouse logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: no shipment in Kibo for externalOrderId 'SW-EUG00828299'
+    row 18: shipmentOrderNumber=RC-USA00014165 productId=468051205187500
+      -> cancel_at_warehouse logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: RC-USA00014165 has no GX location row in tlg-wlfs-prd.til.prd_orders
+
