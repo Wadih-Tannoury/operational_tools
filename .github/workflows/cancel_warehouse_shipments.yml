@@ -1,9 +1,9 @@
 name: Warehouse cancellations
 
-# Picks up every CSV in warehouse/input/ and, per row, either sends a CANCEL event to the
-# GXO endpoint for the whole shipment or — when the named product is not the
-# whole shipment — cancels just that item in Kibo and leaves the warehouse
-# alone. Writes a log in warehouse/logs/ and moves the file to warehouse/archive/
+# Picks up every CSV in warehouse/input/ and sends a CANCEL event to the GXO
+# endpoint for each shipment. A row that names a product is sent only when that
+# product is the whole shipment; otherwise nothing is sent anywhere.
+# Writes a log in warehouse/logs/ and moves the file to warehouse/archive/
 # or warehouse/error/. Runs on every push that adds a file to warehouse/input/,
 # and on demand. The Kibo workflow owns input/ at the root; the two never share
 # a folder, so they can run at the same time.
@@ -15,21 +15,13 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: "Dry run: resolve and report, send nothing to the warehouse or to Kibo"
+        description: "Dry run: resolve and report, send nothing to the warehouse"
         type: boolean
         default: false
       reason_message:
-        description: "Default data.reasonMessage (and moreInfo on a Kibo item cancellation)"
+        description: "Default data.reasonMessage"
         type: string
         default: "Kibo notification cancellation"
-      reason_code:
-        description: "canceledReason.reasonCode, used only when an item is cancelled in Kibo"
-        type: string
-        default: "CustomerChangedTheirMind"
-      send_notifications:
-        description: "Let Kibo send the customer notifications on an item cancellation"
-        type: boolean
-        default: true
       update_reason:
         description: "data.updateReason"
         type: string
@@ -96,8 +88,6 @@ jobs:
           INPUT_DRY_RUN: ${{ inputs.dry_run }}
           INPUT_NO_PRODUCT_CHECK: ${{ inputs.no_product_check }}
           INPUT_REASON_MESSAGE: ${{ inputs.reason_message }}
-          INPUT_REASON_CODE: ${{ inputs.reason_code }}
-          INPUT_SEND_NOTIFICATIONS: ${{ inputs.send_notifications }}
           INPUT_UPDATE_REASON: ${{ inputs.update_reason }}
           INPUT_HOST: ${{ inputs.kibo_host }}
           INPUT_LIMIT: ${{ inputs.limit }}
@@ -106,15 +96,11 @@ jobs:
           if [ "$INPUT_DRY_RUN" = "true" ]; then DRY_RUN_FLAG="--dry-run"; fi
           NO_CHECK_FLAG=""
           if [ "$INPUT_NO_PRODUCT_CHECK" = "true" ]; then NO_CHECK_FLAG="--no-product-check"; fi
-          NO_NOTIFY_FLAG=""
-          if [ "$INPUT_SEND_NOTIFICATIONS" = "false" ]; then NO_NOTIFY_FLAG="--no-send-notifications"; fi
           python scripts/process_warehouse_cancellations.py \
             $DRY_RUN_FLAG \
             $NO_CHECK_FLAG \
-            $NO_NOTIFY_FLAG \
             --host "${INPUT_HOST:-tp3.mozu.com}" \
             --reason-message "${INPUT_REASON_MESSAGE:-Kibo notification cancellation}" \
-            --reason-code "${INPUT_REASON_CODE:-CustomerChangedTheirMind}" \
             --update-reason "${INPUT_UPDATE_REASON:-external}" \
             --limit "${INPUT_LIMIT:-0}"
 
