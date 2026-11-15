@@ -20,9 +20,9 @@ What happens per row
        The whole shipment is cancelled at the warehouse. No Kibo call.
 
 2. shipmentOrderNumber + productId
-       The row is a request to cancel that product, and the warehouse event has
-       no item granularity: it stops a whole shipment. So the shipment is read
-       from Kibo first and the product decides which of two things happens.
+       The row is a request to cancel the shipment *because of* that product,
+       and the warehouse cancellation has no item granularity: it stops the
+       whole shipment. So the product acts as a gate.
 
            GET /api/commerce/shipments?filter=externalOrderId=={orderNumber}
 
@@ -34,11 +34,11 @@ What happens per row
                -> the warehouse cancellation is sent, as in case 1.
 
          - the shipments carry other products too
-               -> the warehouse is NOT told anything. Only that product is
-                  cancelled in Kibo, with
-                      PUT /api/commerce/shipments/{shipmentNumber}/canceledItems
-                  so the rest of the shipment goes out as planned. The outcome
-                  is 'item_canceled_in_kibo'.
+               -> NOTHING happens, here or in Kibo. The record is reported as
+                  'has_other_products' and left for a human, because stopping
+                  the shipment would also stop products nobody asked about.
+
+       This worker only ever reads from Kibo. It never writes there.
 
        The externalOrderId comes from the orderNumber column when there is
        one, otherwise it is derived from the shipmentOrderNumber by replacing
@@ -65,8 +65,9 @@ Tenant resolution (only needed for rows that carry a productId)
 Credentials come from environment variables (GitHub repository secrets):
     WLFS_BIGQUERY_CREDS   service account JSON for tlg-wlfs-prd
     GXO_API_KEY           the endpoint key, raw or as {"api_key": "..."}
-    KIBO_API_CREDS        {"client_id": "...", "client_secret": "..."} —
-                          only read when a row carries a productId
+    KIBO_API_CREDS        {"client_id": "...", "client_secret": "..."} — only
+                          read when a row carries a productId, and only to READ
+                          that shipment
 
 Outputs (all under warehouse/, so the Kibo worker's folders stay untouched)
 --------------------------------------------------------------------------
@@ -123,8 +124,6 @@ DEFAULT_KIBO_HOST = "tp3.mozu.com"
 DEFAULT_KIBO_AUTH_URL = "https://home.mozu.com/api/platform/applications/authtickets/oauth"
 
 DEFAULT_UPDATE_REASON = "external"
-# Used when the gate sends the cancellation to Kibo instead of the warehouse.
-DEFAULT_REASON_CODE = "CustomerChangedTheirMind"
 DEFAULT_REASON_MESSAGE = "Kibo notification cancellation"
 
 DEFAULT_TENANT_ID = ""
@@ -155,14 +154,9 @@ ITEM_ID_FIELDS = (
 )
 
 # Outcomes that count as the record having been dealt with.
-SUCCESS_OUTCOMES = {"success", "item_canceled_in_kibo"}
+SUCCESS_OUTCOMES = {"success"}
 # Outcomes that are neither a success nor a failure: nothing needed doing.
-SKIP_OUTCOMES = {"item_already_canceled", "already_terminal", "dry_run"}
-
-TERMINAL_STATUSES = {
-    "CANCELED", "CANCELLED", "FULFILLED", "SHIPPED", "COMPLETED", "COMPLETE",
-    "DELIVERED", "CLOSED",
-}
+SKIP_OUTCOMES = {"has_other_products", "dry_run"}
 
 
 # ---------------------------------------------------------------------------
@@ -346,7 +340,6 @@ class InputRecord:
     tenant_id: str = ""
     site_id: str = ""
     quantity: str = ""
-    reason_code: str = ""
     reason_message: str = ""
 
     @property
@@ -377,8 +370,6 @@ COLUMN_ALIASES = {
     "siteid": "site_id",
     "reasonmessage": "reason_message",
     "moreinfo": "reason_message",
-    "reasoncode": "reason_code",
-    "reason": "reason_code",
     "quantity": "quantity",
     "qty": "quantity",
 }
@@ -464,21 +455,6 @@ def item_identifiers(item: Dict[str, Any]) -> List[str]:
             if text:
                 values.append(text)
     return values
-
-
-def is_terminal_status(status: str) -> bool:
-    return status.upper().replace(" ", "").replace("-", "_") in TERMINAL_STATUSES
-
-
-def shipment_status_of(shipment: Dict[str, Any]) -> str:
-    for key in ("shipmentStatus", "status"):
-        value = clean(shipment.get(key))
-        if value:
-            return value
-    workflow = shipment.get("workflowState")
-    if isinstance(workflow, dict):
-        return clean(workflow.get("shipmentState"))
-    return ""
 
 
 def item_matches_product(item: Dict[str, Any], product_id: str) -> bool:
@@ -658,37 +634,6 @@ class KiboClient:
             return [], "The getShipments response was not JSON."
         return shipments_in_payload(payload), ""
 
-    def cancel_items(self, tenant_id: str, site_id: str, shipment_number: str,
-                     items: List[Dict[str, Any]], send_notifications: bool,
-                     correlation_id: str) -> Tuple[bool, str, str]:
-        """
-        PUT /api/commerce/shipments/{shipmentNumber}/canceledItems
-
-        CancelItemsRequest = {blockAssignment, holdBlockAssignment, isUserAction,
-                              items: [{lineId, quantity, canceledReason}],
-                              sendNotifications}
-        This is the item-level endpoint; /canceled would cancel the whole
-        shipment, which is precisely what this worker is avoiding here.
-        """
-        url = (
-            f"https://t{clean(tenant_id)}.{self.host}"
-            f"/api/commerce/shipments/{quote(clean(shipment_number), safe='')}/canceledItems"
-        )
-        body = {
-            "blockAssignment": False,
-            "holdBlockAssignment": False,
-            "isUserAction": True,
-            "items": items,
-            "sendNotifications": send_notifications,
-        }
-        response, error = self.request(
-            "PUT", url, tenant_id, site_id, json_body=body, correlation_id=correlation_id
-        )
-        if response is None:
-            return False, error, ""
-        ok = 200 <= response.status_code < 300
-        return ok, "" if ok else f"HTTP {response.status_code}", excerpt_of(response)
-
 
 # ---------------------------------------------------------------------------
 # The product gate
@@ -701,8 +646,7 @@ class GateVerdict:
 
     decision is one of:
         'warehouse'  the product is the whole shipment -> send the CANCEL event
-        'kibo_item'  the shipment holds other products -> cancel only that item
-                     in Kibo and tell the warehouse nothing
+        'skip'       the shipment holds other products -> do nothing at all
         'fail'       the row could not be judged; detail says why
     """
     decision: str
@@ -715,12 +659,12 @@ class GateVerdict:
 
 class ProductGate:
     """
-    Reads the shipment from Kibo and decides which of the two cancellations a
-    product-bearing row gets.
+    Reads the shipment from Kibo and decides whether a product-bearing row may
+    cancel the whole shipment at the warehouse.
 
     The warehouse event has no item granularity: it stops a whole shipment. So
-    a shipment carrying other products is never sent to the warehouse — the one
-    product is cancelled in Kibo instead, and the rest ships as planned.
+    a shipment carrying other products is left alone and reported, rather than
+    cancelled whole on account of one line. This class only reads from Kibo.
     """
 
     def __init__(self, kibo: KiboClient, tenant_map: Dict[str, str],
@@ -824,10 +768,10 @@ class ProductGate:
         })
         if others:
             return GateVerdict(
-                "kibo_item",
+                "skip",
                 f"the shipment also carries {len(others)} other product(s) "
-                f"({', '.join(others)[:200]}), so the warehouse was left alone and only "
-                f"productId '{record.product_id}' was cancelled in Kibo",
+                f"({', '.join(others)[:200]}); cancelling it at the warehouse would stop "
+                "those too, so nothing was sent",
                 tenant_id, site_id, matching, len(items),
             )
 
@@ -1011,11 +955,6 @@ class Result:
     brand_code: str = ""
     event_id: str = ""
     gate: str = ""
-    action: str = ""
-    oms_shipment_number: str = ""
-    line_id: str = ""
-    quantity: str = ""
-    correlation_id: str = ""
     outcome: str = "failed"
     status_code: str = ""
     error: str = ""
@@ -1091,9 +1030,11 @@ class Processor:
             if verdict.decision == "fail":
                 return [Result.of(record, outcome="failed", gate="failed",
                                   tenant_id=verdict.tenant_id, error=verdict.detail)]
-            if verdict.decision == "kibo_item":
-                # The warehouse hears nothing: the rest of the shipment ships.
-                return self._cancel_item_in_kibo(record, verdict)
+            if verdict.decision == "skip":
+                # The shipment holds other products: nothing is sent anywhere.
+                return [Result.of(record, outcome="has_other_products",
+                                  gate="other products", tenant_id=verdict.tenant_id,
+                                  error=verdict.detail)]
             gate_note = verdict.detail
 
         return self._cancel_at_warehouse(record, gate_note)
@@ -1104,7 +1045,7 @@ class Processor:
         rows = self.lookup.for_shipment_order_number(record.shipment_order_number)
         if not rows:
             return [Result.of(
-                record, outcome="failed", action="cancel_at_warehouse",
+                record, outcome="failed",
                 gate="whole shipment" if record.product_id else "",
                 error=f"{record.shipment_order_number} has no GX location row in "
                       f"{WLFS_PROJECT}.{WLFS_DATASET}.{ORDERS_TABLE}",
@@ -1114,7 +1055,6 @@ class Processor:
         for order in rows:
             result = Result.of(
                 record,
-                action="cancel_at_warehouse",
                 gate="whole shipment" if record.product_id else "",
                 logistic_order_number=order.logistic_order_number,
                 location_name=order.location_name,
@@ -1146,132 +1086,6 @@ class Processor:
 
         return results
 
-    # -- the Kibo item path -------------------------------------------------
-
-    def _cancel_item_in_kibo(self, record: InputRecord,
-                             verdict: GateVerdict) -> List[Result]:
-        """
-        The shipment holds other products, so the warehouse is not told
-        anything and only this product is cancelled in Kibo. One call per
-        shipment that actually carries the product.
-        """
-        assert self.gate is not None
-        carriers = [
-            shipment for shipment in verdict.shipments
-            if any(item_matches_product(item, record.product_id)
-                   for item in shipment_items(shipment))
-        ]
-        results: List[Result] = []
-        for shipment in carriers:
-            results.append(self._cancel_item_on_shipment(record, verdict, shipment))
-            if self.args.sleep_between_requests > 0:
-                time.sleep(self.args.sleep_between_requests)
-        if not results:  # the gate only returns kibo_item when something carries it
-            results.append(Result.of(
-                record, outcome="failed", action="cancel_item_in_kibo",
-                gate="other products", tenant_id=verdict.tenant_id,
-                error="no shipment in the getShipments response carries the product",
-            ))
-        return results
-
-    def _cancel_item_on_shipment(self, record: InputRecord, verdict: GateVerdict,
-                                 shipment: Dict[str, Any]) -> Result:
-        assert self.gate is not None
-        shipment_number = clean(shipment.get("shipmentNumber"))
-        result = Result.of(
-            record,
-            action="cancel_item_in_kibo",
-            gate="other products",
-            tenant_id=verdict.tenant_id,
-            oms_shipment_number=shipment_number,
-            correlation_id=uuid.uuid4().hex,
-        )
-        if not shipment_number:
-            result.outcome = "failed"
-            result.error = "the shipment in the getShipments response has no shipmentNumber"
-            return result
-
-        status = shipment_status_of(shipment)
-        if is_terminal_status(status):
-            result.outcome = "already_terminal"
-            result.error = f"the shipment is already {status}; nothing was cancelled"
-            return result
-
-        matches = [item for item in shipment_items(shipment)
-                   if item_matches_product(item, record.product_id)]
-        if not matches:
-            canceled = shipment.get("canceledItems")
-            already = [item for item in (canceled if isinstance(canceled, list) else [])
-                       if isinstance(item, dict)
-                       and item_matches_product(item, record.product_id)]
-            result.outcome = "item_already_canceled" if already else "failed"
-            result.error = (
-                f"product {record.product_id} is already in canceledItems"
-                if already else
-                f"product {record.product_id} is not among the active items of "
-                f"shipment {shipment_number}"
-            )
-            return result
-
-        reason = {
-            "reasonCode": clean(record.reason_code) or self.args.reason_code,
-            "moreInfo": clean(record.reason_message) or self.args.reason_message,
-        }
-        wanted_quantity = int(record.quantity) if record.quantity.isdigit() else 0
-        payload_items: List[Dict[str, Any]] = []
-        line_ids: List[str] = []
-        quantities: List[str] = []
-
-        for item in matches:
-            line_id = item.get("lineId")
-            if line_id is None:
-                result.outcome = "failed"
-                result.error = (f"the matching item on shipment {shipment_number} "
-                                "has no lineId")
-                return result
-            available = item.get("quantity")
-            try:
-                available_int = int(available)
-            except (TypeError, ValueError):
-                available_int = 0
-            quantity = wanted_quantity if 0 < wanted_quantity <= available_int else available_int
-            if quantity <= 0:
-                result.outcome = "failed"
-                result.error = (f"line {line_id} has no cancellable quantity "
-                                f"(quantity={available})")
-                return result
-            payload_items.append(
-                {"lineId": int(line_id), "quantity": int(quantity), "canceledReason": reason}
-            )
-            line_ids.append(str(line_id))
-            quantities.append(str(quantity))
-
-        result.line_id = ",".join(line_ids)
-        result.quantity = ",".join(quantities)
-
-        if self.args.dry_run:
-            result.outcome = "dry_run"
-            result.error = (
-                f"{verdict.detail}; would cancel line(s) {result.line_id} "
-                f"quantity {result.quantity} on Kibo shipment {shipment_number}, "
-                "and send nothing to the warehouse"
-            )
-            return result
-
-        ok, error, excerpt = self.gate.kibo.cancel_items(
-            verdict.tenant_id, verdict.site_id, shipment_number,
-            payload_items, self.args.send_notifications, result.correlation_id,
-        )
-        result.status_code = error.replace("HTTP ", "") if error.startswith("HTTP ") else ""
-        result.response_excerpt = excerpt
-        if ok:
-            result.outcome = "item_canceled_in_kibo"
-            result.error = verdict.detail
-        else:
-            result.outcome = "failed"
-            result.error = f"{error} while cancelling the item in Kibo ({verdict.detail})"
-        return result
-
 
 # ---------------------------------------------------------------------------
 # Logging and file moves
@@ -1279,9 +1093,8 @@ class Processor:
 
 RESULT_FIELDS = [
     "source_file", "row_number", "shipment_order_number", "product_id", "order_number",
-    "tenant_id", "action", "gate", "logistic_order_number", "location_name", "brand",
-    "brand_code", "event_id", "oms_shipment_number", "line_id", "quantity",
-    "outcome", "status_code", "error", "response_excerpt", "correlation_id",
+    "tenant_id", "gate", "logistic_order_number", "location_name", "brand",
+    "brand_code", "event_id", "outcome", "status_code", "error", "response_excerpt",
 ]
 
 
@@ -1301,12 +1114,8 @@ def write_log(path: Path, outcomes: List[FileOutcome], args: argparse.Namespace,
     lines.append(f"GXO endpoint  : {args.gxo_url}")
     lines.append(f"Product check : {'off' if args.no_product_check else 'on (Kibo getShipments)'}")
     lines.append(f"Files read    : {len(outcomes)}")
-    sent = sum(1 for outcome in outcomes for r in outcome.results if r.outcome == "success")
-    in_kibo = sum(1 for outcome in outcomes for r in outcome.results
-                  if r.outcome == "item_canceled_in_kibo")
     lines.append(f"Records       : {succeeded + skipped + failed} "
-                 f"({sent} sent to the warehouse, {in_kibo} cancelled in Kibo instead, "
-                 f"{skipped} skipped, {failed} failed)")
+                 f"({succeeded} sent to the warehouse, {skipped} skipped, {failed} failed)")
     lines.append("")
 
     for outcome in outcomes:
@@ -1319,8 +1128,7 @@ def write_log(path: Path, outcomes: List[FileOutcome], args: argparse.Namespace,
         lines.append(f"  records: {len(outcome.results)}")
         lines.append("")
 
-        ok_rows = [r for r in outcome.results if r.outcome == "success"]
-        kibo_rows = [r for r in outcome.results if r.outcome == "item_canceled_in_kibo"]
+        ok_rows = [r for r in outcome.results if r.succeeded]
         skip_rows = [r for r in outcome.results if r.skipped]
         bad_rows = [r for r in outcome.results if not (r.succeeded or r.skipped)]
 
@@ -1335,21 +1143,12 @@ def write_log(path: Path, outcomes: List[FileOutcome], args: argparse.Namespace,
                     f"shipmentOrderNumber={row.shipment_order_number or '-'} "
                     f"productId={row.product_id or '-'}"
                 )
-                if row.action == "cancel_item_in_kibo":
-                    lines.append(
-                        f"      -> cancel_item_in_kibo shipment={row.oms_shipment_number or '-'} "
-                        f"tenant={row.tenant_id or '-'} line={row.line_id or '-'} "
-                        f"qty={row.quantity or '-'} outcome={row.outcome}"
-                        + (f" HTTP {row.status_code}" if row.status_code else "")
-                    )
-                else:
-                    lines.append(
-                        f"      -> cancel_at_warehouse "
-                        f"logisticOrderNumber={row.logistic_order_number or '-'} "
-                        f"location={row.location_name or '-'} brand={row.brand or '-'}"
-                        f"/{row.brand_code or '-'} outcome={row.outcome}"
-                        + (f" HTTP {row.status_code}" if row.status_code else "")
-                    )
+                lines.append(
+                    f"      -> logisticOrderNumber={row.logistic_order_number or '-'} "
+                    f"location={row.location_name or '-'} brand={row.brand or '-'}"
+                    f"/{row.brand_code or '-'} outcome={row.outcome}"
+                    + (f" HTTP {row.status_code}" if row.status_code else "")
+                )
                 if row.error:
                     lines.append(f"         note: {row.error}")
                 if row.response_excerpt and not row.succeeded:
@@ -1357,9 +1156,7 @@ def write_log(path: Path, outcomes: List[FileOutcome], args: argparse.Namespace,
 
         render(ok_rows, "SENT TO THE WAREHOUSE")
         lines.append("")
-        render(kibo_rows, "CANCELLED IN KIBO INSTEAD (warehouse not told)")
-        lines.append("")
-        render(skip_rows, "SKIPPED (nothing was done)")
+        render(skip_rows, "SKIPPED (nothing was sent)")
         lines.append("")
         render(bad_rows, "FAILED")
         lines.append("")
@@ -1419,15 +1216,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--gxo-url", default=os.environ.get("GXO_URL") or DEFAULT_GXO_URL)
     parser.add_argument("--update-reason", default=DEFAULT_UPDATE_REASON)
     parser.add_argument("--reason-message", default=DEFAULT_REASON_MESSAGE,
-                        help="data.reasonMessage on the warehouse event, and "
-                             "canceledReason.moreInfo on a Kibo item cancellation.")
-    parser.add_argument("--reason-code", default=DEFAULT_REASON_CODE,
-                        help="canceledReason.reasonCode, used only when an item is "
-                             "cancelled in Kibo.")
-    parser.add_argument("--no-send-notifications", dest="send_notifications",
-                        action="store_false",
-                        help="Set sendNotifications to false on a Kibo item cancellation.")
-    parser.set_defaults(send_notifications=True)
+                        help="data.reasonMessage on the warehouse event.")
+
     parser.add_argument("--host", default=os.environ.get("KIBO_HOST") or DEFAULT_KIBO_HOST,
                         help="Kibo host suffix, used only by the product check.")
     parser.add_argument("--auth-url", default=DEFAULT_KIBO_AUTH_URL)
@@ -1540,14 +1330,9 @@ def main() -> int:
                 f"{record.label}")
             for result in processor.process_record(record):
                 outcome.results.append(result)
-                where = (
-                    f"kibo shipment={result.oms_shipment_number or '-'} "
-                    f"line={result.line_id or '-'}"
-                    if result.action == "cancel_item_in_kibo" else
+                log(f"    {result.outcome.upper()} "
                     f"logisticOrderNumber={result.logistic_order_number or '-'} "
                     f"location={result.location_name or '-'}"
-                )
-                log(f"    {result.outcome.upper()} {where}"
                     + (f" :: {result.error}" if result.error else ""))
 
     # 4. Logs.
@@ -1566,8 +1351,7 @@ def main() -> int:
         log(f"{outcome.path.name} -> {moved}")
 
     log("")
-    log(f"Summary: {succeeded} handled ({skipped} skipped, {failed} failed). "
-        "See the log for the warehouse / Kibo split.")
+    log(f"Summary: {succeeded} sent, {skipped} skipped, {failed} failed.")
     log(f"Log: {log_path}")
     log(f"Results CSV: {csv_path}")
 
