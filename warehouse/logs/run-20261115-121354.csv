@@ -1,0 +1,2 @@
+﻿source_file,row_number,shipment_order_number,product_id,order_number,tenant_id,action,gate,logistic_order_number,location_name,brand,brand_code,event_id,oms_shipment_number,line_id,quantity,outcome,status_code,error,response_excerpt,correlation_id
+20261115-121337__Wadih__shipment.csv,2,WF-MKA032805-3118708,,,,cancel_at_warehouse,,WF21942,TLITGX0056,WF,56,B6E0BC8C-D208-4CB3-B005-1FF202551AC7,,,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}",
