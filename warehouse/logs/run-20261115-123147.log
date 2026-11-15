@@ -1,0 +1,26 @@
+Run started   : 2026-11-15T12:31:47+00:00
+Run finished  : 2026-11-15T12:31:49+00:00
+Mode          : LIVE
+GXO endpoint  : https://prdedi.gxo.com:4084/sync/mft/tlg_it/shipmentStatusUpdate
+Product check : on (Kibo getShipments)
+Files read    : 1
+Records       : 1 (1 sent to the warehouse, 0 cancelled in Kibo instead, 0 skipped, 0 failed)
+
+==============================================================================
+FILE 20261115-123133__Wadih__Book1.csv
+  records: 1
+
+  SENT TO THE WAREHOUSE (1)
+    row 2: shipmentOrderNumber=SW-EUG00828299 productId=040196034649756
+      -> cancel_at_warehouse logisticOrderNumber=SW71999 location=TLITGX0004 brand=SW/04 outcome=success HTTP 200
+         note: productId '040196034649756' is the only product on the shipment (1 item line(s))
+
+  CANCELLED IN KIBO INSTEAD (warehouse not told) (0)
+    -
+
+  SKIPPED (nothing was done) (0)
+    -
+
+  FAILED (0)
+    -
+
