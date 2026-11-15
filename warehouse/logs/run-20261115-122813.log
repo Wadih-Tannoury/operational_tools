@@ -1,0 +1,29 @@
+Run started   : 2026-11-15T12:28:13+00:00
+Run finished  : 2026-11-15T12:28:14+00:00
+Mode          : LIVE
+GXO endpoint  : https://prdedi.gxo.com:4084/sync/mft/tlg_it/shipmentStatusUpdate
+Product check : on (Kibo getShipments)
+Files read    : 1
+Records       : 2 (0 sent to the warehouse, 0 cancelled in Kibo instead, 0 skipped, 2 failed)
+
+==============================================================================
+FILE 20261115-122757__Wadih__Book1.csv
+  records: 2
+
+  SENT TO THE WAREHOUSE (0)
+    -
+
+  CANCELLED IN KIBO INSTEAD (warehouse not told) (0)
+    -
+
+  SKIPPED (nothing was done) (0)
+    -
+
+  FAILED (2)
+    row 2: shipmentOrderNumber=SW-EUG00828299 productId=40196034649756
+      -> cancel_at_warehouse logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: productId '40196034649756' is not on shipment SW-EUG00828299; it carries 040196034649756
+    row 3: shipmentOrderNumber=RC-USB00014165 productId=468051205187500
+      -> cancel_at_warehouse logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: RC-USB00014165 has no GX location row in tlg-wlfs-prd.til.prd_orders
+

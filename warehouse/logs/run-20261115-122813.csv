@@ -1,0 +1,3 @@
+﻿source_file,row_number,shipment_order_number,product_id,order_number,tenant_id,action,gate,logistic_order_number,location_name,brand,brand_code,event_id,oms_shipment_number,line_id,quantity,outcome,status_code,error,response_excerpt,correlation_id
+20261115-122757__Wadih__Book1.csv,2,SW-EUG00828299,40196034649756,SW-EU-00828299,29992,,failed,,,,,,,,,failed,,productId '40196034649756' is not on shipment SW-EUG00828299; it carries 040196034649756,,
+20261115-122757__Wadih__Book1.csv,3,RC-USB00014165,468051205187500,RC-US-00014165,,cancel_at_warehouse,whole shipment,,,,,,,,,failed,,RC-USB00014165 has no GX location row in tlg-wlfs-prd.til.prd_orders,,
