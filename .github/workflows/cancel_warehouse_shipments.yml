@@ -1,0 +1,152 @@
+name: Warehouse cancellations
+
+# Picks up every CSV in warehouse/input/ and, per row, either sends a CANCEL event to the
+# GXO endpoint for the whole shipment or — when the named product is not the
+# whole shipment — cancels just that item in Kibo and leaves the warehouse
+# alone. Writes a log in warehouse/logs/ and moves the file to warehouse/archive/
+# or warehouse/error/. Runs on every push that adds a file to warehouse/input/,
+# and on demand. The Kibo workflow owns input/ at the root; the two never share
+# a folder, so they can run at the same time.
+
+on:
+  push:
+    paths:
+      - "warehouse/input/**"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run: resolve and report, send nothing to the warehouse or to Kibo"
+        type: boolean
+        default: false
+      reason_message:
+        description: "Default data.reasonMessage (and moreInfo on a Kibo item cancellation)"
+        type: string
+        default: "Kibo notification cancellation"
+      reason_code:
+        description: "canceledReason.reasonCode, used only when an item is cancelled in Kibo"
+        type: string
+        default: "CustomerChangedTheirMind"
+      send_notifications:
+        description: "Let Kibo send the customer notifications on an item cancellation"
+        type: boolean
+        default: true
+      update_reason:
+        description: "data.updateReason"
+        type: string
+        default: "external"
+      no_product_check:
+        description: "Skip the Kibo read (rows with a productId then fail)"
+        type: boolean
+        default: false
+      kibo_host:
+        description: "Kibo host suffix, used only by the product check"
+        type: string
+        default: "tp3.mozu.com"
+      limit:
+        description: "Maximum records to process (0 = no limit)"
+        type: string
+        default: "0"
+
+concurrency:
+  group: warehouse-cancellations
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  process:
+    name: Send the warehouse cancellations
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Is there anything to do?
+        id: scan
+        run: |
+          count=$(find warehouse/input -maxdepth 1 -type f \( -name '*.csv' -o -name '*.txt' \) | wc -l)
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "Found $count file(s) in warehouse/input/."
+
+      - name: Set up Python
+        if: steps.scan.outputs.count != '0'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        if: steps.scan.outputs.count != '0'
+        run: pip install -r requirements.txt
+
+      - name: Run
+        if: steps.scan.outputs.count != '0'
+        env:
+          WLFS_BIGQUERY_CREDS: ${{ secrets.WLFS_BIGQUERY_CREDS }}
+          GXO_API_KEY: ${{ secrets.GXO_API_KEY }}
+          # Only read when a row carries a productId, for the getShipments check.
+          KIBO_API_CREDS: ${{ secrets.KIBO_API_CREDS }}
+          # Optional repository variables.
+          KIBO_TENANT_MAP: ${{ vars.KIBO_TENANT_MAP }}
+          GXO_URL: ${{ vars.GXO_URL }}
+          INPUT_DRY_RUN: ${{ inputs.dry_run }}
+          INPUT_NO_PRODUCT_CHECK: ${{ inputs.no_product_check }}
+          INPUT_REASON_MESSAGE: ${{ inputs.reason_message }}
+          INPUT_REASON_CODE: ${{ inputs.reason_code }}
+          INPUT_SEND_NOTIFICATIONS: ${{ inputs.send_notifications }}
+          INPUT_UPDATE_REASON: ${{ inputs.update_reason }}
+          INPUT_HOST: ${{ inputs.kibo_host }}
+          INPUT_LIMIT: ${{ inputs.limit }}
+        run: |
+          DRY_RUN_FLAG=""
+          if [ "$INPUT_DRY_RUN" = "true" ]; then DRY_RUN_FLAG="--dry-run"; fi
+          NO_CHECK_FLAG=""
+          if [ "$INPUT_NO_PRODUCT_CHECK" = "true" ]; then NO_CHECK_FLAG="--no-product-check"; fi
+          NO_NOTIFY_FLAG=""
+          if [ "$INPUT_SEND_NOTIFICATIONS" = "false" ]; then NO_NOTIFY_FLAG="--no-send-notifications"; fi
+          python scripts/process_warehouse_cancellations.py \
+            $DRY_RUN_FLAG \
+            $NO_CHECK_FLAG \
+            $NO_NOTIFY_FLAG \
+            --host "${INPUT_HOST:-tp3.mozu.com}" \
+            --reason-message "${INPUT_REASON_MESSAGE:-Kibo notification cancellation}" \
+            --reason-code "${INPUT_REASON_CODE:-CustomerChangedTheirMind}" \
+            --update-reason "${INPUT_UPDATE_REASON:-external}" \
+            --limit "${INPUT_LIMIT:-0}"
+
+      - name: Commit the logs and the moved files
+        if: always() && steps.scan.outputs.count != '0'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A warehouse
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git commit -m "Warehouse cancellation run $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
+          # Another run may have pushed in the meantime; rebase and retry.
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "Pushed on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected, rebasing (attempt $attempt)."
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            sleep $((attempt * 3))
+          done
+          echo "Could not push after 5 attempts." >&2
+          exit 1
+
+      - name: Upload the run log as an artifact
+        if: always() && steps.scan.outputs.count != '0'
+        uses: actions/upload-artifact@v4
+        with:
+          name: warehouse-cancellation-run-logs
+          path: warehouse/logs/run-*
+          if-no-files-found: warn
+          retention-days: 30

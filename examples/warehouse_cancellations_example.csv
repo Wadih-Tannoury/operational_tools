@@ -1,0 +1,4 @@
+shipmentOrderNumber,productId,orderNumber,quantity,reasonCode,reasonMessage
+OW-USA00037769,,,,,Kibo notification cancellation
+OW-USA00037770,518055266024613,,,,Cancelled at source
+DJ-ITA00012345,,DJ-IT-00012345,,,Customer changed their mind
