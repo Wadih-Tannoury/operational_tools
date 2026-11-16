@@ -1,0 +1,76 @@
+Run started   : 2026-11-16T17:45:27+00:00
+Run finished  : 2026-11-16T17:45:39+00:00
+Mode          : LIVE
+GXO endpoint  : https://prdedi.gxo.com:4084/sync/mft/tlg_it/shipmentStatusUpdate
+Product check : on (Kibo getShipments)
+Files read    : 1
+Records       : 24 (15 sent to the warehouse, 0 skipped, 9 failed)
+
+==============================================================================
+FILE 20261116-174459__Wadih__Book1.csv
+  records: 24
+
+  SENT TO THE WAREHOUSE (15)
+    row 2: shipmentOrderNumber=DG-EUD01687608 productId=-
+      -> logisticOrderNumber=DG772779 location=TLITGX0015 brand=DG/15 outcome=success HTTP 200
+    row 3: shipmentOrderNumber=WF-EUD00019298 productId=-
+      -> logisticOrderNumber=WF38896 location=TLITGX0056 brand=WF/56 outcome=success HTTP 200
+    row 6: shipmentOrderNumber=WF-EUE00018989 productId=-
+      -> logisticOrderNumber=WF38903 location=TLITGX0056 brand=WF/56 outcome=success HTTP 200
+    row 7: shipmentOrderNumber=WF-EUD00019942 productId=-
+      -> logisticOrderNumber=WF38915 location=TLITGX0056 brand=WF/56 outcome=success HTTP 200
+    row 8: shipmentOrderNumber=WF-EUD00020023 productId=-
+      -> logisticOrderNumber=WF38899 location=TLITGX0056 brand=WF/56 outcome=success HTTP 200
+    row 9: shipmentOrderNumber=WF-EUD00019728 productId=-
+      -> logisticOrderNumber=WF38911 location=TLITGX0056 brand=WF/56 outcome=success HTTP 200
+    row 10: shipmentOrderNumber=WF-EUD00019873 productId=-
+      -> logisticOrderNumber=WF38914 location=TLITGX0056 brand=WF/56 outcome=success HTTP 200
+    row 11: shipmentOrderNumber=WF-EUD00019683 productId=-
+      -> logisticOrderNumber=WF38910 location=TLITGX0056 brand=WF/56 outcome=success HTTP 200
+    row 12: shipmentOrderNumber=WF-EUE00018901 productId=-
+      -> logisticOrderNumber=WF38904 location=TLITGX0056 brand=WF/56 outcome=success HTTP 200
+    row 13: shipmentOrderNumber=WF-EUD00019090 productId=-
+      -> logisticOrderNumber=WF38893 location=TLITGX0056 brand=WF/56 outcome=success HTTP 200
+    row 14: shipmentOrderNumber=FE-EUD00134101 productId=-
+      -> logisticOrderNumber=FE191760 location=TLITGX0048 brand=FE/48 outcome=success HTTP 200
+    row 15: shipmentOrderNumber=SC-USE00008260 productId=-
+      -> logisticOrderNumber=SC317871 location=TLITGX0017 brand=SC/17 outcome=success HTTP 200
+    row 16: shipmentOrderNumber=FE-EUD00134101 productId=-
+      -> logisticOrderNumber=FE191760 location=TLITGX0048 brand=FE/48 outcome=success HTTP 200
+    row 17: shipmentOrderNumber=SC-USE00008260 productId=-
+      -> logisticOrderNumber=SC317871 location=TLITGX0017 brand=SC/17 outcome=success HTTP 200
+    row 20: shipmentOrderNumber=PJ-FF-TGP191238920 productId=-
+      -> logisticOrderNumber=PJ153656 location=TLITGX0035 brand=PJ/35 outcome=success HTTP 200
+
+  SKIPPED (nothing was sent) (0)
+    -
+
+  FAILED (9)
+    row 4: shipmentOrderNumber=WF-EUD00019586 productId=-
+      -> logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: WF-EUD00019586 has no GX location row in tlg-wlfs-prd.til.prd_orders
+    row 5: shipmentOrderNumber=WF-EUD00019269 productId=-
+      -> logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: WF-EUD00019269 has no GX location row in tlg-wlfs-prd.til.prd_orders
+    row 18: shipmentOrderNumber=CA-EUC00859254 productId=-
+      -> logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: CA-EUC00859254 has no GX location row in tlg-wlfs-prd.til.prd_orders
+    row 19: shipmentOrderNumber=CA-EUD00859181 productId=-
+      -> logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: CA-EUD00859181 has no GX location row in tlg-wlfs-prd.til.prd_orders
+    row 21: shipmentOrderNumber=SW-EUE00828053 productId=-
+      -> logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: SW-EUE00828053 has no GX location row in tlg-wlfs-prd.til.prd_orders
+    row 22: shipmentOrderNumber=SW-EUE00828053 productId=-
+      -> logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: SW-EUE00828053 has no GX location row in tlg-wlfs-prd.til.prd_orders
+    row 23: shipmentOrderNumber=CV-EUC00084838 productId=-
+      -> logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: CV-EUC00084838 has no GX location row in tlg-wlfs-prd.til.prd_orders
+    row 24: shipmentOrderNumber=PJ-EUD9901015626 productId=-
+      -> logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: PJ-EUD9901015626 has no GX location row in tlg-wlfs-prd.til.prd_orders
+    row 25: shipmentOrderNumber=PJ-EUB9901015626 productId=-
+      -> logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: PJ-EUB9901015626 has no GX location row in tlg-wlfs-prd.til.prd_orders
+

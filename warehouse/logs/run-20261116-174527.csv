@@ -1,0 +1,25 @@
+﻿source_file,row_number,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,outcome,status_code,error,response_excerpt
+20261116-174459__Wadih__Book1.csv,2,DG-EUD01687608,,,,,DG772779,TLITGX0015,DG,15,AE8F74BD-D907-4AEF-840A-6150FE6BEBB8,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,3,WF-EUD00019298,,,,,WF38896,TLITGX0056,WF,56,9A3327BA-27A4-4A66-8185-38AB5E4D8A4F,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,4,WF-EUD00019586,,,,,,,,,,failed,,WF-EUD00019586 has no GX location row in tlg-wlfs-prd.til.prd_orders,
+20261116-174459__Wadih__Book1.csv,5,WF-EUD00019269,,,,,,,,,,failed,,WF-EUD00019269 has no GX location row in tlg-wlfs-prd.til.prd_orders,
+20261116-174459__Wadih__Book1.csv,6,WF-EUE00018989,,,,,WF38903,TLITGX0056,WF,56,FC67B95C-CC76-40DC-B4F5-71D27C7E7F0C,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,7,WF-EUD00019942,,,,,WF38915,TLITGX0056,WF,56,7FD70000-7255-4FC5-8E9E-33F41D0073EE,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,8,WF-EUD00020023,,,,,WF38899,TLITGX0056,WF,56,F2AEC830-0FBF-4729-BEDB-AE1A8E9F8032,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,9,WF-EUD00019728,,,,,WF38911,TLITGX0056,WF,56,A3D64ACC-A167-42AE-B8A6-50720E04430D,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,10,WF-EUD00019873,,,,,WF38914,TLITGX0056,WF,56,02E697A6-0E29-44D0-B0B9-794209711CEB,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,11,WF-EUD00019683,,,,,WF38910,TLITGX0056,WF,56,A617012F-AAAA-4A0A-A8BC-93C8F5978E2A,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,12,WF-EUE00018901,,,,,WF38904,TLITGX0056,WF,56,43F1F153-4596-4497-885F-6E355CD44040,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,13,WF-EUD00019090,,,,,WF38893,TLITGX0056,WF,56,8F779631-B0B1-4602-AC4B-D4F1FBA13E1F,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,14,FE-EUD00134101,,,,,FE191760,TLITGX0048,FE,48,3A564924-0AB2-4019-B196-BE0248A33514,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,15,SC-USE00008260,,,,,SC317871,TLITGX0017,SC,17,34703411-7025-4630-B640-0391D976C00D,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,16,FE-EUD00134101,,,,,FE191760,TLITGX0048,FE,48,250F3FDD-87B6-4DD5-979B-A40C569451EA,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,17,SC-USE00008260,,,,,SC317871,TLITGX0017,SC,17,DBCB6528-73C1-4C76-9B1B-8E3A793E30C5,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,18,CA-EUC00859254,,,,,,,,,,failed,,CA-EUC00859254 has no GX location row in tlg-wlfs-prd.til.prd_orders,
+20261116-174459__Wadih__Book1.csv,19,CA-EUD00859181,,,,,,,,,,failed,,CA-EUD00859181 has no GX location row in tlg-wlfs-prd.til.prd_orders,
+20261116-174459__Wadih__Book1.csv,20,PJ-FF-TGP191238920,,,,,PJ153656,TLITGX0035,PJ,35,FD33A7D0-A362-42E0-86D2-F5F591B50C71,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-174459__Wadih__Book1.csv,21,SW-EUE00828053,,,,,,,,,,failed,,SW-EUE00828053 has no GX location row in tlg-wlfs-prd.til.prd_orders,
+20261116-174459__Wadih__Book1.csv,22,SW-EUE00828053,,,,,,,,,,failed,,SW-EUE00828053 has no GX location row in tlg-wlfs-prd.til.prd_orders,
+20261116-174459__Wadih__Book1.csv,23,CV-EUC00084838,,,,,,,,,,failed,,CV-EUC00084838 has no GX location row in tlg-wlfs-prd.til.prd_orders,
+20261116-174459__Wadih__Book1.csv,24,PJ-EUD9901015626,,,,,,,,,,failed,,PJ-EUD9901015626 has no GX location row in tlg-wlfs-prd.til.prd_orders,
+20261116-174459__Wadih__Book1.csv,25,PJ-EUB9901015626,,,,,,,,,,failed,,PJ-EUB9901015626 has no GX location row in tlg-wlfs-prd.til.prd_orders,
