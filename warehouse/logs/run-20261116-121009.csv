@@ -1,0 +1,7 @@
+﻿source_file,row_number,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,outcome,status_code,error,response_excerpt
+20261116-120956__Wadih__Book1.csv,2,WF-MTABE12D28C726265,,WF-MT-BE12D28C726265,,,WF20604,TLITGX0056,WF,56,52EB81A6-8D1E-462B-8D8C-63DC0CD7546A,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-120956__Wadih__Book1.csv,3,LN-MTANODE534B4ADBD2,,LN-MT-NODE534B4ADBD2,,,LN673703,TLITGX0009,LN,09,22DE30B5-A5C8-4EE5-A2D3-18402CD1019F,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-120956__Wadih__Book1.csv,4,CV-MTADEC5AC696D7B54,,CV-MT-DEC5AC696D7B54,,,CV149351,TLITGX0050,CV,50,9D5CA329-6099-4823-9D5C-841D169486D2,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-120956__Wadih__Book1.csv,5,WF-MTANO393664E8A721,,WF-MT-NO393664E8A721,,,WF30492,TLITGX0056,WF,56,9A2D1019-B503-449E-BDF7-36E52C3479AE,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-120956__Wadih__Book1.csv,6,SC-MTANO8C655B128BC6,,SC-MT-NO8C655B128BC6,,,SC314981,TLITGX0017,SC,17,F4AB6599-990C-4F0C-996B-BD84D4B96DBB,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261116-120956__Wadih__Book1.csv,7,PL-MTABEFF54B2767184,,PL-MT-BEFF54B2767184,,,PL394488,TLITGX0049,PL,49,D7724741-A906-44AC-A12D-0AB8DBB27AE0,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
