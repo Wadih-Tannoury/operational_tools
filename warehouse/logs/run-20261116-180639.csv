@@ -1,0 +1,2 @@
+﻿source_file,row_number,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,outcome,status_code,error,response_excerpt
+20261116-180614__Wadih__shipment.csv,2,CA-EUC00859254,,,,,CA55648,TLITGX0005,CA,05,F8A90B1F-421C-4FD9-9CF4-7DB742B43723,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
