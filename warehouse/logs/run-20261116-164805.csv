@@ -1,0 +1,2 @@
+﻿source_file,row_number,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,outcome,status_code,error,response_excerpt
+20261116-164748__Wadih__shipment.csv,2,LA-EUA10000004,,,,,LA11533,TLITGX0057,LA,57,B598A0F2-2B89-466A-A4C5-C24B4D65EA8F,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
