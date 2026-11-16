@@ -1,0 +1,2 @@
+﻿source_file,row_number,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,outcome,status_code,error,response_excerpt
+20261116-181058__Wadih__shipment.csv,2,SW-EUE00828053,,,,,SW72228,TLITGX0004,SW,04,913704C2-C884-4AAB-A8AA-BAA5FC7D2B0C,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"

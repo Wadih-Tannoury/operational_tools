@@ -1,0 +1,22 @@
+Run started   : 2026-11-16T18:11:14+00:00
+Run finished  : 2026-11-16T18:11:16+00:00
+Mode          : LIVE
+GXO endpoint  : https://prdedi.gxo.com:4084/sync/mft/tlg_it/shipmentStatusUpdate
+Product check : on (Kibo getShipments)
+Files read    : 1
+Records       : 1 (1 sent to the warehouse, 0 skipped, 0 failed)
+
+==============================================================================
+FILE 20261116-181058__Wadih__shipment.csv
+  records: 1
+
+  SENT TO THE WAREHOUSE (1)
+    row 2: shipmentOrderNumber=SW-EUE00828053 productId=-
+      -> logisticOrderNumber=SW72228 location=TLITGX0004 brand=SW/04 outcome=success HTTP 200
+
+  SKIPPED (nothing was sent) (0)
+    -
+
+  FAILED (0)
+    -
+
