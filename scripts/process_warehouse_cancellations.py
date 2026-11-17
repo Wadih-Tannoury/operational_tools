@@ -42,20 +42,23 @@ single item is process_cancellations.py's job.
 
 When nothing is cancelled
 -------------------------
-A shipmentOrderNumber is meant to identify one shipment. Where it does not, the
-worker refuses the record instead of guessing:
+A shipmentOrderNumber is meant to identify one shipment. Before anything is
+sent, every record is read back from Kibo and the shipments carrying its
+shipmentOrderNumber are counted. How many of them are still in play depends on
+the channel, items[].data.channel in the getShipments response:
 
-    at the warehouse   more than one distinct GX warehouse order (logistic
-                       order number + location) answers to the number
-    in Kibo            more than one shipment that Kibo does not already report
-                       as terminal carries the number
-    in Kibo            no shipment under the externalOrderId carries the number
-                       at all
+    channel = Farfetch    every shipment except the ones already CANCELED,
+                          FULFILLED or REASSIGNED
+    any other channel     the shipments that are READY and at a location whose
+                          name contains GX
 
-The first two are reported as 'ambiguous', the third as 'failed', and in every
-one of them not a single event or cancellation is sent — for the warehouse or
-for Kibo. Cancel those by logisticOrderNumber or shipmentNumber instead, one at
-a time.
+More than one still in play and the record is refused as 'ambiguous': no CANCEL
+event to the warehouse, no cancellation in Kibo. The same happens, as 'failed',
+when the shipments cannot be read at all — a duplicate that could not be ruled
+out is treated as a duplicate. Cancel those by shipmentNumber, one at a time.
+
+This check runs for every record, with or without a productId and with or
+without the Kibo step, so KIBO_API_CREDS is needed for every run.
 
 What happens per row
 --------------------
@@ -179,11 +182,26 @@ DEFAULT_KIBO_REASON_CODE = "CustomerChangedTheirMind"
 DEFAULT_KIBO_MORE_INFO = "Unspecified"
 
 # A shipment Kibo already reports in one of these states is left alone: there
-# is nothing left to cancel, and a PUT would only return an error.
+# is nothing left to cancel, and a PUT would only return an error. REASSIGNED
+# is in here because the shipment that was reassigned is no longer the one
+# doing the work.
 TERMINAL_STATUSES = {
     "CANCELED", "CANCELLED", "CLOSED", "COMPLETE", "COMPLETED",
-    "FULFILLED", "SHIPPED", "PICKEDUP", "PICKED_UP", "DELETED",
+    "FULFILLED", "SHIPPED", "PICKEDUP", "PICKED_UP", "DELETED", "REASSIGNED",
 }
+
+# A shipmentOrderNumber is supposed to identify one shipment. Where more than
+# one shipment still in play carries the same one, nothing in the input says
+# which was meant, so the record is refused — at the warehouse and in Kibo
+# both. What counts as "still in play" depends on the channel the shipment
+# belongs to, items[].data.channel in the getShipments response.
+FARFETCH_CHANNEL = "FARFETCH"
+# Farfetch: anything that is not one of these is still in play.
+FARFETCH_SETTLED_STATUSES = {"CANCELED", "CANCELLED", "FULFILLED", "REASSIGNED"}
+# Everywhere else: only a shipment READY at a GX location is, since that is the
+# only kind this worker cancels at the warehouse anyway.
+OTHER_LIVE_STATUS = "READY"
+GX_LOCATION_MARK = "GX"
 
 DEFAULT_TENANT_ID = ""
 DEFAULT_SITE_ID = ""
@@ -624,23 +642,62 @@ def shipment_status_of(shipment: Dict[str, Any]) -> str:
     return ""
 
 
-def distinct_order_rows(rows: List["OrderRow"]) -> List["OrderRow"]:
+def channel_of(shipment: Dict[str, Any]) -> str:
     """
-    The GX warehouse orders behind a shipmentOrderNumber, each listed once.
+    The sales channel a shipment belongs to, from items[].data.channel.
 
-    prd_orders can repeat a warehouse order across rows; what makes two rows two
-    different cancellations is the logisticOrderNumber and the location the
-    event is addressed to, so that is what is deduplicated on.
+    The items of one shipment belong to one channel, so the first item that
+    names one answers for the shipment; a shipment-level field is read as a
+    fallback for responses shaped differently.
     """
-    seen = set()
-    unique = []
-    for row in rows:
-        key = (normalize_id(row.logistic_order_number), clean(row.location_name).upper())
-        if key in seen:
-            continue
-        seen.add(key)
-        unique.append(row)
-    return unique
+    for item in shipment_items(shipment):
+        data = item.get("data")
+        if isinstance(data, dict):
+            value = clean(data.get("channel"))
+            if value:
+                return value
+        value = clean(item.get("channel"))
+        if value:
+            return value
+    data = shipment.get("data")
+    if isinstance(data, dict):
+        value = clean(data.get("channel"))
+        if value:
+            return value
+    return clean(shipment.get("channel"))
+
+
+def location_of(shipment: Dict[str, Any]) -> str:
+    """The location a shipment is assigned to, whichever field names it."""
+    for key in ("locationName", "locationCode", "fulfillmentLocationName",
+                "fulfillmentLocationCode", "locationId"):
+        value = clean(shipment.get(key))
+        if value:
+            return value
+    return ""
+
+
+def is_in_play(shipment: Dict[str, Any]) -> bool:
+    """
+    Whether a shipment still counts when deciding if a shipmentOrderNumber is
+    ambiguous. Two of these under one number and nothing is cancelled.
+
+    Farfetch       anything not already canceled, fulfilled or reassigned.
+    anything else  READY, at a GX location — the only kind this worker cancels
+                   at the warehouse.
+    """
+    status = clean(shipment_status_of(shipment)).upper().replace(" ", "").replace("-", "_")
+    if clean(channel_of(shipment)).upper() == FARFETCH_CHANNEL:
+        return status not in FARFETCH_SETTLED_STATUSES
+    return status == OTHER_LIVE_STATUS and GX_LOCATION_MARK in location_of(shipment).upper()
+
+
+def describe_shipment(shipment: Dict[str, Any]) -> str:
+    """One shipment, named the way the log names it."""
+    return (f"{shipment_number_of(shipment) or '?'}"
+            f"[{shipment_status_of(shipment) or '?'}"
+            f"@{location_of(shipment) or '?'}"
+            f", {channel_of(shipment) or 'no channel'}]")
 
 
 def select_shipments(
@@ -692,6 +749,13 @@ class KiboClient:
         self.max_retries = max_retries
         self.session = requests.Session()
         self._tokens: Dict[str, Tuple[str, float]] = {}
+        # One record is read once: the duplicate check, the product gate and
+        # the cancellation all want the same getShipments response. Cleared
+        # between records, because the run itself changes shipments.
+        self._shipments: Dict[Tuple[str, str, str], Tuple[List[Dict[str, Any]], str]] = {}
+
+    def forget_shipments(self) -> None:
+        self._shipments.clear()
 
     def token_for_tenant(self, tenant_id: str, force_refresh: bool = False) -> str:
         tenant_id = clean(tenant_id)
@@ -790,6 +854,16 @@ class KiboClient:
         self, tenant_id: str, site_id: str, external_order_id: str
     ) -> Tuple[List[Dict[str, Any]], str]:
         """GET /api/commerce/shipments?filter=externalOrderId=={value}"""
+        key = (clean(tenant_id), clean(site_id), clean(external_order_id))
+        if key in self._shipments:
+            return self._shipments[key]
+        shipments, error = self._fetch_shipments(*key)
+        self._shipments[key] = (shipments, error)
+        return shipments, error
+
+    def _fetch_shipments(
+        self, tenant_id: str, site_id: str, external_order_id: str
+    ) -> Tuple[List[Dict[str, Any]], str]:
         filter_value = quote(f"externalOrderId=={clean(external_order_id)}", safe="=")
         url = (
             f"https://t{clean(tenant_id)}.{self.host}"
@@ -887,6 +961,79 @@ def external_order_id_for(record: InputRecord, derive: bool) -> str:
     if not value and derive:
         value = derive_external_order_id(record.shipment_order_number)
     return value
+
+
+@dataclass
+class GuardVerdict:
+    outcome: str = "ok"          # ok | ambiguous | failed
+    error: str = ""
+    tenant_id: str = ""
+
+
+class DuplicateGuard:
+    """
+    Refuses a record whose shipmentOrderNumber answers for more than one
+    shipment that is still in play, before anything is cancelled anywhere.
+
+    The warehouse event cannot be taken back, so this is asked before it goes
+    out and not after: a record refused here sends nothing to GXO and nothing
+    to Kibo. What counts as still in play is is_in_play(), which reads the
+    channel off the shipment's items.
+    """
+
+    def __init__(self, kibo: "KiboClient", tenant_map: Dict[str, str],
+                 default_tenant_id: str, default_site_id: str,
+                 derive_external: bool) -> None:
+        self.kibo = kibo
+        self.tenant_map = tenant_map
+        self.default_tenant_id = default_tenant_id
+        self.default_site_id = default_site_id
+        self.derive_external = derive_external
+
+    def check(self, record: InputRecord) -> GuardVerdict:
+        external_order_id = external_order_id_for(record, self.derive_external)
+        if not external_order_id:
+            return GuardVerdict(
+                "failed",
+                "there is no orderNumber to read the shipments with, and the "
+                "externalOrderId could not be derived from the shipmentOrderNumber, so "
+                "the shipment could not be checked for duplicates",
+            )
+
+        tenant_id, tenant_error = resolve_tenant(record, self.tenant_map,
+                                                 self.default_tenant_id)
+        if tenant_error:
+            return GuardVerdict("failed", tenant_error)
+
+        site_id = clean(record.site_id) or self.default_site_id
+        shipments, error = self.kibo.get_shipments_by_external_order_id(
+            tenant_id, site_id, external_order_id
+        )
+        if error:
+            return GuardVerdict(
+                "failed",
+                f"getShipments by externalOrderId '{external_order_id}' failed: {error}; "
+                "nothing was cancelled, because duplicates could not be ruled out",
+                tenant_id,
+            )
+
+        matching = [
+            shipment for shipment in shipments
+            if normalize_id(shipment_order_number_of(shipment))
+            == normalize_id(record.shipment_order_number)
+        ]
+        in_play = [shipment for shipment in matching if is_in_play(shipment)]
+        if len(in_play) > 1:
+            return GuardVerdict(
+                "ambiguous",
+                f"{len(in_play)} shipment(s) still in play carry shipmentOrderNumber "
+                f"{record.shipment_order_number} — "
+                + "; ".join(describe_shipment(shipment) for shipment in in_play)
+                + " — so nothing was cancelled, at the warehouse or in Kibo; cancel them "
+                  "by shipmentNumber, one at a time",
+                tenant_id,
+            )
+        return GuardVerdict("ok", "", tenant_id)
 
 
 class ProductGate:
@@ -1357,12 +1504,16 @@ class FileOutcome:
 class Processor:
     def __init__(self, lookup: OrderLookup, gate: Optional[ProductGate],
                  gxo: GxoClient, args: argparse.Namespace,
-                 kibo_canceller: Optional[KiboCanceller] = None) -> None:
+                 kibo_canceller: Optional[KiboCanceller] = None,
+                 guard: Optional[DuplicateGuard] = None,
+                 kibo: Optional[KiboClient] = None) -> None:
         self.lookup = lookup
         self.gate = gate
         self.gxo = gxo
         self.args = args
         self.kibo_canceller = kibo_canceller
+        self.guard = guard
+        self.kibo = kibo
 
     # -- entry point --------------------------------------------------------
 
@@ -1370,6 +1521,28 @@ class Processor:
         if not record.shipment_order_number:
             return [Result.of(record, outcome="failed",
                               error="the row has no shipmentOrderNumber")]
+
+        # Each record is read from Kibo afresh; the run cancels shipments, so a
+        # response cached from an earlier record would be stale.
+        if self.kibo is not None:
+            self.kibo.forget_shipments()
+
+        # Before anything leaves for GXO: is this number one shipment or two?
+        if self.guard is None:
+            return [Result.of(
+                record, outcome="failed",
+                error="no Kibo client was built, so the shipment could not be checked for "
+                      "duplicates and nothing was cancelled; check KIBO_API_CREDS")]
+        try:
+            guarded = self.guard.check(record)
+        except Exception as exc:  # noqa: BLE001  one bad record must not stop the run
+            return [Result.of(
+                record, outcome="failed",
+                error=f"the duplicate check raised {type(exc).__name__}: {exc}; "
+                      "nothing was cancelled")]
+        if guarded.outcome != "ok":
+            return [Result.of(record, outcome=guarded.outcome,
+                              tenant_id=guarded.tenant_id, error=guarded.error)]
 
         gate_note = "no productId: the whole shipment is cancelled"
         if record.product_id:
@@ -1442,25 +1615,6 @@ class Processor:
                       f"{WLFS_PROJECT}.{WLFS_DATASET}.{ORDERS_TABLE}",
             )]
 
-        # A shipmentOrderNumber is meant to identify one warehouse order. On
-        # Farfetch it sometimes does not: two live shipments can share one, each
-        # at its own GX location, and then nothing in the row says which of them
-        # the person meant. Cancelling the wrong one is worse than cancelling
-        # none, and cancelling both is worse still, so the record is reported
-        # and left alone for someone to look at.
-        rows = distinct_order_rows(rows)
-        if len(rows) > 1:
-            return [Result.of(
-                record, outcome="ambiguous",
-                gate="whole shipment" if record.product_id else "",
-                error=f"{record.shipment_order_number} matches {len(rows)} GX warehouse "
-                      "order(s) — " + ", ".join(
-                          f"{row.logistic_order_number or '?'}@{row.location_name or '?'}"
-                          for row in rows
-                      ) + " — so nothing was cancelled; cancel them by "
-                      "logisticOrderNumber, one at a time",
-            )]
-
         results: List[Result] = []
         for order in rows:
             result = Result.of(
@@ -1524,6 +1678,8 @@ def write_log(path: Path, outcomes: List[FileOutcome], args: argparse.Namespace,
                  f"{'DRY RUN - nothing was sent to the warehouse' if args.dry_run else 'LIVE'}")
     lines.append(f"GXO endpoint  : {args.gxo_url}")
     lines.append(f"Product check : {'off' if args.no_product_check else 'on (Kibo getShipments)'}")
+    lines.append("Duplicate check: on — a shipmentOrderNumber carrying more than one "
+                 "shipment still in play cancels nothing, anywhere")
     lines.append(f"Kibo step     : "
                  f"{'on by default' if args.cancel_in_kibo else 'only where a row asks for it'} "
                  "(the warehouse first, Kibo after it)")
@@ -1744,45 +1900,52 @@ def main() -> int:
         lookup = OrderLookup()
         lookup.load(bigquery_client(), shipment_order_numbers)
 
-        # 3. One Kibo client, built only when something actually needs Kibo:
-        #    the product check, the Kibo cancellation, or both.
-        needs_gate = (
-            any(record.product_id for _, record in records) and not args.no_product_check
+        # 3. One Kibo client for the whole run. Kibo is read for every record
+        #    now, not only for the product check: the duplicate guard decides
+        #    whether a record may be cancelled at all, so there is no path that
+        #    skips it.
+        kibo_client = KiboClient(
+            credentials=kibo_credentials(),
+            auth_url=args.auth_url,
+            host=args.host,
+            timeout=args.timeout,
+            max_retries=args.max_retries,
         )
-        needs_kibo_cancel = any(
-            record.wants_kibo(args.cancel_in_kibo) for _, record in records
+        tenant_map = load_tenant_map(args.tenant_map)
+
+        guard = DuplicateGuard(
+            kibo=kibo_client,
+            tenant_map=tenant_map,
+            default_tenant_id=args.default_tenant_id,
+            default_site_id=args.default_site_id,
+            derive_external=args.derive_external_order_id,
         )
 
         gate: Optional[ProductGate] = None
-        kibo_canceller: Optional[KiboCanceller] = None
-        if needs_gate or needs_kibo_cancel:
-            kibo_client = KiboClient(
-                credentials=kibo_credentials(),
-                auth_url=args.auth_url,
-                host=args.host,
-                timeout=args.timeout,
-                max_retries=args.max_retries,
+        if any(record.product_id for _, record in records) and not args.no_product_check:
+            gate = ProductGate(
+                kibo=kibo_client,
+                tenant_map=tenant_map,
+                default_tenant_id=args.default_tenant_id,
+                default_site_id=args.default_site_id,
+                derive_external=args.derive_external_order_id,
             )
-            tenant_map = load_tenant_map(args.tenant_map)
-            if needs_gate:
-                gate = ProductGate(
-                    kibo=kibo_client,
-                    tenant_map=tenant_map,
-                    default_tenant_id=args.default_tenant_id,
-                    default_site_id=args.default_site_id,
-                    derive_external=args.derive_external_order_id,
-                )
-            if needs_kibo_cancel:
-                log(f"{sum(1 for _, record in records if record.wants_kibo(args.cancel_in_kibo))}"
-                    " record(s) will also be cancelled in Kibo, after the warehouse event.")
-                kibo_canceller = KiboCanceller(
-                    kibo=kibo_client,
-                    tenant_map=tenant_map,
-                    default_tenant_id=args.default_tenant_id,
-                    default_site_id=args.default_site_id,
-                    derive_external=args.derive_external_order_id,
-                    args=args,
-                )
+
+        kibo_canceller: Optional[KiboCanceller] = None
+        wants_kibo = sum(
+            1 for _, record in records if record.wants_kibo(args.cancel_in_kibo)
+        )
+        if wants_kibo:
+            log(f"{wants_kibo} record(s) will also be cancelled in Kibo, after the "
+                "warehouse event.")
+            kibo_canceller = KiboCanceller(
+                kibo=kibo_client,
+                tenant_map=tenant_map,
+                default_tenant_id=args.default_tenant_id,
+                default_site_id=args.default_site_id,
+                derive_external=args.derive_external_order_id,
+                args=args,
+            )
 
         gxo = GxoClient(
             url=args.gxo_url,
@@ -1792,7 +1955,8 @@ def main() -> int:
             update_reason=args.update_reason,
         )
         processor = Processor(lookup=lookup, gate=gate, gxo=gxo, args=args,
-                              kibo_canceller=kibo_canceller)
+                              kibo_canceller=kibo_canceller, guard=guard,
+                              kibo=kibo_client)
 
         for index, (outcome, record) in enumerate(records, start=1):
             log(f"[{index}/{len(records)}] {record.source_file} row {record.row_number}: "
