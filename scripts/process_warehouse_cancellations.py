@@ -40,6 +40,23 @@ for every shipment of that shipmentOrderNumber, skipping the ones Kibo already
 reports in a terminal state. It cancels whole shipments only: cancelling a
 single item is process_cancellations.py's job.
 
+When nothing is cancelled
+-------------------------
+A shipmentOrderNumber is meant to identify one shipment. Where it does not, the
+worker refuses the record instead of guessing:
+
+    at the warehouse   more than one distinct GX warehouse order (logistic
+                       order number + location) answers to the number
+    in Kibo            more than one shipment that Kibo does not already report
+                       as terminal carries the number
+    in Kibo            no shipment under the externalOrderId carries the number
+                       at all
+
+The first two are reported as 'ambiguous', the third as 'failed', and in every
+one of them not a single event or cancellation is sent — for the warehouse or
+for Kibo. Cancel those by logisticOrderNumber or shipmentNumber instead, one at
+a time.
+
 What happens per row
 --------------------
 1. shipmentOrderNumber, no productId
@@ -197,6 +214,10 @@ ITEM_ID_FIELDS = (
 
 # Outcomes that count as the record having been dealt with.
 SUCCESS_OUTCOMES = {"success"}
+# Not a success and not a skip: the record was understood but refused, because
+# more than one live shipment answers to its shipmentOrderNumber. It lands in
+# the error folder so that a person decides which one to cancel.
+AMBIGUOUS_OUTCOME = "ambiguous"
 # Outcomes that are neither a success nor a failure: nothing needed doing.
 # 'already_terminal' is a shipment Kibo had already closed, and
 # 'not_sent' a Kibo step held back because the warehouse step failed — the
@@ -601,6 +622,25 @@ def shipment_status_of(shipment: Dict[str, Any]) -> str:
     if isinstance(workflow, dict):
         return clean(workflow.get("shipmentState"))
     return ""
+
+
+def distinct_order_rows(rows: List["OrderRow"]) -> List["OrderRow"]:
+    """
+    The GX warehouse orders behind a shipmentOrderNumber, each listed once.
+
+    prd_orders can repeat a warehouse order across rows; what makes two rows two
+    different cancellations is the logisticOrderNumber and the location the
+    event is addressed to, so that is what is deduplicated on.
+    """
+    seen = set()
+    unique = []
+    for row in rows:
+        key = (normalize_id(row.logistic_order_number), clean(row.location_name).upper())
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(row)
+    return unique
 
 
 def select_shipments(
@@ -1161,20 +1201,52 @@ class KiboCanceller:
                 error=f"no shipment in Kibo for externalOrderId '{external_order_id}'",
             )]
 
-        matching, selection_error = select_shipments(shipments,
-                                                     record.shipment_order_number)
-        if selection_error:
+        # Unlike the product gate, which only reads, this writes — so it asks
+        # the shipments to name themselves rather than assuming the response is
+        # the right one. No shipment carrying the row's shipmentOrderNumber
+        # means nothing is cancelled.
+        matching = [
+            shipment for shipment in shipments
+            if normalize_id(shipment_order_number_of(shipment))
+            == normalize_id(record.shipment_order_number)
+        ]
+        if not matching:
             return [Result.of(
                 record, outcome="failed", tenant_id=tenant_id, **base,
-                error=f"getShipments for '{external_order_id}': {selection_error}",
+                error=f"none of the {len(shipments)} shipment(s) under externalOrderId "
+                      f"'{external_order_id}' carries shipmentOrderNumber "
+                      f"{record.shipment_order_number}, so nothing was cancelled in Kibo",
             )]
 
-        results: List[Result] = []
-        for shipment in matching:
-            results.append(self._cancel_one(record, shipment, tenant_id, site_id, base))
-            if self.args.sleep_between_requests > 0:
-                time.sleep(self.args.sleep_between_requests)
-        return results
+        live = [
+            shipment for shipment in matching
+            if not is_terminal_status(shipment_status_of(shipment))
+        ]
+        if not live:
+            return [Result.of(
+                record, outcome="already_terminal", tenant_id=tenant_id, **base,
+                kibo_shipment_number=", ".join(
+                    shipment_number_of(shipment) for shipment in matching
+                ),
+                error=f"every shipment of {record.shipment_order_number} is already in a "
+                      "terminal state in Kibo",
+            )]
+        if len(live) > 1:
+            # Same ambiguity as at the warehouse, seen from Kibo's side.
+            return [Result.of(
+                record, outcome="ambiguous", tenant_id=tenant_id, **base,
+                kibo_shipment_number=", ".join(
+                    shipment_number_of(shipment) for shipment in live
+                ),
+                error=f"{len(live)} live shipment(s) in Kibo carry shipmentOrderNumber "
+                      f"{record.shipment_order_number} — nothing was cancelled; cancel "
+                      "them by shipmentNumber, one at a time",
+            )]
+
+        result = self._cancel_one(record, live[0], tenant_id, site_id, base)
+        if self.args.sleep_between_requests > 0:
+            time.sleep(self.args.sleep_between_requests)
+        return [result]
 
     def _cancel_one(self, record: InputRecord, shipment: Dict[str, Any],
                     tenant_id: str, site_id: str, base: Dict[str, Any]) -> Result:
@@ -1330,10 +1402,14 @@ class Processor:
         # it: a shipment Kibo thinks is cancelled while the warehouse is still
         # packing it is the one outcome worth refusing outright.
         if any(not (result.succeeded or result.skipped) for result in results):
+            reasons = ", ".join(sorted({
+                result.outcome for result in results
+                if not (result.succeeded or result.skipped)
+            }))
             results.append(Result.of(
                 record, stage="kibo", outcome="not_sent",
-                error="the warehouse cancellation did not go through, so the shipment was "
-                      "left alone in Kibo",
+                error=f"the warehouse stage ended as {reasons}, so the shipment was left "
+                      "alone in Kibo",
             ))
             return results
 
@@ -1364,6 +1440,25 @@ class Processor:
                 gate="whole shipment" if record.product_id else "",
                 error=f"{record.shipment_order_number} has no GX location row in "
                       f"{WLFS_PROJECT}.{WLFS_DATASET}.{ORDERS_TABLE}",
+            )]
+
+        # A shipmentOrderNumber is meant to identify one warehouse order. On
+        # Farfetch it sometimes does not: two live shipments can share one, each
+        # at its own GX location, and then nothing in the row says which of them
+        # the person meant. Cancelling the wrong one is worse than cancelling
+        # none, and cancelling both is worse still, so the record is reported
+        # and left alone for someone to look at.
+        rows = distinct_order_rows(rows)
+        if len(rows) > 1:
+            return [Result.of(
+                record, outcome="ambiguous",
+                gate="whole shipment" if record.product_id else "",
+                error=f"{record.shipment_order_number} matches {len(rows)} GX warehouse "
+                      "order(s) — " + ", ".join(
+                          f"{row.logistic_order_number or '?'}@{row.location_name or '?'}"
+                          for row in rows
+                      ) + " — so nothing was cancelled; cancel them by "
+                      "logisticOrderNumber, one at a time",
             )]
 
         results: List[Result] = []
