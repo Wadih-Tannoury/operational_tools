@@ -1,0 +1,21 @@
+Run started   : 2026-11-17T08:44:35+00:00
+Run finished  : 2026-11-17T08:44:37+00:00
+Mode          : LIVE
+Kibo host     : tp3.mozu.com
+Files read    : 1
+Records       : 1 (1 succeeded, 0 skipped, 0 failed)
+
+==============================================================================
+FILE 20261117-084422__Wadih__order.csv
+  records: 1
+
+  SUCCEEDED (1)
+    row 2: shipmentOrderNumber=- orderNumber=PJ-EU-9901015626 productId=-
+      -> cancel_shipment shipment=155255 tenant=30475 line=- qty=- via=bigquery outcome=success
+
+  SKIPPED (nothing to do) (0)
+    -
+
+  FAILED (0)
+    -
+
