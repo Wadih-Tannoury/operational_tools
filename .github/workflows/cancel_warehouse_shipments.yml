@@ -3,6 +3,8 @@ name: Warehouse cancellations
 # Picks up every CSV in warehouse/input/ and sends a CANCEL event to the GXO
 # endpoint for each shipment. A row that names a product is sent only when that
 # product is the whole shipment; otherwise nothing is sent anywhere.
+# A row whose cancelInKibo column says yes is then cancelled in Kibo as well,
+# but only after the warehouse has accepted the event.
 # Writes a log in warehouse/logs/ and moves the file to warehouse/archive/
 # or warehouse/error/. Runs on every push that adds a file to warehouse/input/,
 # and on demand. The Kibo workflow owns input/ at the root; the two never share
@@ -30,6 +32,14 @@ on:
         description: "Skip the Kibo read (rows with a productId then fail)"
         type: boolean
         default: false
+      cancel_in_kibo:
+        description: "Also cancel in Kibo (warehouse first) where a row leaves cancelInKibo empty"
+        type: boolean
+        default: false
+      kibo_reason_code:
+        description: "canceledReason.reasonCode on the Kibo cancellation"
+        type: string
+        default: "CustomerChangedTheirMind"
       kibo_host:
         description: "Kibo host suffix, used only by the product check"
         type: string
@@ -80,13 +90,16 @@ jobs:
         env:
           WLFS_BIGQUERY_CREDS: ${{ secrets.WLFS_BIGQUERY_CREDS }}
           GXO_API_KEY: ${{ secrets.GXO_API_KEY }}
-          # Only read when a row carries a productId, for the getShipments check.
+          # Read for the getShipments check and for the Kibo cancellation that
+          # follows the warehouse event on the rows that ask for one.
           KIBO_API_CREDS: ${{ secrets.KIBO_API_CREDS }}
           # Optional repository variables.
           KIBO_TENANT_MAP: ${{ vars.KIBO_TENANT_MAP }}
           GXO_URL: ${{ vars.GXO_URL }}
           INPUT_DRY_RUN: ${{ inputs.dry_run }}
           INPUT_NO_PRODUCT_CHECK: ${{ inputs.no_product_check }}
+          INPUT_CANCEL_IN_KIBO: ${{ inputs.cancel_in_kibo }}
+          INPUT_KIBO_REASON_CODE: ${{ inputs.kibo_reason_code }}
           INPUT_REASON_MESSAGE: ${{ inputs.reason_message }}
           INPUT_UPDATE_REASON: ${{ inputs.update_reason }}
           INPUT_HOST: ${{ inputs.kibo_host }}
@@ -96,9 +109,13 @@ jobs:
           if [ "$INPUT_DRY_RUN" = "true" ]; then DRY_RUN_FLAG="--dry-run"; fi
           NO_CHECK_FLAG=""
           if [ "$INPUT_NO_PRODUCT_CHECK" = "true" ]; then NO_CHECK_FLAG="--no-product-check"; fi
+          KIBO_FLAG=""
+          if [ "$INPUT_CANCEL_IN_KIBO" = "true" ]; then KIBO_FLAG="--cancel-in-kibo"; fi
           python scripts/process_warehouse_cancellations.py \
             $DRY_RUN_FLAG \
             $NO_CHECK_FLAG \
+            $KIBO_FLAG \
+            --kibo-reason-code "${INPUT_KIBO_REASON_CODE:-CustomerChangedTheirMind}" \
             --host "${INPUT_HOST:-tp3.mozu.com}" \
             --reason-message "${INPUT_REASON_MESSAGE:-Kibo notification cancellation}" \
             --update-reason "${INPUT_UPDATE_REASON:-external}" \
