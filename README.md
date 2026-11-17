@@ -265,6 +265,28 @@ Then it writes `warehouse/logs/run-<stamp>.log` and `warehouse/logs/run-<stamp>.
 input file to `warehouse/archive/` (everything succeeded or had nothing to do) or
 `warehouse/error/` (the file was unreadable, or a record failed).
 
+### When one number means two shipments
+
+A `shipmentOrderNumber` is meant to identify one shipment. On Farfetch it
+sometimes does not: two live shipments can carry the same one, each at its own
+`%GX%` location and both `READY`. Nothing in the row says which was meant, so
+the worker cancels **neither** and reports the record as `ambiguous`:
+
+| Where | What is refused |
+|---|---|
+| Warehouse | More than one distinct GX warehouse order — `logisticOrderNumber` + `locationName`, deduplicated — answers to the number. |
+| Kibo | More than one shipment that Kibo does not already report as terminal carries the number. |
+
+A record refused at the warehouse never reaches the Kibo step: its Kibo row
+reads `not_sent`. Either way not one event and not one cancellation goes out,
+and the file lands in `warehouse/error/` with both shipments named in the log,
+so the cancellation can be redone by `logisticOrderNumber` or `shipmentNumber`,
+one at a time.
+
+Repetition is not ambiguity: the same warehouse order appearing on several
+`prd_orders` rows is deduplicated first, and a number matching one live
+shipment plus one already-cancelled one cancels the live one.
+
 ### Cancelling in Kibo as well
 
 Every row cancels at the warehouse. The `cancelInKibo` column decides whether
@@ -273,7 +295,7 @@ Kibo follows:
 | `cancelInKibo` | What happens |
 |---|---|
 | empty, `no`, `false`, `0` | The warehouse only. Kibo is left untouched. This is the default. |
-| `yes`, `true`, `1` | The warehouse **first**; then `PUT /api/commerce/shipments/{shipmentNumber}/canceled` for every shipment of that `shipmentOrderNumber`. |
+| `yes`, `true`, `1` | The warehouse **first**; then `PUT /api/commerce/shipments/{shipmentNumber}/canceled` for the one live shipment carrying that `shipmentOrderNumber`. |
 
 `--cancel-in-kibo` flips the default for rows that leave the column empty; a row
 that says `yes` or `no` always decides for itself.
@@ -287,7 +309,10 @@ packing) is the one state this tool will not produce.
 
 The Kibo shipment is found the same way the product check finds it, through
 `GET /api/commerce/shipments?filter=externalOrderId=={orderNumber}`, so the
-`orderNumber` rules below apply to this step too. A shipment Kibo already
+`orderNumber` rules below apply to this step too. The lookup is by order, so
+the shipments have to name themselves: if none of them carries the row's
+`shipmentOrderNumber`, nothing is cancelled and the record fails rather than
+the worker cancelling whatever came back. A shipment Kibo already
 reports as cancelled, closed, shipped or otherwise terminal is left alone and
 reported as `already_terminal`. The cancellation records `reasonCode` (from the
 row, else `--kibo-reason-code`, default `CustomerChangedTheirMind`) and
@@ -371,7 +396,8 @@ what it would send, without a single POST to GXO. Worth doing the first time.
 |---|---|---|
 | `success` | GXO accepted the event | archive |
 | `has_other_products` | The shipment holds products beyond the one named; nothing was sent | archive |
-| `already_terminal` | The Kibo step found the shipment already cancelled, closed or shipped | archive |
+| `already_terminal` | The Kibo step found every matching shipment already cancelled, closed or shipped | archive |
+| `ambiguous` | More than one live shipment answers to the `shipmentOrderNumber`; **nothing was cancelled**, at the warehouse or in Kibo | error |
 | `not_sent` | The Kibo step was held back because the warehouse event failed | error (the warehouse row is the failure) |
 | `dry_run` | Nothing was sent | warehouse/input (nothing moves on a dry run) |
 | `failed` | No GX row in BigQuery, the product is not on the shipment, no tenant, an HTTP error, a malformed row, or the Kibo cancellation was refused | error |
