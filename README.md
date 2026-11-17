@@ -259,10 +259,41 @@ The workflow reads it and, for each row:
 | `shipmentOrderNumber` + `productId`, that product is the **only** product on the shipment | The warehouse cancellation is sent, exactly as above. |
 | `shipmentOrderNumber` + `productId`, the shipment holds **other products too** | **Nothing happens**, at the warehouse or in Kibo. The record is reported as `has_other_products` and left for a human. |
 | Whenever the whole shipment is to be cancelled | `tlg-wlfs-prd.til.prd_orders` (joined to `til.prd_brandConfig`) supplies `logisticOrderNumber`, `locationName`, `brand` and `brandCode` for the `%GX%` locations, and one event is POSTed per matching row. |
+| `cancelInKibo` says **yes** | After the warehouse has accepted the event, the whole shipment is cancelled in Kibo too. See below. |
 
 Then it writes `warehouse/logs/run-<stamp>.log` and `warehouse/logs/run-<stamp>.csv`, and moves the
 input file to `warehouse/archive/` (everything succeeded or had nothing to do) or
 `warehouse/error/` (the file was unreadable, or a record failed).
+
+### Cancelling in Kibo as well
+
+Every row cancels at the warehouse. The `cancelInKibo` column decides whether
+Kibo follows:
+
+| `cancelInKibo` | What happens |
+|---|---|
+| empty, `no`, `false`, `0` | The warehouse only. Kibo is left untouched. This is the default. |
+| `yes`, `true`, `1` | The warehouse **first**; then `PUT /api/commerce/shipments/{shipmentNumber}/canceled` for every shipment of that `shipmentOrderNumber`. |
+
+`--cancel-in-kibo` flips the default for rows that leave the column empty; a row
+that says `yes` or `no` always decides for itself.
+
+The order is the point. The warehouse is what is physically moving the goods,
+so it is told first, and Kibo is only brought in line once the warehouse has
+accepted the event. **A record whose warehouse event failed is never cancelled
+in Kibo** — it is reported as `not_sent` on the Kibo row, and the warehouse row
+carries the actual failure. The reverse (Kibo cancelled, warehouse still
+packing) is the one state this tool will not produce.
+
+The Kibo shipment is found the same way the product check finds it, through
+`GET /api/commerce/shipments?filter=externalOrderId=={orderNumber}`, so the
+`orderNumber` rules below apply to this step too. A shipment Kibo already
+reports as cancelled, closed, shipped or otherwise terminal is left alone and
+reported as `already_terminal`. The cancellation records `reasonCode` (from the
+row, else `--kibo-reason-code`, default `CustomerChangedTheirMind`) and
+`moreInfo` (from the row's `moreInfo`, else its `reasonMessage`, else
+`--kibo-more-info`). It cancels whole shipments only; a single item is
+`process_cancellations.py`'s job.
 
 ### Why a product splits the two paths
 
@@ -275,8 +306,10 @@ That leaves one sensible rule, and it is the rule the worker follows: if the
 product is the whole shipment, stopping the shipment and cancelling the product
 are the same act, so the warehouse gets the event. If the shipment holds
 anything else, nothing is sent and the record is reported, because cancelling
-would also stop products nobody asked about. This worker only reads from Kibo;
-it never writes there.
+would also stop products nobody asked about. The product check itself only ever
+reads from Kibo; the only write this worker makes to Kibo is the cancellation a
+row asks for with `cancelInKibo`, and that one happens after the warehouse
+event, never before it.
 
 The sent payload:
 
@@ -303,11 +336,16 @@ The sent payload:
 
 **Upload a CSV.** Column names are matched ignoring case, spaces and
 underscores: `shipmentOrderNumber` (required), `productId`, `orderNumber`,
-`reasonMessage`, `tenantId`, `siteId`. The *Warehouse cancellations* page shows
-what it parsed before anything is committed.
+`reasonMessage`, `cancelInKibo`, `reasonCode`, `moreInfo`, `tenantId`, `siteId`.
+The *Warehouse cancellations* page shows what it parsed before anything is
+committed, including the `cancelInKibo` it is about to queue.
 
 **One-off cancellation.** The *Single cancellation* tab turns one shipment —
 with or without a product condition — into the same one-row CSV.
+
+**Which systems to cancel in.** Both tabs of the page open on the same choice:
+*Warehouse only* or *Warehouse, then Kibo*. It fills the `cancelInKibo` column
+for every row that does not carry one of its own.
 
 **Logs.** The *Logs* tab lists every `warehouse/logs/run-*.log`, newest first.
 
@@ -323,8 +361,13 @@ what it would send, without a single POST to GXO. Worth doing the first time.
 |---|---|---|
 | `success` | GXO accepted the event | archive |
 | `has_other_products` | The shipment holds products beyond the one named; nothing was sent | archive |
+| `already_terminal` | The Kibo step found the shipment already cancelled, closed or shipped | archive |
+| `not_sent` | The Kibo step was held back because the warehouse event failed | error (the warehouse row is the failure) |
 | `dry_run` | Nothing was sent | warehouse/input (nothing moves on a dry run) |
-| `failed` | No GX row in BigQuery, the product is not on the shipment, no tenant, an HTTP error, a malformed row | error |
+| `failed` | No GX row in BigQuery, the product is not on the shipment, no tenant, an HTTP error, a malformed row, or the Kibo cancellation was refused | error |
+
+Every record is logged with the stage it belongs to — `[warehouse]` or `[kibo]`
+— so a row that asked for both shows up twice, in the order they ran.
 
 A failed record does **not** fail the workflow run. The job stays green, the log
 says what went wrong, and the file lands in `warehouse/error/`.
