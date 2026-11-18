@@ -25,6 +25,10 @@ shipment is then cancelled in Kibo as well:
     cancelInKibo empty or no      the warehouse only (the default)
     cancelInKibo yes              the warehouse first, then Kibo
 
+The Kibo step also has to be switched on for the run, with --allow-kibo; it is
+off by default. Without it a row asking for Kibo is still cancelled at the
+warehouse, and its Kibo half is reported as 'kibo_disabled'.
+
 The order is the point: the warehouse event goes out first, and Kibo is only
 touched once the warehouse has accepted it. A row whose warehouse cancellation
 failed is never cancelled in Kibo, so the two systems cannot drift apart on
@@ -241,7 +245,8 @@ AMBIGUOUS_OUTCOME = "ambiguous"
 # 'not_sent' a Kibo step held back because the warehouse step failed — the
 # failure is already reported on the warehouse row, and counting it twice
 # would make one bad record look like two.
-SKIP_OUTCOMES = {"has_other_products", "dry_run", "already_terminal", "not_sent"}
+SKIP_OUTCOMES = {"has_other_products", "dry_run", "already_terminal", "not_sent",
+                 "kibo_disabled"}
 
 
 # ---------------------------------------------------------------------------
@@ -1571,6 +1576,18 @@ class Processor:
         if not record.wants_kibo(self.args.cancel_in_kibo):
             return results
 
+        # The Kibo step is off unless the run turns it on. A row that asked for
+        # it is still cancelled at the warehouse — the same end state as
+        # 'Warehouse only' — and the Kibo half is recorded as left undone.
+        if not self.args.allow_kibo:
+            results.append(Result.of(
+                record, stage="kibo", outcome="kibo_disabled",
+                error="the row asks for the Kibo cancellation, but the Kibo step is "
+                      "switched off for this run (--allow-kibo); the warehouse "
+                      "cancellation was sent on its own",
+            ))
+            return results
+
         # The warehouse first, Kibo second, and only when the warehouse took
         # it: a shipment Kibo thinks is cancelled while the warehouse is still
         # packing it is the one outcome worth refusing outright.
@@ -1680,9 +1697,13 @@ def write_log(path: Path, outcomes: List[FileOutcome], args: argparse.Namespace,
     lines.append(f"Product check : {'off' if args.no_product_check else 'on (Kibo getShipments)'}")
     lines.append("Duplicate check: on — a shipmentOrderNumber carrying more than one "
                  "shipment still in play cancels nothing, anywhere")
-    lines.append(f"Kibo step     : "
-                 f"{'on by default' if args.cancel_in_kibo else 'only where a row asks for it'} "
-                 "(the warehouse first, Kibo after it)")
+    if args.allow_kibo:
+        lines.append(f"Kibo step     : allowed, "
+                     f"{'on by default' if args.cancel_in_kibo else 'where a row asks for it'}"
+                     " (the warehouse first, Kibo after it)")
+    else:
+        lines.append("Kibo step     : switched off for this run (--allow-kibo); rows that "
+                     "asked for it were cancelled at the warehouse only")
     lines.append(f"Files read    : {len(outcomes)}")
     lines.append(f"Records       : {succeeded + skipped + failed} "
                  f"({succeeded} applied, {skipped} skipped, {failed} failed)")
@@ -1816,6 +1837,10 @@ def parse_args() -> argparse.Namespace:
                         default=os.environ.get("KIBO_TENANT_ID") or DEFAULT_TENANT_ID)
     parser.add_argument("--default-site-id",
                         default=os.environ.get("KIBO_SITE_ID") or DEFAULT_SITE_ID)
+    parser.add_argument("--allow-kibo", action="store_true",
+                        help="Allow the Kibo step at all. Off by default: without it a row "
+                             "asking for Kibo is cancelled at the warehouse only, and the "
+                             "Kibo half is reported as kibo_disabled.")
     parser.add_argument("--cancel-in-kibo", action="store_true",
                         help="Cancel in Kibo as well, for rows that leave the cancelInKibo "
                              "column empty. A row saying yes or no decides for itself. The "
@@ -1935,7 +1960,11 @@ def main() -> int:
         wants_kibo = sum(
             1 for _, record in records if record.wants_kibo(args.cancel_in_kibo)
         )
-        if wants_kibo:
+        if wants_kibo and not args.allow_kibo:
+            log(f"{wants_kibo} record(s) ask to be cancelled in Kibo too, but the Kibo "
+                "step is switched off for this run (--allow-kibo): they will be cancelled "
+                "at the warehouse only.")
+        if wants_kibo and args.allow_kibo:
             log(f"{wants_kibo} record(s) will also be cancelled in Kibo, after the "
                 "warehouse event.")
             kibo_canceller = KiboCanceller(
