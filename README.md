@@ -260,7 +260,7 @@ The workflow reads it and, for each row:
 | `shipmentOrderNumber` + `productId`, the shipment holds **other products too** | **Nothing happens**, at the warehouse or in Kibo. The record is reported as `has_other_products` and left for a human. |
 | Always, before anything is sent | Kibo is read for the order and the shipments carrying this `shipmentOrderNumber` are counted; more than one still in play and the record is refused without cancelling anything. See below. |
 | Whenever the whole shipment is to be cancelled | `tlg-wlfs-prd.til.prd_orders` (joined to `til.prd_brandConfig`) supplies `logisticOrderNumber`, `locationName`, `brand` and `brandCode` for the `%GX%` locations, and one event is POSTed per matching row. |
-| `cancelInKibo` says **yes** | After the warehouse has accepted the event, the whole shipment is cancelled in Kibo too. See below. |
+| `cancelInKibo` says **yes**, and the run allows the Kibo step | After the warehouse has accepted the event, the whole shipment is cancelled in Kibo too. See below. |
 
 Then it writes `warehouse/logs/run-<stamp>.log` and `warehouse/logs/run-<stamp>.csv`, and moves the
 input file to `warehouse/archive/` (everything succeeded or had nothing to do) or
@@ -306,6 +306,15 @@ Kibo follows:
 
 `--cancel-in-kibo` flips the default for rows that leave the column empty; a row
 that says `yes` or `no` always decides for itself.
+
+**The Kibo step is off unless the run switches it on.** `--allow-kibo` is the
+switch, and without it a row asking for Kibo is cancelled at the warehouse on
+its own — the same end state as *Warehouse only* — with its Kibo half recorded
+as `kibo_disabled`. In the workflow the switch is the `allow_kibo` checkbox on
+a manual run, and the `ALLOW_KIBO_CANCELLATIONS` repository variable (set it to
+`true`) on a push; unset means off. So a console user can choose *Warehouse,
+then Kibo* today and the Kibo half stays dormant until the variable is turned
+on.
 
 The order is the point. The warehouse is what is physically moving the goods,
 so it is told first, and Kibo is only brought in line once the warehouse has
@@ -404,6 +413,7 @@ what it would send, without a single POST to GXO. Worth doing the first time.
 | `success` | GXO accepted the event | archive |
 | `has_other_products` | The shipment holds products beyond the one named; nothing was sent | archive |
 | `already_terminal` | The Kibo step found every matching shipment already cancelled, closed or shipped | archive |
+| `kibo_disabled` | The row asked for Kibo, but the Kibo step was switched off for the run; the warehouse cancellation went out on its own | archive |
 | `ambiguous` | More than one shipment still in play answers to the `shipmentOrderNumber`; **nothing was cancelled**, at the warehouse or in Kibo | error |
 | `not_sent` | The Kibo step was held back because the warehouse event failed | error (the warehouse row is the failure) |
 | `dry_run` | Nothing was sent | warehouse/input (nothing moves on a dry run) |
