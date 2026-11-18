@@ -1,0 +1,111 @@
+Run started   : 2026-11-18T13:13:34+00:00
+Run finished  : 2026-11-18T13:14:09+00:00
+Mode          : LIVE
+GXO endpoint  : https://prdedi.gxo.com:4084/sync/mft/tlg_it/shipmentStatusUpdate
+Product check : on (Kibo getShipments)
+Duplicate check: on — a shipmentOrderNumber carrying more than one shipment still in play cancels nothing, anywhere
+Kibo step     : switched off for this run (--allow-kibo); rows that asked for it were cancelled at the warehouse only
+Files read    : 2
+Records       : 38 (37 applied, 0 skipped, 1 failed)
+              : 37 sent to the warehouse, 0 cancelled in Kibo
+
+==============================================================================
+FILE 20261118-115759__backoffice__shipment.csv
+  records: 1
+
+  APPLIED (1)
+    [warehouse] row 2: shipmentOrderNumber=LN-MTANODE534B4ADBD2 productId=-
+      -> logisticOrderNumber=LN673703 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+
+  SKIPPED (nothing was sent) (0)
+    -
+
+  FAILED (0)
+    -
+
+==============================================================================
+FILE 20261118-131317__backoffice__lista_ordini.csv
+  records: 37
+
+  APPLIED (36)
+    [warehouse] row 2: shipmentOrderNumber=LN-CTA1929075002-4 productId=-
+      -> logisticOrderNumber=LN680454 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 4: shipmentOrderNumber=LN-CTA1929455419-4 productId=-
+      -> logisticOrderNumber=LN680010 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 5: shipmentOrderNumber=LN-CTA1929592264-4 productId=-
+      -> logisticOrderNumber=LN680970 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 6: shipmentOrderNumber=WF-ZLA10103739398086 productId=-
+      -> logisticOrderNumber=WF22899 location=TLITGX0056 brand=WF/56 outcome=success HTTP 200
+    [warehouse] row 7: shipmentOrderNumber=LN-CTA1929618342-4 productId=-
+      -> logisticOrderNumber=LN681837 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 8: shipmentOrderNumber=LN-CTA1282354731-8 productId=-
+      -> logisticOrderNumber=LN680393 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 9: shipmentOrderNumber=LN-CTA1929088062-4 productId=-
+      -> logisticOrderNumber=LN682319 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 10: shipmentOrderNumber=LN-CTA1929848493-4 productId=-
+      -> logisticOrderNumber=LN681968 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 11: shipmentOrderNumber=LN-CTA1929518262-4 productId=-
+      -> logisticOrderNumber=LN682253 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 12: shipmentOrderNumber=LN-CTA1929372574-4 productId=-
+      -> logisticOrderNumber=LN680615 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 13: shipmentOrderNumber=LN-CTA1929158240-4 productId=-
+      -> logisticOrderNumber=LN682285 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 14: shipmentOrderNumber=LN-CTA1929247586-4 productId=-
+      -> logisticOrderNumber=LN682456 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 15: shipmentOrderNumber=LN-CTA1929307730-4 productId=-
+      -> logisticOrderNumber=LN682963 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 16: shipmentOrderNumber=LN-CTA1929580519-4 productId=-
+      -> logisticOrderNumber=LN682980 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 17: shipmentOrderNumber=LN-CTA1929900537-4 productId=-
+      -> logisticOrderNumber=LN682987 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 18: shipmentOrderNumber=LN-CTA1929127033-4 productId=-
+      -> logisticOrderNumber=LN682938 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 19: shipmentOrderNumber=LN-CTA1929420310-4 productId=-
+      -> logisticOrderNumber=LN683070 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 20: shipmentOrderNumber=LN-CTA1929470911-4 productId=-
+      -> logisticOrderNumber=LN683150 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 21: shipmentOrderNumber=LN-CTA1929340322-4 productId=-
+      -> logisticOrderNumber=LN683097 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 22: shipmentOrderNumber=LN-CTA1929840462-4 productId=-
+      -> logisticOrderNumber=LN683140 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 23: shipmentOrderNumber=LN-CTA1929170200-4 productId=-
+      -> logisticOrderNumber=LN683508 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 24: shipmentOrderNumber=LN-IMAP26111325800 productId=-
+      -> logisticOrderNumber=LN683578 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 25: shipmentOrderNumber=LN-IMAP26111326418 productId=-
+      -> logisticOrderNumber=LN683618 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 26: shipmentOrderNumber=LN-CTA1929171346-4 productId=-
+      -> logisticOrderNumber=LN684021 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 27: shipmentOrderNumber=LN-CTA1929085801-4 productId=-
+      -> logisticOrderNumber=LN680190 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 28: shipmentOrderNumber=LN-IMAP26111432708 productId=-
+      -> logisticOrderNumber=LN684272 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 29: shipmentOrderNumber=WF-MTABE12D28C726265 productId=-
+      -> logisticOrderNumber=WF20604 location=TLITGX0056 brand=WF/56 outcome=success HTTP 200
+    [warehouse] row 30: shipmentOrderNumber=CV-MTADEC5AC696D7B54 productId=-
+      -> logisticOrderNumber=CV149351 location=TLITGX0050 brand=CV/50 outcome=success HTTP 200
+    [warehouse] row 31: shipmentOrderNumber=WF-MTANO393664E8A721 productId=-
+      -> logisticOrderNumber=WF30492 location=TLITGX0056 brand=WF/56 outcome=success HTTP 200
+    [warehouse] row 32: shipmentOrderNumber=PL-MTABEFF54B2767184 productId=-
+      -> logisticOrderNumber=PL394488 location=TLITGX0049 brand=PL/49 outcome=success HTTP 200
+    [warehouse] row 33: shipmentOrderNumber=LN-IMAP26111638486 productId=-
+      -> logisticOrderNumber=LN685050 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 34: shipmentOrderNumber=WL-CTA1929995878-4 productId=-
+      -> logisticOrderNumber=WL184290 location=TLITGX0012 brand=WL/12 outcome=success HTTP 200
+    [warehouse] row 35: shipmentOrderNumber=LN-CTA1929010371-4 productId=-
+      -> logisticOrderNumber=LN683079 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 36: shipmentOrderNumber=LN-CTA1929109303-4 productId=-
+      -> logisticOrderNumber=LN684999 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 37: shipmentOrderNumber=LN-CTA1929149600-4 productId=-
+      -> logisticOrderNumber=LN684888 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 38: shipmentOrderNumber=LN-CTA1929999344-4 productId=-
+      -> logisticOrderNumber=LN684955 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+
+  SKIPPED (nothing was sent) (0)
+    -
+
+  FAILED (1)
+    [warehouse] row 3: shipmentOrderNumber=LN-IMAP26110800106 productId=-
+      -> logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: LN-IMAP26110800106 has no GX location row in tlg-wlfs-prd.til.prd_orders
+
