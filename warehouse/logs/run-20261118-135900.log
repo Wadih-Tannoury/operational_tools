@@ -1,0 +1,39 @@
+Run started   : 2026-11-18T13:59:00+00:00
+Run finished  : 2026-11-18T13:59:04+00:00
+Mode          : LIVE
+GXO endpoint  : https://prdedi.gxo.com:4084/sync/mft/tlg_it/shipmentStatusUpdate
+Product check : on (Kibo getShipments)
+Duplicate check: on — a shipmentOrderNumber carrying more than one shipment still in play cancels nothing, anywhere
+Kibo step     : switched off for this run (--allow-kibo); rows that asked for it were cancelled at the warehouse only
+Files read    : 2
+Records       : 2 (2 applied, 0 skipped, 0 failed)
+              : 2 sent to the warehouse, 0 cancelled in Kibo
+
+==============================================================================
+FILE 20261118-135804__backoffice__shipment.csv
+  records: 1
+
+  APPLIED (1)
+    [warehouse] row 2: shipmentOrderNumber=LN-CTA1929926546-4 productId=-
+      -> logisticOrderNumber=LN686178 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+
+  SKIPPED (nothing was sent) (0)
+    -
+
+  FAILED (0)
+    -
+
+==============================================================================
+FILE 20261118-135827__backoffice__shipment.csv
+  records: 1
+
+  APPLIED (1)
+    [warehouse] row 2: shipmentOrderNumber=LN-CTA1929666581-4 productId=-
+      -> logisticOrderNumber=LN686135 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+
+  SKIPPED (nothing was sent) (0)
+    -
+
+  FAILED (0)
+    -
+
