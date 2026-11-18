@@ -4,7 +4,10 @@ name: Warehouse cancellations
 # endpoint for each shipment. A row that names a product is sent only when that
 # product is the whole shipment; otherwise nothing is sent anywhere.
 # A row whose cancelInKibo column says yes is then cancelled in Kibo as well,
-# but only after the warehouse has accepted the event. Nothing is sent at all
+# but only after the warehouse has accepted the event — and only when the Kibo
+# step is switched on for the run, which it is not by default: the allow_kibo
+# checkbox on a manual run, or the ALLOW_KIBO_CANCELLATIONS repository variable
+# on a push. Nothing is sent at all
 # for a shipmentOrderNumber that answers for more than one shipment still in
 # play — see "When one number means two shipments" in the README.
 # Writes a log in warehouse/logs/ and moves the file to warehouse/archive/
@@ -32,6 +35,10 @@ on:
         default: "external"
       no_product_check:
         description: "Skip the Kibo read (rows with a productId then fail)"
+        type: boolean
+        default: false
+      allow_kibo:
+        description: "Allow the Kibo step at all (off by default: rows asking for it are cancelled at the warehouse only)"
         type: boolean
         default: false
       cancel_in_kibo:
@@ -99,6 +106,11 @@ jobs:
           # Optional repository variables.
           KIBO_TENANT_MAP: ${{ vars.KIBO_TENANT_MAP }}
           GXO_URL: ${{ vars.GXO_URL }}
+          # The Kibo step is off unless it is switched on. On a manual run the
+          # checkbox decides; on a push the repository variable does, and an
+          # unset variable means off.
+          VAR_ALLOW_KIBO: ${{ vars.ALLOW_KIBO_CANCELLATIONS }}
+          INPUT_ALLOW_KIBO: ${{ inputs.allow_kibo }}
           INPUT_DRY_RUN: ${{ inputs.dry_run }}
           INPUT_NO_PRODUCT_CHECK: ${{ inputs.no_product_check }}
           INPUT_CANCEL_IN_KIBO: ${{ inputs.cancel_in_kibo }}
@@ -114,9 +126,19 @@ jobs:
           if [ "$INPUT_NO_PRODUCT_CHECK" = "true" ]; then NO_CHECK_FLAG="--no-product-check"; fi
           KIBO_FLAG=""
           if [ "$INPUT_CANCEL_IN_KIBO" = "true" ]; then KIBO_FLAG="--cancel-in-kibo"; fi
+          ALLOW_KIBO="$INPUT_ALLOW_KIBO"
+          if [ -z "$ALLOW_KIBO" ]; then ALLOW_KIBO="$VAR_ALLOW_KIBO"; fi
+          ALLOW_KIBO_FLAG=""
+          if [ "$ALLOW_KIBO" = "true" ]; then
+            ALLOW_KIBO_FLAG="--allow-kibo"
+            echo "The Kibo step is allowed for this run."
+          else
+            echo "The Kibo step is off: rows asking for it are cancelled at the warehouse only."
+          fi
           python scripts/process_warehouse_cancellations.py \
             $DRY_RUN_FLAG \
             $NO_CHECK_FLAG \
+            $ALLOW_KIBO_FLAG \
             $KIBO_FLAG \
             --kibo-reason-code "${INPUT_KIBO_REASON_CODE:-CustomerChangedTheirMind}" \
             --host "${INPUT_HOST:-tp3.mozu.com}" \
