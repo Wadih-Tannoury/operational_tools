@@ -1,0 +1,26 @@
+Run started   : 2026-11-18T16:08:45+00:00
+Run finished  : 2026-11-18T16:08:47+00:00
+Mode          : LIVE
+GXO endpoint  : https://prdedi.gxo.com:4084/sync/mft/tlg_it/shipmentStatusUpdate
+Product check : on (Kibo getShipments)
+Duplicate check: on — a shipmentOrderNumber carrying more than one shipment still in play cancels nothing, anywhere
+Kibo step     : switched off for this run (--allow-kibo); rows that asked for it were cancelled at the warehouse only
+Files read    : 1
+Records       : 1 (0 applied, 0 skipped, 1 failed)
+              : 0 sent to the warehouse, 0 cancelled in Kibo
+
+==============================================================================
+FILE 20261118-160828__backoffice__shipment.csv
+  records: 1
+
+  APPLIED (0)
+    -
+
+  SKIPPED (nothing was sent) (0)
+    -
+
+  FAILED (1)
+    [warehouse] row 2: shipmentOrderNumber=PJ-BSA2309674261-1 productId=-
+      -> logisticOrderNumber=- location=- brand=-/- outcome=failed
+         note: PJ-BSA2309674261-1 has no GX location row in tlg-wlfs-prd.til.prd_orders
+
