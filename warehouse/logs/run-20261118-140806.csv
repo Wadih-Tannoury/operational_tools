@@ -1,0 +1,3 @@
+﻿source_file,row_number,stage,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,kibo_shipment_number,outcome,status_code,error,response_excerpt
+20261118-140611__backoffice__shipment.csv,2,warehouse,LN-CTA1929999344-4,,,,,LN684955,TLITGX0009,LN,09,22625188-5601-45CF-A18A-B3EB8A238A37,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261118-140749__backoffice__shipment.csv,2,warehouse,LN-IMAP26111638486,,,,,LN685050,TLITGX0009,LN,09,A40BE675-084D-418B-BB2C-B3AC73FE3459,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
