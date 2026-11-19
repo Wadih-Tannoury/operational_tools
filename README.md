@@ -34,13 +34,17 @@ The two queues share nothing, so both workflows can run at the same time.
 ```
 .github/workflows/cancel_shipments.yml             push + manual trigger (Kibo)
 .github/workflows/cancel_warehouse_shipments.yml   push + manual trigger (warehouse)
+.github/workflows/reconcile_cancellations.yml      hourly + manual trigger (follow-up)
 scripts/process_cancellations.py                   the Kibo worker
 scripts/process_warehouse_cancellations.py         the warehouse worker
+scripts/reconcile_cancellations.py                 the reconciliation worker
+scripts/cancellation_log.py                        the cancellation ledger, shared
+sql/warehouse_orders_cancellation_table.sql                  the ledger's columns; run once
 input/ archive/ error/ logs/                       the Kibo queue
 warehouse/input/ warehouse/archive/ …              the warehouse queue
 examples/cancellations_example.csv
 examples/warehouse_cancellations_example.csv
-requirements.txt                                   worker dependencies, both workers
+requirements.txt                                   worker dependencies, all workers
 ```
 
 The consoles are in the **applications** repository; `app/` and
@@ -64,9 +68,14 @@ of that; see *Costs and limits* below.
 | Secret | Used by | Value |
 |---|---|---|
 | `KIBO_API_CREDS` | both workers | `{"client_id": "...", "client_secret": "..."}` |
-| `BI_BIGQUERY_CREDS` | Kibo | The full service-account JSON for `tlg-business-intelligence-prd` |
-| `WLFS_BIGQUERY_CREDS` | warehouse | The full service-account JSON for `tlg-wlfs-prd` |
-| `GXO_API_KEY` | warehouse | The endpoint key: the raw key, or the whole `GXO_endpoint_key.json` |
+| `BI_BIGQUERY_CREDS` | Kibo, warehouse, reconciliation | The full service-account JSON for `tlg-business-intelligence-prd` |
+| `WLFS_BIGQUERY_CREDS` | warehouse, reconciliation | The full service-account JSON for `tlg-wlfs-prd` |
+| `GXO_API_KEY` | warehouse, reconciliation | The endpoint key: the raw key, or the whole `GXO_endpoint_key.json` |
+
+The warehouse worker and the reconciliation worker both write to
+`tlg-business-intelligence-prd`.til.warehouse_orders_cancellation_table, so the
+`BI_BIGQUERY_CREDS` service account needs `roles/bigquery.dataEditor` on that
+dataset, not only read access.
 
 Optional repository variables: `KIBO_TENANT_MAP` (merged over the built-in brand
 map, used by both workers) and `GXO_URL` (to point the warehouse worker at a
@@ -480,13 +489,227 @@ Useful flags: `--limit N`, `--dry-run`, `--no-product-check`,
 
 ---
 
+# 3. The cancellation ledger and the reconciliation workflow
+
+Everything the warehouse worker cancels is written down in
+
+```
+`tlg-business-intelligence-prd`.til.warehouse_orders_cancellation_table
+```
+
+and a third workflow, **Reconcile cancellations**, works that table afterwards:
+it confirms what the warehouse acknowledged, sends again what it did not, and
+cancels the confirmed ones in Kibo. It reads nothing but the table, so it shares
+no folder and no file with the other two workflows and runs beside them.
+
+Run **`sql/warehouse_orders_cancellation_table.sql`** once in the BI project
+before any of this. It creates the table with `CREATE TABLE IF NOT EXISTS` and
+then adds anything a previous deployment left missing with
+`ADD COLUMN IF NOT EXISTS`, so it is safe to run twice and leaves every existing
+column alone.
+
+**This is not the older `til.orders_cancellation_table`.** That table belongs to
+the `shipments_resolver` repository, carries its own `reason_code` and
+`more_info` columns, and is not read or written by anything here. Nothing in
+this repository touches it, and nothing there touches this one.
+
+## What a row says
+
+| Column | Written by | Meaning |
+|---|---|---|
+| `row_insertion_date` | warehouse worker | when the row was first inserted |
+| `row_last_modified_date` | both | when any column of the row last changed |
+| `shipment_order_number` | warehouse worker | the key; one row per shipment |
+| `shipment_items` | warehouse worker | the shipment's products, joined by `;` |
+| `cancellation_sent_to_warehouse` | both | `false` when the GXO call failed, `true` when it went through |
+| `cancellation_sent_to_warehouse_date` | both | when it was sent, or attempted |
+| `cancellation_confirmed_by_warehouse` | reconciliation | `true` once the warehouse's own CANCELLED event carries exactly these items |
+| `cancellation_confirmed_by_warehouse_date` | reconciliation | that event's `eventTimestamp` |
+| `number_of_cancellations_sent_to_warehouse` | both | `1` on the first successful send, `+1` on every resend |
+| `cancelled_on_kibo` | reconciliation | `true` once the Kibo shipment is cancelled |
+| `cancelled_on_kibo_date` | reconciliation | when that happened |
+
+The key is `shipment_order_number`. A shipment cancelled a second time does not
+get a second row; it gets its counter raised, which is what the counter is for.
+
+`shipment_items` holds one identifier per item line — the first of
+`productCode`, `upc`, `sku`, … that the Kibo item carries — upper-cased, sorted
+and joined by `;`. That is the same spelling the `shipments_resolver` scripts
+use for their own table, which split such a column on `[,\s;|]+`, so the format
+is readable by either if the two are ever pointed at each other.
+
+### What the warehouse worker writes
+
+Every record that named a shipment gets a row, whether or not the CANCEL event
+went out: a cancellation refused as `ambiguous` or `has_other_products` is worth
+being able to look up later, and `cancellation_sent_to_warehouse` is `true` only
+when the warehouse actually took the event. `cancelled_on_kibo` is `false`
+unless that same run also cancelled in Kibo (the `--allow-kibo` path), in which
+case the row says so straight away and the reconciliation leaves it alone.
+
+**The ledger can never break a cancellation.** A run that cannot reach the table
+cancels anyway, says so once per record in its log, and ends green — a shipment
+that was stopped at the warehouse is still stopped, whether or not it was
+written down. `--no-ledger` switches the writing off for a run.
+
+## The three stages
+
+### 1. Confirm
+
+Every row with `cancellation_sent_to_warehouse = true` and
+`cancellation_confirmed_by_warehouse = false` is looked for in the warehouse's
+own event feed:
+
+```sql
+SELECT shipmentOrderNumber, eventType, eventTimestamp, requestPayload
+FROM `tlg-wlfs-prd`.til.prd_shipmentStatus
+WHERE shipmentOrderNumber IN UNNEST(@numbers)
+  AND UPPER(eventType) IN ('CANCELLED', 'CANCELED')
+```
+
+A row is confirmed when one of those events carries **exactly** the items in
+`shipment_items`: every item of the event is in the column and every item of the
+column is in the event, not more and not less. An event listing a superset or a
+subset is about a different shipment of the same order and confirms nothing.
+Identifiers are compared upper-cased and blind to spaces and hyphens, so the
+warehouse's spelling of a code and Kibo's spelling of it still match.
+
+`cancellation_confirmed_by_warehouse_date` is the event's own `eventTimestamp`,
+not the time the reconciliation noticed it.
+
+### 2. Resend
+
+A row still unconfirmed whose `cancellation_sent_to_warehouse_date` is at least
+24 hours old (`--resend-after-hours`) gets the same CANCEL event again, built
+from the same `prd_orders` GX rows the warehouse worker uses. On success:
+
+```
+number_of_cancellations_sent_to_warehouse += 1
+cancellation_sent_to_warehouse_date        = now
+```
+
+Stage 1 runs first, so a cancellation the warehouse has acknowledged in the
+meantime is never sent twice.
+
+### 3. Cancel in Kibo
+
+Every row with `cancellation_confirmed_by_warehouse = true` and
+`cancelled_on_kibo = false` is closed in Kibo. The shipment is found the long
+way round, because the Kibo Shipment API is queried by order and not by
+shipmentOrderNumber:
+
+```
+`tlg-wlfs-prd`.til.prd_orders   shipmentOrderNumber -> orderNumber
+GET /api/commerce/shipments?filter=externalOrderId=={orderNumber}
+PUT /api/commerce/shipments/{shipmentNumber}/canceled
+```
+
+Of the shipments that come back, only the ones whose `shipmentStatus` is
+`READY`, `BACKORDER` or `CUSTOMER_CARE` (`--cancel-target-statuses`) are
+cancelled, and by default only those carrying exactly the row's
+`shipment_items`.
+
+**Why the items and not the number.** The `shipmentOrderNumber` does not
+identify one shipment, in either of the two shapes the data comes in:
+
+- the Farfetch orders repeat it verbatim across every generation — one real
+  `getShipments` response carries three shipments, `770126` (`READY`), `766738`
+  and `770107` (both `REASSIGNED`), and all three say
+  `data.shipmentOrderNumber = DG-FF-DUW191008089`, so matching on the number
+  matches all three;
+- elsewhere the live generation carries a later letter in 6th position —
+  `DJ-USA…` becomes `DJ-USB…` — so matching on the row's own number matches
+  nothing.
+
+The items survive the reassignment either way, so they are what picks the
+shipment out. `--require-shipment-order-number` matches on the number instead,
+and `--no-item-match` drops the gate and cancels every shipment of the order in
+one of those statuses — neither is the default, and both are worth thinking
+twice about.
+
+**Where a shipment keeps its items.** Kibo empties `items` when it hands the
+goods to the next generation and moves them to `reassignedItems`; in that same
+response, `766738` and `770107` have `"items": []` with the product under
+`reassignedItems`, while the live `770126` has it under `items`. The gate reads
+`items` first and falls back to `reassignedItems` / `canceledItems`, so a
+shipment parked in `CUSTOMER_CARE` with its items already moved is still
+matched. The reassigned ancestors cannot be picked up that way, because the
+status filter has already ruled them out.
+
+The ledger's `shipment_items` is written from `items` only, with no fallback: the
+shipments of one order include the generations Kibo has already reassigned, and
+reading their moved items would put products on the row that the live shipment no
+longer carries.
+
+A row whose `shipment_items` is empty is skipped rather than guessed at.
+
+## Using it
+
+The workflow runs **hourly at :17** and on demand from
+`Actions → Reconcile cancellations → Run workflow`, where every stage can be
+skipped and every threshold changed for one run. A dry run resolves and reports
+and writes nothing, anywhere.
+
+Each run leaves `warehouse/logs/reconcile-<stamp>.log` and `.csv`, one line per
+row, and the job stays green even when a row fails so one bad shipment does not
+look like a broken workflow.
+
+## Things worth knowing before you rely on it
+
+- **`cancel_cancelled_shipments.py` in the `shipments_resolver` repository can
+  still reach the same shipments.** It reads a different table
+  (`til.orders_cancellation_table`) and finds its work from
+  `oms_active_shipments`, so the two never share a row — but a shipment
+  cancelled at the warehouse can appear in both paths, and both end in a Kibo
+  cancellation. Whichever gets there first cancels; the other finds the shipment
+  already `CANCELED` and skips it. Nothing is cancelled twice, but the two logs
+  will disagree about who did what, and only this repository's ledger will show
+  `cancelled_on_kibo = true`. If both run against the same brands, pick one as
+  the owner of stage 3 and switch the other off (`--skip-kibo` here, or the
+  schedule there).
+- **The resend is a real cancellation.** The warehouse has no idea it has seen
+  this event before; it is a fresh CANCEL for a shipment it may already have
+  stopped. That is deliberate — the event is the only way to ask again — but it
+  is why the threshold is a day and not an hour.
+- **A row with no `shipment_items` can never be confirmed**, and so is resent
+  every day forever. Those rows are reported as `skipped` with that reason in
+  stage 1; watch for them. They come from records whose Kibo read failed when
+  the warehouse worker wrote them.
+- **The brand's Kibo site matters as much as its tenant.** A wrong `x-vol-site`
+  scopes the query to a site holding none of the order's shipments and Kibo
+  answers `200` with an empty page, which reads exactly like "this order has no
+  shipments". `BRAND_KIBO_SITES` in `scripts/reconcile_cancellations.py` is the
+  authority, kept in step with `BRAND_KIBO_CONFIG` in `shipments_resolver`.
+- **`cancelled_on_kibo` is set once per row, not once per shipment.** When the
+  item gate matches two shipments of the same order, both are cancelled and the
+  one row is flagged.
+
+## Local run of the reconciliation worker
+
+```bash
+pip install -r requirements.txt
+export BI_BIGQUERY_CREDS="$(cat bi-service-account.json)"
+export WLFS_BIGQUERY_CREDS="$(cat wlfs-service-account.json)"
+export KIBO_API_CREDS='{"client_id":"...","client_secret":"..."}'
+export GXO_API_KEY="$(cat GXO_endpoint_key.json)"
+python scripts/reconcile_cancellations.py --dry-run
+```
+
+Useful flags: `--dry-run`, `--limit N`, `--resend-after-hours`,
+`--cancel-target-statuses`, `--no-item-match`,
+`--require-shipment-order-number`, `--skip-confirm`, `--skip-resend`,
+`--skip-kibo`, `--kibo-reason-code`, `--kibo-more-info`, `--host`,
+`--tenant-map`, `--default-tenant-id`, `--default-site-id`.
+
+---
+
 ## Costs and limits
 
 | | |
 |---|---|
 | GitHub Actions | 2,000 min/month free on private repos. A no-op run is ~10s; a run with work is 1–2 min. |
 | Streamlit Community Cloud | Free. Unlimited public apps, a small number of private ones, ~1 GB RAM. |
-| BigQuery | The lookup is one query per run, filtered to the numbers in the files. `shipment_json` is only selected when a row carries a `productId`. |
+| BigQuery | The lookup is one query per run, filtered to the numbers in the files. `shipment_json` is only selected when a row carries a `productId`. The ledger adds one `MERGE` per record, and the reconciliation one schema read plus three queries per run, plus one small `UPDATE` per row it changes. |
 | Kibo | One GET plus one PUT per shipment, with retry on 429/5xx. |
 
 Free-tier terms change; check the current ones when you set this up.
