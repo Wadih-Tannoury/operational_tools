@@ -1,0 +1,8 @@
+﻿source_file,row_number,stage,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,kibo_shipment_number,outcome,status_code,error,response_excerpt
+20261119-090108__backoffice__lista_ordini.csv,2,warehouse,WF-MTABE12D28C726265,,,,,WF20604,TLITGX0056,WF,56,18FDAB82-BFC7-4684-9C80-453AD038E4AA,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261119-090108__backoffice__lista_ordini.csv,3,warehouse,LN-MTANODE534B4ADBD2,,,,,LN673703,TLITGX0009,LN,09,A0946759-A34F-4996-9D72-19593C8E6926,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261119-090108__backoffice__lista_ordini.csv,4,warehouse,CV-MTADEC5AC696D7B54,,,,,CV149351,TLITGX0050,CV,50,FD6E52AA-CF3F-4FD0-BAC6-8C7D7357A2F6,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261119-090108__backoffice__lista_ordini.csv,5,warehouse,WF-MTANO393664E8A721,,,,,WF30492,TLITGX0056,WF,56,9EE14308-26E4-4088-86B8-97159DA5E54E,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261119-090108__backoffice__lista_ordini.csv,6,warehouse,PL-MTABEFF54B2767184,,,,,PL394488,TLITGX0049,PL,49,73F3B6A1-2524-4D0C-9046-ECB116030ABA,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261119-090108__backoffice__lista_ordini.csv,7,warehouse,SW-MTAUKC44EC12B7506,,,,,SW72077,TLITGX0004,SW,04,37B716BE-42A7-4AB8-A182-B08F7D4054F4,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261119-090108__backoffice__lista_ordini.csv,8,warehouse,LN-MTASEE86B7420A6D4,,,,,LN686521,TLITGX0009,LN,09,57759E29-CFD1-4157-8DB4-815D614A2D54,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
