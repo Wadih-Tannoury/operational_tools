@@ -103,6 +103,10 @@ jobs:
           # shipmentOrderNumber carrying more than one shipment still in play,
           # as well as for the product check and the Kibo cancellation.
           KIBO_API_CREDS: ${{ secrets.KIBO_API_CREDS }}
+          # The cancellation ledger lives in the BI project. Without it the run
+          # still cancels, but nothing is written down and the reconciliation
+          # workflow has nothing to follow up on.
+          BI_BIGQUERY_CREDS: ${{ secrets.BI_BIGQUERY_CREDS }}
           # Optional repository variables.
           KIBO_TENANT_MAP: ${{ vars.KIBO_TENANT_MAP }}
           GXO_URL: ${{ vars.GXO_URL }}
