@@ -1,0 +1,4 @@
+﻿source_file,row_number,stage,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,kibo_shipment_number,outcome,status_code,error,response_excerpt
+20261124-151815__backoffice__shipment.csv,2,warehouse,LN-CTA1920902394-4,,,,,LN689089,TLITGX0009,LN,09,A95D1F51-0833-48BD-A027-8BB5576D89A1,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261124-151836__backoffice__shipment.csv,2,warehouse,LN-CTA1920262865-4,,,,,LN689451,TLITGX0009,LN,09,A51DBD23-16FB-470B-BE50-FEB10A804253,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261124-151858__backoffice__shipment.csv,2,warehouse,LN-CTA920455476-4,,,,,,,,,,,failed,,LN-CTA920455476-4 has no GX location row in tlg-wlfs-prd.til.prd_orders,
