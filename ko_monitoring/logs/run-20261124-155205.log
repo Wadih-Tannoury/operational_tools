@@ -1,0 +1,63 @@
+KO monitoring run 20261124-155205
+Batches  : 0 complete, 0 incomplete
+
+
+Backfill: the operational table.
+  tlg-business-intelligence-prd.til.ko_operational_table: 498 shipment(s) row(s) in all.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 487 of 498 shipment(s) matched.
+  tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table: 235 shipment(s) sent to the warehouse and not confirmed yet.
+  action_needed_from_gxo: 121 to cancel, 148 to print.
+  ko_reason: 385 of 498 filled, 314 from the monitoring table.
+  location_provider: 456 of 498 known.
+  oerodp: 394 built from brand, channel and logistics order.
+  Kibo: 378 row(s) have at least one gap; asking getShipments for each.
+    e.g. WF-ZLA10413244048897: location_name
+    100/378 asked.
+    200/378 asked.
+    300/378 asked.
+  oerodp: 418 built from brand, channel and logistics order.
+  oerodp: 474 already set, 24 newly filled, 0 still blank.
+  location_name: 417 already set, 76 newly filled (76 of them from Kibo), 5 still blank.
+  logistic_order_number: 474 already set, 24 newly filled (24 of them from Kibo), 0 still blank.
+  oms_shipment_number: 440 already set, 53 newly filled (53 of them from Kibo), 5 still blank.
+  ko_source: 176 already set, 0 newly filled, 322 still blank.
+  blocking_reason: 319 already set, 15 newly filled, 164 still blank.
+  order_submit_date: 440 already set, 53 newly filled (53 of them from Kibo), 5 still blank.
+  shipment_creation_date: 440 already set, 53 newly filled (53 of them from Kibo), 5 still blank.
+  fulfillment_status: 469 already set, 24 newly filled (24 of them from Kibo), 5 still blank.
+  location_provider: 456 already set, 0 newly filled, 42 still blank.
+  channel: 469 already set, 24 newly filled (24 of them from Kibo), 5 still blank.
+  tlg-business-intelligence-prd.til.ko_operational_table: 498 row(s) updated (oerodp, location_name, logistic_order_number, oms_shipment_number, ko_source, blocking_reason, order_submit_date, shipment_creation_date, fulfillment_status, location_provider, channel).
+
+Backfill: the archive.
+  tlg-business-intelligence-prd.til.ko_operational_history_table: 861 shipment(s) row(s) in the archive.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 277 of 814 shipment(s) matched.
+  tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table: 236 shipment(s) sent to the warehouse and not confirmed yet.
+  action_needed_from_gxo: 41 to cancel, 384 to print.
+  ko_reason: 422 of 861 filled, 151 from the monitoring table.
+  location_provider: 835 of 861 known.
+  oerodp: 704 built from brand, channel and logistics order.
+  Kibo: 647 row(s) have at least one gap; asking getShipments for each.
+    100/647 asked.
+    200/647 asked.
+    300/647 asked.
+    400/647 asked.
+    500/647 asked.
+    600/647 asked.
+  oerodp: 704 built from brand, channel and logistics order.
+  oerodp: 861 already set, 0 newly filled, 0 still blank.
+  location_name: 861 already set, 0 newly filled, 0 still blank.
+  logistic_order_number: 861 already set, 0 newly filled, 0 still blank.
+  oms_shipment_number: 861 already set, 0 newly filled, 0 still blank.
+  ko_source: 223 already set, 0 newly filled, 638 still blank.
+  blocking_reason: 409 already set, 3 newly filled, 449 still blank.
+  order_submit_date: 861 already set, 0 newly filled, 0 still blank.
+  shipment_creation_date: 861 already set, 0 newly filled, 0 still blank.
+  fulfillment_status: 861 already set, 0 newly filled, 0 still blank.
+  location_provider: 835 already set, 0 newly filled, 26 still blank.
+  channel: 861 already set, 0 newly filled, 0 still blank.
+  tlg-business-intelligence-prd.til.ko_operational_history_table: 861 row(s) updated (oerodp, location_name, logistic_order_number, oms_shipment_number, ko_source, blocking_reason, order_submit_date, shipment_creation_date, fulfillment_status, location_provider, channel).
+
+Records  : backfill only — no documents API, no verdicts, nothing archived.
+Operational: 498 row(s) read, 498 updated, 378 asked of Kibo
+Archive  : 861 row(s) read, 861 updated, 647 asked of Kibo
