@@ -135,7 +135,6 @@ import json
 import os
 import random
 import re
-import shutil
 import ssl
 import sys
 import time
@@ -861,11 +860,79 @@ class KiboClient:
             return response, ""
         return last_response, last_error or "Unknown error"
 
+    @staticmethod
+    def order_id_variants(*values: str) -> List[str]:
+        """
+        The forms of an order number worth trying as Kibo's externalOrderId.
+
+        The two systems spell the same order differently in exactly one place:
+        the sixth character. The warehouse and prd_orders carry a generation
+        letter there — `LN-CTA1929379009-4` — while Kibo's externalOrderId has
+        a hyphen — `LN-CT-1929379009-4`. Everything else matches, so a lookup
+        by the first form finds nothing and the shipment looks absent when it
+        is sitting there in READY.
+
+        Given one or more numbers, this returns each as it stands plus, where
+        the sixth character is a letter, the same number with a hyphen in its
+        place. Order is preserved and duplicates dropped, so the caller tries
+        the most likely spelling first.
+        """
+        found: List[str] = []
+        for value in values:
+            text = clean(value)
+            if not text:
+                continue
+            # derive_external_order_id is the same rule the queueing worker
+            # already applies; this only makes the reconciler use it too.
+            for candidate in (text, derive_external_order_id(text)):
+                if candidate and candidate not in found:
+                    found.append(candidate)
+        return found
+
+    def get_shipments_for_order(
+        self, tenant_id: str, site_id: str, *numbers: str
+    ) -> Tuple[List[Dict[str, Any]], str, str]:
+        """
+        The order's shipments, trying each spelling of its number in turn.
+
+        Returns (shipments, the spelling that found them, error). The first
+        candidate that comes back with anything wins; an empty result is not an
+        error, so the next spelling is tried. An actual failure — a refused
+        call, a bad response — stops it there and is returned.
+        """
+        candidates = self.order_id_variants(*numbers)
+        if not candidates:
+            return [], "", "no order number to query Kibo by"
+
+        last_error = ""
+        for candidate in candidates:
+            shipments, error = self.get_shipments_by_external_order_id(
+                tenant_id, site_id, candidate
+            )
+            if error:
+                last_error = error
+                continue
+            if shipments:
+                return shipments, candidate, ""
+        return [], candidates[-1], last_error
+
     def get_shipments_by_external_order_id(
         self, tenant_id: str, site_id: str, external_order_id: str
     ) -> Tuple[List[Dict[str, Any]], str]:
-        """GET /api/commerce/shipments?filter=externalOrderId=={value}"""
-        key = (clean(tenant_id), clean(site_id), clean(external_order_id))
+        """
+        GET /api/commerce/shipments?filter=externalOrderId=={value}
+
+        Tenant-wide: the search deliberately sends no x-vol-site. That header
+        scopes the result to one site, and a brand can have several — LN's
+        orders sit on 49804 as well as the 49801 in BRAND_KIBO_SITES — so a
+        site-scoped search hides every shipment on any other one and the
+        shipment looks absent when it is sitting there in READY.
+
+        site_id is still accepted, and ignored, so every caller reads the same
+        and none of them can reintroduce the scoping by passing one. The writes
+        still need a site, and they take the shipment's own.
+        """
+        key = (clean(tenant_id), clean(external_order_id))
         if key in self._shipments:
             return self._shipments[key]
         shipments, error = self._fetch_shipments(*key)
@@ -873,14 +940,15 @@ class KiboClient:
         return shipments, error
 
     def _fetch_shipments(
-        self, tenant_id: str, site_id: str, external_order_id: str
+        self, tenant_id: str, external_order_id: str
     ) -> Tuple[List[Dict[str, Any]], str]:
         filter_value = quote(f"externalOrderId=={clean(external_order_id)}", safe="=")
         url = (
             f"https://t{clean(tenant_id)}.{self.host}"
             f"/api/commerce/shipments?filter={filter_value}&pageSize=200"
         )
-        response, error = self.request("GET", url, tenant_id, site_id)
+        # No site: see get_shipments_by_external_order_id.
+        response, error = self.request("GET", url, tenant_id, "")
         if response is None:
             return [], error
         if not (200 <= response.status_code < 300):
@@ -1434,13 +1502,20 @@ class KiboCanceller:
                             f"(current status {status or 'unknown'})")
             return result
 
+        # The site and tenant the shipment itself came back with, not the
+        # brand's mapped pair. The search is tenant-wide precisely because a
+        # brand can have several sites, so the shipment in hand is the only
+        # thing that knows which one it is on — and a PUT to the wrong site is
+        # a cancellation that does not land.
         ok, error, excerpt = self.kibo.cancel_shipment(
-            tenant_id,
-            site_id,
+            clean(str(shipment.get("tenantId") or "")) or tenant_id,
+            clean(str(shipment.get("siteId") or "")) or site_id,
             shipment_number,
-            clean(record.reason_code) or self.args.kibo_reason_code,
-            clean(record.more_info) or clean(record.reason_message)
-            or self.args.kibo_more_info,
+            *cancellation_log.resolve_reason(
+                clean(record.reason_code) or self.args.kibo_reason_code,
+                clean(record.more_info) or clean(record.reason_message)
+                or self.args.kibo_more_info,
+            ),
             self.args.kibo_send_notifications,
         )
         result.outcome = "success" if ok else "failed"
@@ -1658,6 +1733,13 @@ class Processor:
         kibo_done = any(
             result.stage == "kibo" and result.succeeded for result in results
         )
+        # Only what the row itself said, never the run's --kibo-reason-code
+        # default: an empty reason in the ledger means nobody chose one, and
+        # the reconciler is free to fall back to its own. Writing the default
+        # here would overwrite a real reason on the next resend.
+        reason_code, more_info = cancellation_log.resolve_reason(
+            record.reason_code, record.more_info
+        )
         return LedgerEntry(
             shipment_order_number=number,
             items=cancellation_log.format_items(
@@ -1667,6 +1749,11 @@ class Processor:
             sent_at=datetime.now(timezone.utc),
             cancelled_on_kibo=kibo_done,
             cancelled_on_kibo_at=datetime.now(timezone.utc) if kibo_done else None,
+            # Recorded even when this run does not cancel in Kibo: the
+            # reconciler will, hours later, and the ledger is where it reads
+            # the reason the person actually chose.
+            reason_code=reason_code,
+            more_info=more_info,
         )
 
     # -- the warehouse path -------------------------------------------------
@@ -1846,15 +1933,23 @@ def write_results_csv(path: Path, outcomes: List[FileOutcome]) -> None:
                 writer.writerow({key: data.get(key, "") for key in RESULT_FIELDS})
 
 
-def move_file(path: Path, destination_dir: Path, stamp: str) -> Path:
-    destination_dir.mkdir(parents=True, exist_ok=True)
-    target = destination_dir / f"{stamp}__{path.name}"
-    counter = 1
-    while target.exists():
-        target = destination_dir / f"{stamp}__{counter}__{path.name}"
-        counter += 1
-    shutil.move(str(path), str(target))
-    return target
+def discard_file(path: Path) -> str:
+    """
+    Delete a request file once it has been processed, and say what happened.
+
+    These used to be moved into archive/ or error/, which committed every
+    upload to the repository a second time and left it there. Nothing read
+    them back — the run's log under logs/ and the ledger in BigQuery are the
+    record of what was asked and what came of it — so they are deleted
+    instead. A file that will not delete is reported rather than raising: the
+    cancellations have already been sent, and failing the run after the fact
+    would say the work did not happen when it did.
+    """
+    try:
+        path.unlink(missing_ok=True)
+        return "deleted"
+    except OSError as exc:
+        return f"could not be deleted: {exc}"
 
 
 # ---------------------------------------------------------------------------
@@ -1870,8 +1965,6 @@ def parse_args() -> argparse.Namespace:
     # root; this one lives under warehouse/ so the two never touch each other's
     # files, and both workflows can run at the same time.
     parser.add_argument("--input-dir", type=Path, default=Path("warehouse/input"))
-    parser.add_argument("--archive-dir", type=Path, default=Path("warehouse/archive"))
-    parser.add_argument("--error-dir", type=Path, default=Path("warehouse/error"))
     parser.add_argument("--log-dir", type=Path, default=Path("warehouse/logs"))
     parser.add_argument("--gxo-url", default=os.environ.get("GXO_URL") or DEFAULT_GXO_URL)
     parser.add_argument("--update-reason", default=DEFAULT_UPDATE_REASON)
@@ -2091,14 +2184,15 @@ def main() -> int:
     succeeded, skipped, failed = write_log(log_path, outcomes, args, started_at)
     write_results_csv(csv_path, outcomes)
 
-    # 5. Move the inputs.
+    # 5. Delete the inputs. Processed or failed, they are not kept: the log
+    #    and the ledger are the record, and a failed request is re-uploaded
+    #    rather than retried from a folder.
     for outcome in outcomes:
-        destination = args.error_dir if outcome.has_failure else args.archive_dir
         if args.dry_run:
-            log(f"DRY RUN: {outcome.path.name} would move to {destination}/")
+            log(f"DRY RUN: {outcome.path.name} would be deleted")
             continue
-        moved = move_file(outcome.path, destination, stamp)
-        log(f"{outcome.path.name} -> {moved}")
+        log(f"{outcome.path.name} {discard_file(outcome.path)}"
+            + (" (it had failures)" if outcome.has_failure else ""))
 
     log("")
     log(f"Summary: {succeeded} applied, {skipped} skipped, {failed} failed.")

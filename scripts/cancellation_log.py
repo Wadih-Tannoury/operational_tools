@@ -25,6 +25,7 @@ Columns
     number_of_cancellations_sent_to_warehouse   INT64      1 on the first successful send
     cancelled_on_kibo                           BOOL       the Kibo shipment is cancelled
     cancelled_on_kibo_date                      TIMESTAMP  when that happened
+    reassigned_on_kibo                          BOOL       Kibo moved it elsewhere
 
 `sql/warehouse_orders_cancellation_table.sql` adds the ones the table did not already have.
 Run it once before either worker writes.
@@ -98,11 +99,54 @@ COLUMN_CANDIDATES: Dict[str, Tuple[str, ...]] = {
         "number_of_cancellations_sent_to_warehouse",
         "numberOfCancellationsSentToWarehouse",
     ),
+    "reason_code": ("reason_code", "reasonCode", "cancellation_reason_code"),
+    "more_info": ("more_info", "moreInfo", "cancellation_more_info"),
     "cancelled_on_kibo": ("cancelled_on_kibo", "canceled_on_kibo", "cancelledOnKibo"),
     "cancelled_on_kibo_date": (
         "cancelled_on_kibo_date", "canceled_on_kibo_date", "cancelledOnKiboDate",
     ),
+    "reassigned_on_kibo": (
+        "reassigned_on_kibo", "reassignedOnKibo",
+    ),
 }
+
+# The cancellation reasons Kibo accepts, in the order the console offers them.
+# The console validates against this list and the workers never invent one, so
+# a reason that reaches Kibo is always one it knows.
+REASON_CODES = (
+    "Arrived Too Late",
+    "Can Not Find Item",
+    "Customer Changed Their Mind",
+    "Damaged Or Defective Item",
+    "Do Not Have Enough Quantity",
+    "Found Better Price",
+    "Item Did Not Match Website",
+    "Item Is On Reserve For Other Customer",
+    "Item Is Shop Worn Not Web Sellable",
+    "Item Not Available",
+    "Item Price Too High",
+    "Need To Change Payment Method",
+    "No Inventory",
+    "Other",
+)
+
+OTHER_REASON = "Other"
+
+
+def resolve_reason(reason_code: Any, more_info: Any) -> Tuple[str, str]:
+    """
+    The pair as Kibo should receive it.
+
+    moreInfo is optional and goes out empty when nobody filled it in — except
+    on "Other", where an empty moreInfo tells Kibo nothing at all. There it
+    becomes "Other" too, so the record always carries a reason in words.
+    """
+    code = clean(reason_code)
+    info = clean(more_info)
+    if code == OTHER_REASON and not info:
+        info = OTHER_REASON
+    return code, info
+
 
 # The ones a worker cannot do without. The rest are reported as missing and the
 # statement simply leaves them alone.
@@ -406,6 +450,16 @@ class LedgerEntry:
     sent_at: Optional[datetime] = None
     cancelled_on_kibo: bool = False
     cancelled_on_kibo_at: Optional[datetime] = None
+    # Kibo did not cancel the shipment, it moved it to another location. The
+    # warehouse still has to be told to drop it, so the row is written the
+    # same way; this is what says which of the two happened.
+    reassigned_on_kibo: bool = False
+    # Why the shipment is being cancelled. Written here so that whoever
+    # cancels it in Kibo later — usually the reconciler, hours afterwards —
+    # sends the reason the person actually chose rather than a run-wide
+    # default.
+    reason_code: str = ""
+    more_info: str = ""
 
 
 class CancellationLedger:
@@ -487,6 +541,20 @@ class CancellationLedger:
         # established.
         updates.append(f"`{items_col}` = IF(@items != '', @items, `{items_col}`)")
 
+        # The reason is written when this request carried one, and left alone
+        # when it did not: a later cancellation that says nothing about why
+        # must not blank out the reason the first one recorded.
+        reason_code, more_info = resolve_reason(entry.reason_code, entry.more_info)
+        for logical, parameter in (("reason_code", "@reason_code"),
+                                   ("more_info", "@more_info")):
+            if not schema.has(logical):
+                continue
+            column = schema.column(logical)
+            insert_columns.append(f"`{column}`")
+            insert_values.append(parameter)
+            if reason_code:
+                updates.append(f"`{column}` = {parameter}")
+
         add("row_last_modified_date", "@now", "@now")
         # row_insertion_date is set on insert and never touched again.
         if schema.has("row_insertion_date"):
@@ -535,6 +603,14 @@ class CancellationLedger:
                                  else "CAST(NULL AS TIMESTAMP)")
             if entry.cancelled_on_kibo:
                 updates.append(f"`{column}` = @kibo_at")
+        # Set once and never unset: a shipment Kibo reassigned stays
+        # reassigned, whatever a later resend of the warehouse event says.
+        if schema.has("reassigned_on_kibo"):
+            literal = schema.bool_literal("reassigned_on_kibo", entry.reassigned_on_kibo)
+            insert_columns.append(f"`{schema.column('reassigned_on_kibo')}`")
+            insert_values.append(literal)
+            if entry.reassigned_on_kibo:
+                updates.append(f"`{schema.column('reassigned_on_kibo')}` = {literal}")
 
         sql = f"""
             MERGE `{BI_PROJECT}.{BI_DATASET}.{CANCELLATION_TABLE}` AS t
@@ -559,6 +635,8 @@ class CancellationLedger:
             bigquery.ScalarQueryParameter(
                 "kibo_at", "TIMESTAMP", entry.cancelled_on_kibo_at or when
             ),
+            bigquery.ScalarQueryParameter("reason_code", "STRING", reason_code),
+            bigquery.ScalarQueryParameter("more_info", "STRING", more_info),
         ]
         try:
             job = self.client.query(
@@ -589,6 +667,9 @@ class LedgerRow:
     confirmed_at: Optional[datetime] = None
     sends: int = 0
     cancelled_on_kibo: bool = False
+    reassigned_on_kibo: bool = False
+    reason_code: str = ""
+    more_info: str = ""
 
     @property
     def label(self) -> str:
@@ -616,7 +697,10 @@ def fetch_rows(client: Any, schema: Schema, where: str,
             {_select(schema, 'cancellation_confirmed_by_warehouse_date', 'TIMESTAMP',
                      'confirmed_at')},
             {_select(schema, 'number_of_cancellations_sent_to_warehouse', 'INT64', 'sends')},
-            {_select(schema, 'cancelled_on_kibo', 'STRING', 'cancelled_on_kibo')}
+            {_select(schema, 'cancelled_on_kibo', 'STRING', 'cancelled_on_kibo')},
+            {_select(schema, 'reassigned_on_kibo', 'STRING', 'reassigned_on_kibo')},
+            {_select(schema, 'reason_code', 'STRING', 'reason_code')},
+            {_select(schema, 'more_info', 'STRING', 'more_info')}
         FROM `{BI_PROJECT}.{BI_DATASET}.{CANCELLATION_TABLE}`
         WHERE `{son_col}` IS NOT NULL
           AND TRIM(CAST(`{son_col}` AS STRING)) != ''
@@ -647,6 +731,9 @@ def fetch_rows(client: Any, schema: Schema, where: str,
             confirmed_at=row["confirmed_at"],
             sends=int(row["sends"] or 0),
             cancelled_on_kibo=truthy_flag(row["cancelled_on_kibo"]),
+            reassigned_on_kibo=truthy_flag(row["reassigned_on_kibo"]),
+            reason_code=clean(row["reason_code"]),
+            more_info=clean(row["more_info"]),
         ))
     return found, ""
 
@@ -671,6 +758,10 @@ def rows_confirmed_not_cancelled(client: Any, schema: Schema) -> Tuple[List[Ledg
     where = schema.is_truthy_sql("cancellation_confirmed_by_warehouse")
     if schema.has("cancelled_on_kibo"):
         where += f" AND NOT {schema.is_truthy_sql('cancelled_on_kibo')}"
+    # A reassigned shipment is settled in Kibo too: it was never cancelled
+    # there and never will be, so the reconciler has nothing to do with it.
+    if schema.has("reassigned_on_kibo"):
+        where += f" AND NOT {schema.is_truthy_sql('reassigned_on_kibo')}"
     return fetch_rows(client, schema, where)
 
 
@@ -688,6 +779,139 @@ def _update(client: Any, sql: str, parameters: List[Any]) -> Tuple[int, str]:
 def _key_clause(schema: Schema) -> str:
     son_col = schema.column("shipment_order_number")
     return f"UPPER(TRIM(CAST(`{son_col}` AS STRING))) = UPPER(TRIM(@son))"
+
+
+def _batch_update(client: Any, schema: Schema, sets: Sequence[str],
+                  keys: Sequence[str], extra: Optional[List[Any]] = None,
+                  struct_rows: Optional[List[Dict[str, Any]]] = None,
+                  struct_type: Optional[Any] = None) -> Tuple[int, str]:
+    """
+    One UPDATE for a whole stage, rather than one per shipment.
+
+    BigQuery charges a few seconds for every DML statement whatever its size,
+    so confirming a hundred and thirty shipments one at a time is ten minutes
+    of waiting for work that takes seconds in a single statement. The keys go
+    in as an array parameter and the rows are matched against UNNEST of it.
+
+    `struct_rows` is for a stage that needs a value per shipment — the confirm
+    date comes off each shipment's own CANCELLED event — and `keys` for one
+    that does not.
+    """
+    if not sets:
+        return 0, f"{CANCELLATION_TABLE} has no column to write"
+    son_col = schema.column("shipment_order_number")
+    parameters: List[Any] = list(extra or [])
+
+    if struct_rows is not None:
+        # Two scalar arrays paired by position rather than one array of
+        # structs: struct parameters want wrapper objects and gain nothing
+        # here, while WITH OFFSET lines the two up in plain SQL.
+        source = """(
+            SELECT son, confirmed_at
+            FROM UNNEST(@sons) AS son WITH OFFSET son_at
+            JOIN UNNEST(@confirmed_ats) AS confirmed_at WITH OFFSET date_at
+              ON son_at = date_at
+        ) AS s"""
+        where = f"UPPER(TRIM(CAST(t.`{son_col}` AS STRING))) = UPPER(TRIM(s.son))"
+        parameters.append(bigquery.ArrayQueryParameter(
+            "sons", "STRING", [str(row["son"]) for row in struct_rows]))
+        parameters.append(bigquery.ArrayQueryParameter(
+            "confirmed_ats", "TIMESTAMP", [row["confirmed_at"] for row in struct_rows]))
+    else:
+        if not keys:
+            return 0, ""
+        source = ""
+        where = (f"UPPER(TRIM(CAST(t.`{son_col}` AS STRING))) IN UNNEST(@sons)")
+        parameters.append(bigquery.ArrayQueryParameter(
+            "sons", "STRING", [clean(key).upper() for key in keys]))
+
+    sql = f"""
+        UPDATE `{BI_PROJECT}.{BI_DATASET}.{CANCELLATION_TABLE}` AS t
+        SET {", ".join(sets)}
+        {"FROM " + source if source else ""}
+        WHERE {where}
+    """
+    return _update(client, sql, parameters)
+
+
+def mark_confirmed_many(
+    client: Any, schema: Schema,
+    confirmations: Sequence[Tuple[str, Optional[datetime]]],
+) -> Tuple[int, str]:
+    """
+    Confirm every shipment in one statement, each with its own event date.
+
+    The same write mark_confirmed does, for a whole stage at once. Returns
+    (rows updated, error); an error means none of them were written, so the
+    caller reports the lot as unconfirmed and the next run tries again.
+    """
+    if not confirmations:
+        return 0, ""
+    sets = [
+        f"`{schema.column('cancellation_confirmed_by_warehouse')}` = "
+        f"{schema.bool_literal('cancellation_confirmed_by_warehouse', True)}"
+    ]
+    if schema.has("cancellation_confirmed_by_warehouse_date"):
+        sets.append(
+            f"`{schema.column('cancellation_confirmed_by_warehouse_date')}` = s.confirmed_at"
+        )
+    if schema.has("row_last_modified_date"):
+        sets.append(f"`{schema.column('row_last_modified_date')}` = @now")
+
+    rows = [
+        {"son": clean(number), "confirmed_at": when or now_utc()}
+        for number, when in confirmations
+    ]
+    return _batch_update(
+        client, schema, sets, [],
+        extra=[bigquery.ScalarQueryParameter("now", "TIMESTAMP", now_utc())],
+        struct_rows=rows,
+    )
+
+
+def record_resend_many(client: Any, schema: Schema,
+                       shipment_order_numbers: Sequence[str]) -> Tuple[int, str]:
+    """Raise the counter and move the sent date on every resent shipment at once."""
+    if not shipment_order_numbers:
+        return 0, ""
+    sets: List[str] = []
+    if schema.has("number_of_cancellations_sent_to_warehouse"):
+        counter = schema.column("number_of_cancellations_sent_to_warehouse")
+        sets.append(f"`{counter}` = IFNULL(t.`{counter}`, 0) + 1")
+    if schema.has("cancellation_sent_to_warehouse"):
+        sets.append(
+            f"`{schema.column('cancellation_sent_to_warehouse')}` = "
+            f"{schema.bool_literal('cancellation_sent_to_warehouse', True)}"
+        )
+    if schema.has("cancellation_sent_to_warehouse_date"):
+        sets.append(f"`{schema.column('cancellation_sent_to_warehouse_date')}` = @now")
+    if schema.has("row_last_modified_date"):
+        sets.append(f"`{schema.column('row_last_modified_date')}` = @now")
+    return _batch_update(
+        client, schema, sets, shipment_order_numbers,
+        extra=[bigquery.ScalarQueryParameter("now", "TIMESTAMP", now_utc())],
+    )
+
+
+def mark_cancelled_on_kibo_many(client: Any, schema: Schema,
+                                shipment_order_numbers: Sequence[str]) -> Tuple[int, str]:
+    """cancelled_on_kibo = true on every shipment cancelled in this run."""
+    if not shipment_order_numbers:
+        return 0, ""
+    if not schema.has("cancelled_on_kibo"):
+        return 0, f"{CANCELLATION_TABLE} has no cancelled_on_kibo column"
+    sets = [
+        f"`{schema.column('cancelled_on_kibo')}` = "
+        f"{schema.bool_literal('cancelled_on_kibo', True)}"
+    ]
+    if schema.has("cancelled_on_kibo_date"):
+        sets.append(f"`{schema.column('cancelled_on_kibo_date')}` = @now")
+    if schema.has("row_last_modified_date"):
+        sets.append(f"`{schema.column('row_last_modified_date')}` = @now")
+    return _batch_update(
+        client, schema, sets, shipment_order_numbers,
+        extra=[bigquery.ScalarQueryParameter("now", "TIMESTAMP", now_utc())],
+    )
 
 
 def mark_confirmed(client: Any, schema: Schema, shipment_order_number: str,
