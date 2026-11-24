@@ -1,0 +1,38 @@
+Run started   : 2026-11-24T17:06:00+00:00
+Run finished  : 2026-11-24T17:06:20+00:00
+Mode          : LIVE
+GXO endpoint  : https://prdedi.gxo.com:4084/sync/mft/tlg_it/shipmentStatusUpdate
+Product check : on (Kibo getShipments)
+Duplicate check: on — a shipmentOrderNumber carrying more than one shipment still in play cancels nothing, anywhere
+Ledger        : tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table
+Kibo step     : switched off for this run (--allow-kibo); rows that asked for it were cancelled at the warehouse only
+Files read    : 1
+Records       : 7 (7 applied, 0 skipped, 0 failed)
+              : 7 sent to the warehouse, 0 cancelled in Kibo
+
+==============================================================================
+FILE 20261124-170542__Wadih__Book1.csv
+  records: 7
+
+  APPLIED (7)
+    [warehouse] row 2: shipmentOrderNumber=LN-MTANO63CBB7C97114 productId=-
+      -> logisticOrderNumber=LN687745 location=TLITGX0009 brand=LN/09 outcome=success HTTP 200
+    [warehouse] row 3: shipmentOrderNumber=OW-FF-OW7191656115 productId=-
+      -> logisticOrderNumber=OW111038 location=TLITGX0051 brand=OW/51 outcome=success HTTP 200
+    [warehouse] row 4: shipmentOrderNumber=OW-FF-OW7191658665 productId=-
+      -> logisticOrderNumber=OW111089 location=TLITGX0051 brand=OW/51 outcome=success HTTP 200
+    [warehouse] row 5: shipmentOrderNumber=OW-FF-OW7191697152 productId=-
+      -> logisticOrderNumber=OW111575 location=TLITGX0051 brand=OW/51 outcome=success HTTP 200
+    [warehouse] row 6: shipmentOrderNumber=OW-FF-OW7191715342 productId=-
+      -> logisticOrderNumber=OW111807 location=TLITGX0051 brand=OW/51 outcome=success HTTP 200
+    [warehouse] row 7: shipmentOrderNumber=PA-FF-PA7191702748 productId=-
+      -> logisticOrderNumber=PA84880 location=TLITGX0053 brand=PA/53 outcome=success HTTP 200
+    [warehouse] row 8: shipmentOrderNumber=PJ-FF-TGP191747118 productId=-
+      -> logisticOrderNumber=PJ156462 location=TLITGX0035 brand=PJ/35 outcome=success HTTP 200
+
+  SKIPPED (nothing was sent) (0)
+    -
+
+  FAILED (0)
+    -
+
