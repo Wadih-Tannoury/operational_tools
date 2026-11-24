@@ -31,10 +31,16 @@ CREATE TABLE IF NOT EXISTS
       OPTIONS (description = 'The eventTimestamp of that CANCELLED event.'),
   number_of_cancellations_sent_to_warehouse INT64
       OPTIONS (description = '1 on the first successful send, raised by one on every resend.'),
+  reason_code STRING
+      OPTIONS (description = 'Why the shipment is being cancelled, as chosen in the console. One of the reasons Kibo accepts; sent as canceledReason.reasonCode when the shipment is cancelled in Kibo.'),
+  more_info STRING
+      OPTIONS (description = "Free text beside the reason, sent as canceledReason.moreInfo. Optional, and empty is fine — except on 'Other', where it carries the word 'Other' so the record still says something."),
   cancelled_on_kibo BOOL
       OPTIONS (description = 'True once the Kibo shipment is cancelled.'),
   cancelled_on_kibo_date TIMESTAMP
-      OPTIONS (description = 'When the shipment was cancelled in Kibo.')
+      OPTIONS (description = 'When the shipment was cancelled in Kibo.'),
+  reassigned_on_kibo BOOL
+      OPTIONS (description = 'True when Kibo moved this shipment to another location rather than cancelling it. The warehouse is still told to drop it; the reconciler leaves it alone, because there is no Kibo cancellation left to make.')
 )
 OPTIONS (
   description = 'Every shipment cancelled at the GXO warehouse by the operational_tools repository, and what became of it afterwards.'
@@ -54,6 +60,10 @@ ALTER TABLE `tlg-business-intelligence-prd.til.warehouse_orders_cancellation_tab
   ADD COLUMN IF NOT EXISTS cancellation_confirmed_by_warehouse BOOL,
   ADD COLUMN IF NOT EXISTS cancellation_confirmed_by_warehouse_date TIMESTAMP,
   ADD COLUMN IF NOT EXISTS number_of_cancellations_sent_to_warehouse INT64,
+  ADD COLUMN IF NOT EXISTS reason_code STRING,
+  ADD COLUMN IF NOT EXISTS more_info STRING,
+  ADD COLUMN IF NOT EXISTS reassigned_on_kibo BOOL
+    OPTIONS (description = 'Kibo moved this shipment to another location rather than cancelling it. The warehouse is still told to drop it.'),
   ADD COLUMN IF NOT EXISTS cancelled_on_kibo BOOL,
   ADD COLUMN IF NOT EXISTS cancelled_on_kibo_date TIMESTAMP;
 
