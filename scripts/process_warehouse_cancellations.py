@@ -158,6 +158,12 @@ except ImportError:  # the worker cannot do anything useful without it, but say 
     bigquery = None  # type: ignore[assignment]
     service_account = None  # type: ignore[assignment]
 
+# The cancellation ledger in the BI project. Sits next to this file, so a run
+# started as `python scripts/process_warehouse_cancellations.py` finds it.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import cancellation_log  # noqa: E402
+from cancellation_log import CancellationLedger, LedgerEntry  # noqa: E402
+
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -973,6 +979,10 @@ class GuardVerdict:
     outcome: str = "ok"          # ok | ambiguous | failed
     error: str = ""
     tenant_id: str = ""
+    # The shipments carrying this record's shipmentOrderNumber, as Kibo returned
+    # them. The guard already has them in hand; the ledger needs their items, so
+    # they travel out of here rather than being fetched a second time.
+    shipments: List[Dict[str, Any]] = field(default_factory=list)
 
 
 class DuplicateGuard:
@@ -1037,8 +1047,9 @@ class DuplicateGuard:
                 + " — so nothing was cancelled, at the warehouse or in Kibo; cancel them "
                   "by shipmentNumber, one at a time",
                 tenant_id,
+                matching,
             )
-        return GuardVerdict("ok", "", tenant_id)
+        return GuardVerdict("ok", "", tenant_id, matching)
 
 
 class ProductGate:
@@ -1519,6 +1530,9 @@ class Processor:
         self.kibo_canceller = kibo_canceller
         self.guard = guard
         self.kibo = kibo
+        # The shipments the duplicate guard read for the record in hand. The
+        # ledger writes their items, and they are already paid for.
+        self.last_shipments: List[Dict[str, Any]] = []
 
     # -- entry point --------------------------------------------------------
 
@@ -1531,6 +1545,7 @@ class Processor:
         # response cached from an earlier record would be stale.
         if self.kibo is not None:
             self.kibo.forget_shipments()
+        self.last_shipments = []
 
         # Before anything leaves for GXO: is this number one shipment or two?
         if self.guard is None:
@@ -1545,6 +1560,7 @@ class Processor:
                 record, outcome="failed",
                 error=f"the duplicate check raised {type(exc).__name__}: {exc}; "
                       "nothing was cancelled")]
+        self.last_shipments = guarded.shipments
         if guarded.outcome != "ok":
             return [Result.of(record, outcome=guarded.outcome,
                               tenant_id=guarded.tenant_id, error=guarded.error)]
@@ -1619,6 +1635,39 @@ class Processor:
                 error=f"the Kibo cancellation raised {type(exc).__name__}: {exc}",
             ))
         return results
+
+    # -- the ledger ---------------------------------------------------------
+
+    def ledger_entry_for(self, record: InputRecord,
+                         results: List[Result]) -> Optional[LedgerEntry]:
+        """
+        What the cancellation ledger should say about this record.
+
+        Every record that named a shipment gets a row, whether or not the
+        CANCEL event went out: a refused cancellation is a thing worth being
+        able to look up later. cancellation_sent_to_warehouse is true only when
+        the warehouse actually took the event.
+
+        Returns None for a row that named no shipment, since there would be
+        nothing to key it on.
+        """
+        number = clean(record.shipment_order_number)
+        if not number:
+            return None
+        sent = any(result.stage == "warehouse" and result.succeeded for result in results)
+        kibo_done = any(
+            result.stage == "kibo" and result.succeeded for result in results
+        )
+        return LedgerEntry(
+            shipment_order_number=number,
+            items=cancellation_log.format_items(
+                cancellation_log.items_of_shipments(self.last_shipments)
+            ),
+            sent_to_warehouse=sent,
+            sent_at=datetime.now(timezone.utc),
+            cancelled_on_kibo=kibo_done,
+            cancelled_on_kibo_at=datetime.now(timezone.utc) if kibo_done else None,
+        )
 
     # -- the warehouse path -------------------------------------------------
 
@@ -1697,6 +1746,8 @@ def write_log(path: Path, outcomes: List[FileOutcome], args: argparse.Namespace,
     lines.append(f"Product check : {'off' if args.no_product_check else 'on (Kibo getShipments)'}")
     lines.append("Duplicate check: on — a shipmentOrderNumber carrying more than one "
                  "shipment still in play cancels nothing, anywhere")
+    lines.append(f"Ledger        : "
+                 f"{'off (--no-ledger)' if not args.ledger else cancellation_log.BI_PROJECT + '.' + cancellation_log.BI_DATASET + '.' + cancellation_log.CANCELLATION_TABLE}")
     if args.allow_kibo:
         lines.append(f"Kibo step     : allowed, "
                      f"{'on by default' if args.cancel_in_kibo else 'where a row asks for it'}"
@@ -1862,6 +1913,14 @@ def parse_args() -> argparse.Namespace:
                         help="Do not derive the externalOrderId from the shipmentOrderNumber "
                              "for the product check.")
     parser.set_defaults(derive_external_order_id=True)
+    parser.add_argument("--no-ledger", dest="ledger", action="store_false",
+                        help="Do not write the cancellation ledger in "
+                             f"{cancellation_log.BI_PROJECT}."
+                             f"{cancellation_log.BI_DATASET}."
+                             f"{cancellation_log.CANCELLATION_TABLE}. The cancellations "
+                             "themselves are unaffected; nothing downstream will know "
+                             "about them.")
+    parser.set_defaults(ledger=True)
     parser.add_argument("--dry-run", action="store_true",
                         help="Resolve and report, but send nothing to the warehouse.")
     parser.add_argument("--timeout", type=float, default=30.0)
@@ -1987,10 +2046,29 @@ def main() -> int:
                               kibo_canceller=kibo_canceller, guard=guard,
                               kibo=kibo_client)
 
+        # The ledger is built once. It never raises: a run that cannot reach the
+        # table still cancels, and says so once per record in its log.
+        if args.ledger:
+            ledger = CancellationLedger.build(dry_run=args.dry_run)
+            if ledger.available:
+                log(f"[ledger] {cancellation_log.BI_PROJECT}."
+                    f"{cancellation_log.BI_DATASET}."
+                    f"{cancellation_log.CANCELLATION_TABLE} is ready"
+                    + (f"; columns not on the table: "
+                       f"{', '.join(ledger.schema.missing)}"
+                       if ledger.schema.missing else ""))
+            else:
+                warn(f"[ledger] {ledger.error} — the cancellations go ahead, but "
+                     "nothing will be written down. Run sql/warehouse_orders_cancellation_table.sql "
+                     "and check BI_BIGQUERY_CREDS.")
+        else:
+            ledger = CancellationLedger(error="the ledger is off for this run (--no-ledger)")
+
         for index, (outcome, record) in enumerate(records, start=1):
             log(f"[{index}/{len(records)}] {record.source_file} row {record.row_number}: "
                 f"{record.label}")
-            for result in processor.process_record(record):
+            record_results = processor.process_record(record)
+            for result in record_results:
                 outcome.results.append(result)
                 if result.stage == "kibo":
                     detail = (f"kibo shipmentNumber="
@@ -2000,6 +2078,12 @@ def main() -> int:
                               f"location={result.location_name or '-'}")
                 log(f"    [{result.stage}] {result.outcome.upper()} {detail}"
                     + (f" :: {result.error}" if result.error else ""))
+
+            # The ledger comes last, so it records what actually happened.
+            entry = processor.ledger_entry_for(record, record_results)
+            if entry is not None and args.ledger:
+                ok, message = ledger.record(entry)
+                log(f"    [ledger] {'OK' if ok else 'NOT WRITTEN'} :: {message}")
 
     # 4. Logs.
     log_path = args.log_dir / f"run-{stamp}.log"
@@ -2018,6 +2102,10 @@ def main() -> int:
 
     log("")
     log(f"Summary: {succeeded} applied, {skipped} skipped, {failed} failed.")
+    if args.ledger and records:
+        log(f"Ledger: {ledger.written} row(s) written to "
+            f"{cancellation_log.CANCELLATION_TABLE}"
+            + (f", {len(ledger.errors)} not written" if ledger.errors else ""))
     log(f"Log: {log_path}")
     log(f"Results CSV: {csv_path}")
 
