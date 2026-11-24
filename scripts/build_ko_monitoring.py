@@ -2773,6 +2773,8 @@ def recheck_open(args: argparse.Namespace, log: Log, client: Any,
     check_documents(rows, args, log)
     attach_gxo_attempts(rows, args, log, client)
     attach_monitoring(rows, args, log, client)
+    # Same reason as in enrich(): the channel may have arrived only now.
+    fill_oerodp(rows, log)
 
     summary = {
         "batch": f"recheck-{run}",
@@ -2811,6 +2813,10 @@ def enrich(rows: List[Dict[str, str]], args: argparse.Namespace, log: Log,
     for row in rows:
         if tried_after_fix(row["ko_fix_date"], row["last_tried_by_gxo_date"]):
             row["tried_by_gxo_after_the_fix"] = "yes"
+    # Last, as on the upload path. These rows are created with an empty
+    # channel, so the OERODP they were given has no letter; refresh_fulfillment
+    # and attach_monitoring have only just supplied the channel it needs.
+    fill_oerodp(rows, log)
 
 
 def gxo_ko_candidates(args: argparse.Namespace, log: Log, client: Any,
