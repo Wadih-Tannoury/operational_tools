@@ -1,0 +1,9 @@
+﻿source_file,row_number,stage,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,kibo_shipment_number,outcome,status_code,error,response_excerpt
+20261124-170542__Wadih__Book1.csv,2,warehouse,LN-MTANO63CBB7C97114,,,,,LN687745,TLITGX0009,LN,09,676D8805-2FFA-4073-8F46-F0A56221F137,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261124-170542__Wadih__Book1.csv,3,warehouse,OW-FF-OW7191656115,,,,,OW111038,TLITGX0051,OW,51,CB692385-2B7D-4C4F-B271-0359C453A023,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261124-170542__Wadih__Book1.csv,4,warehouse,OW-FF-OW7191658665,,,,,OW111089,TLITGX0051,OW,51,2AA12578-2CC7-4559-9358-D9AFC31C21A3,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261124-170542__Wadih__Book1.csv,5,warehouse,OW-FF-OW7191697152,,,,,OW111575,TLITGX0051,OW,51,3D354FB5-9F07-4065-8CC8-CF53E1FC0856,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261124-170542__Wadih__Book1.csv,6,warehouse,OW-FF-OW7191715342,,,,,OW111807,TLITGX0051,OW,51,1A4EC620-507E-4BC3-A884-10EC32007725,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261124-170542__Wadih__Book1.csv,7,warehouse,PA-FF-PA7191702748,,,,,PA84880,TLITGX0053,PA,53,7DDF0EE7-A498-442A-8136-152F2C0F7253,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261124-170542__Wadih__Book1.csv,8,warehouse,PJ-FF-TGP191747118,,,,,PJ156462,TLITGX0035,PJ,35,E98A975F-B810-4C3E-B9BB-A87C7CCAF15A,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261124-170613__Wadih__shipment.csv,2,warehouse,WL-FF-WST191627542,,,,,WL186235,TLITGX0012,WL,12,F92725EA-6F9E-44ED-B039-012C6B49F25A,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
