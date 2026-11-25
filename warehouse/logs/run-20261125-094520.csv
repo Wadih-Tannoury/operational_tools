@@ -1,0 +1,4 @@
+﻿source_file,row_number,stage,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,kibo_shipment_number,outcome,status_code,error,response_excerpt
+20261125-094506__backoffice__ORDERSTOCANCEL.csv,2,warehouse,DJ-GLA1300463359004,,,,,DJ148458,TLITGX0011,DJ,11,1EADD725-2F9C-4A2F-B18C-124C7CB2AB13,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261125-094506__backoffice__ORDERSTOCANCEL.csv,3,warehouse,DJ-GLB1300463570352,,,,,DJ153420,TLITGX0011,DJ,11,8A5FB94A-C66D-40A1-9E47-CDD2440657A1,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
+20261125-094506__backoffice__ORDERSTOCANCEL.csv,4,warehouse,DJ-GLB1300463750885,,,,,DJ153421,TLITGX0011,DJ,11,D9CE743C-8C7B-4FF3-BEE3-6AE9DF780564,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"

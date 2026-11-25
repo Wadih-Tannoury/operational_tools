@@ -1,0 +1,30 @@
+Run started   : 2026-11-25T09:45:20+00:00
+Run finished  : 2026-11-25T09:45:29+00:00
+Mode          : LIVE
+GXO endpoint  : https://prdedi.gxo.com:4084/sync/mft/tlg_it/shipmentStatusUpdate
+Product check : on (Kibo getShipments)
+Duplicate check: on — a shipmentOrderNumber carrying more than one shipment still in play cancels nothing, anywhere
+Ledger        : tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table
+Kibo step     : switched off for this run (--allow-kibo); rows that asked for it were cancelled at the warehouse only
+Files read    : 1
+Records       : 3 (3 applied, 0 skipped, 0 failed)
+              : 3 sent to the warehouse, 0 cancelled in Kibo
+
+==============================================================================
+FILE 20261125-094506__backoffice__ORDERSTOCANCEL.csv
+  records: 3
+
+  APPLIED (3)
+    [warehouse] row 2: shipmentOrderNumber=DJ-GLA1300463359004 productId=-
+      -> logisticOrderNumber=DJ148458 location=TLITGX0011 brand=DJ/11 outcome=success HTTP 200
+    [warehouse] row 3: shipmentOrderNumber=DJ-GLB1300463570352 productId=-
+      -> logisticOrderNumber=DJ153420 location=TLITGX0011 brand=DJ/11 outcome=success HTTP 200
+    [warehouse] row 4: shipmentOrderNumber=DJ-GLB1300463750885 productId=-
+      -> logisticOrderNumber=DJ153421 location=TLITGX0011 brand=DJ/11 outcome=success HTTP 200
+
+  SKIPPED (nothing was sent) (0)
+    -
+
+  FAILED (0)
+    -
+
