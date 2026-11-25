@@ -2159,7 +2159,13 @@ def check_documents(rows: List[Dict[str, str]], args: argparse.Namespace, log: L
     # Of those, only the ones waiting to be prepared are worth asking about.
     # The rest are recorded with the state that kept them out and left alone:
     # they keep their row, they keep ko_fixed = false, and no call is made.
-    not_ready = [row for row in main_rows
+    #
+    # Both warehouses, on the same rule. This used to read main_rows alone, so
+    # a MODA shipment had its label asked for in any status at all while a GXO
+    # one in the same status was held back. The status comes from Kibo, which
+    # knows nothing of which warehouse the shipment is in, so there was no
+    # reason for the two to be judged differently.
+    not_ready = [row for row in to_check
                  if live_status(row).lower() != DOCUMENTS_STATUS]
     if not_ready:
         for row in not_ready:
@@ -2170,6 +2176,8 @@ def check_documents(rows: List[Dict[str, str]], args: argparse.Namespace, log: L
                 "not asked: no fulfilment status")
         skipped_ids = {id(row) for row in not_ready}
         main_rows = [row for row in main_rows if id(row) not in skipped_ids]
+        moda_rows = [row for row in moda_rows if id(row) not in skipped_ids]
+        moda_ids = {id(row) for row in moda_rows}
         to_check = [row for row in to_check if id(row) not in skipped_ids]
         states = sorted({live_status(row) or "(none)" for row in not_ready})
         log(f"  {len(not_ready)} shipment(s) not asked, "
