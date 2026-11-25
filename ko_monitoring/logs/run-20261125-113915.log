@@ -1,0 +1,65 @@
+KO monitoring run 20261125-113915
+Batches  : 0 complete, 0 incomplete
+
+
+Backfill: the operational table.
+  tlg-business-intelligence-prd.til.ko_operational_table: 632 shipment(s) row(s) in all.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 604 of 632 shipment(s) matched.
+  tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table: 201 shipment(s) sent to the warehouse and not confirmed yet.
+  action_needed_from_gxo: 88 to cancel, 159 to print.
+  ko_reason: 471 of 632 filled, 311 from the monitoring table.
+  location_provider: 585 of 632 known.
+  oerodp: 542 built from brand, channel and logistics order.
+  Kibo: 502 row(s) have at least one gap; asking getShipments for each.
+    100/502 asked.
+    200/502 asked.
+    300/502 asked.
+    400/502 asked.
+    500/502 asked.
+  oerodp: 542 built from brand, channel and logistics order.
+  oerodp: 632 already set, 0 newly filled, 0 still blank.
+  location_name: 627 already set, 0 newly filled, 5 still blank.
+  logistic_order_number: 632 already set, 0 newly filled, 0 still blank.
+  oms_shipment_number: 627 already set, 0 newly filled, 5 still blank.
+  ko_source: 165 already set, 0 newly filled, 467 still blank.
+  blocking_reason: 343 already set, 1 newly filled, 288 still blank.
+  order_submit_date: 627 already set, 0 newly filled, 5 still blank.
+  shipment_creation_date: 627 already set, 0 newly filled, 5 still blank.
+  fulfillment_status: 627 already set, 0 newly filled, 5 still blank.
+  location_provider: 585 already set, 0 newly filled, 47 still blank.
+  channel: 627 already set, 0 newly filled, 5 still blank.
+  tlg-business-intelligence-prd.til.ko_operational_table: 632 row(s) updated (oerodp, location_name, logistic_order_number, oms_shipment_number, ko_source, blocking_reason, order_submit_date, shipment_creation_date, fulfillment_status, location_provider, channel).
+
+Backfill: the archive.
+  tlg-business-intelligence-prd.til.ko_operational_history_table: 994 shipment(s) row(s) in the archive.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 122 of 864 shipment(s) matched.
+  tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table: 201 shipment(s) sent to the warehouse and not confirmed yet.
+  action_needed_from_gxo: 66 to cancel, 468 to print.
+  ko_reason: 461 of 994 filled, 108 from the monitoring table.
+  location_provider: 968 of 994 known.
+  oerodp: 834 built from brand, channel and logistics order.
+  Kibo: 768 row(s) have at least one gap; asking getShipments for each.
+    100/768 asked.
+    200/768 asked.
+    300/768 asked.
+    400/768 asked.
+    500/768 asked.
+    600/768 asked.
+    700/768 asked.
+  oerodp: 834 built from brand, channel and logistics order.
+  oerodp: 994 already set, 0 newly filled, 0 still blank.
+  location_name: 994 already set, 0 newly filled, 0 still blank.
+  logistic_order_number: 994 already set, 0 newly filled, 0 still blank.
+  oms_shipment_number: 994 already set, 0 newly filled, 0 still blank.
+  ko_source: 235 already set, 0 newly filled, 759 still blank.
+  blocking_reason: 476 already set, 0 newly filled, 518 still blank.
+  order_submit_date: 994 already set, 0 newly filled, 0 still blank.
+  shipment_creation_date: 994 already set, 0 newly filled, 0 still blank.
+  fulfillment_status: 994 already set, 0 newly filled, 0 still blank.
+  location_provider: 968 already set, 0 newly filled, 26 still blank.
+  channel: 994 already set, 0 newly filled, 0 still blank.
+  tlg-business-intelligence-prd.til.ko_operational_history_table: 994 row(s) updated (oerodp, location_name, logistic_order_number, oms_shipment_number, ko_source, blocking_reason, order_submit_date, shipment_creation_date, fulfillment_status, location_provider, channel).
+
+Records  : backfill only — no documents API, no verdicts, nothing archived.
+Operational: 632 row(s) read, 632 updated, 502 asked of Kibo
+Archive  : 994 row(s) read, 994 updated, 768 asked of Kibo
