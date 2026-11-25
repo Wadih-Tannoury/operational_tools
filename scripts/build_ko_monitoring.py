@@ -1567,6 +1567,15 @@ except Exception as exc:  # noqa: BLE001 - the rest of the run does not need Kib
 PREPARE_FOR_SHIPMENT = "prepare for shipment"
 # A shipment Kibo calls FULFILLED has left; there is nothing left to fix.
 FULFILLED_STATUS = "FULFILLED"
+# Kibo moved the shipment to another location rather than fulfilling or
+# cancelling it. The shipment number on this row is settled: whatever is left
+# to do belongs to the shipment Kibo created in its place, which arrives on
+# its own row. Nothing here is worth asking the warehouse about, so it is kept
+# off the operational table and off the dashboard.
+REASSIGNED_STATUS = "REASSIGNED"
+# Every shipment this run found REASSIGNED. Mirrors FULFILLED_BY_KIBO: the
+# resolve pass reads it at the end, once the rows have been written.
+REASSIGNED_BY_KIBO: set = set()
 # Every shipment this run found FULFILLED, from whichever stage found it. The
 # resolve pass archives them at the end, by which point they have been
 # written. A module-level set rather than a parameter through five stages:
@@ -1879,7 +1888,8 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
     fulfilled: set = set()
     shown = False
     counts = {"channel": 0, "logistic": 0, "location": 0, "ready": 0,
-              "fulfilled": 0, "other": 0, "unknown": 0, "failed": 0}
+              "fulfilled": 0, "reassigned": 0, "other": 0, "unknown": 0,
+              "failed": 0}
     for row in wanted:
         number = row["shipment_order_number"]
         tenant, site, tenant_error = tenant_and_site(
@@ -1949,7 +1959,17 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
 
         if status:
             row["fulfillment_status"] = status
-        if status.strip().lower() == PREPARE_FOR_SHIPMENT:
+        if state == REASSIGNED_STATUS:
+            # Checked before the ready test on purpose: a reassigned shipment
+            # can still carry a live "Prepare for Shipment" task, and asking
+            # the warehouse for documents against a shipment Kibo has moved
+            # would be asking about the wrong one. Not ko_fixed — nothing was
+            # fixed — just settled, and resolved by the pass at the end.
+            counts["reassigned"] += 1
+            REASSIGNED_BY_KIBO.add(normalise_shipment(number))
+            row["_ko_status"] = ("Kibo says REASSIGNED: the shipment moved to "
+                                 "another location and is not this row's work")
+        elif status.strip().lower() == PREPARE_FOR_SHIPMENT:
             counts["ready"] += 1
         elif state == FULFILLED_STATUS:
             counts["fulfilled"] += 1
@@ -1976,6 +1996,7 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
         + ", ".join(f"{count} {name}" for name, count in (
             ("ready for documents", counts["ready"]),
             ("FULFILLED", counts["fulfilled"]),
+            ("REASSIGNED", counts["reassigned"]),
             ("in another status", counts["other"]),
             ("with no status", counts["unknown"]),
             ("that could not be read", counts["failed"]),
@@ -2276,6 +2297,7 @@ def run_resolve(client: Any, wlfs_client: Any, gxo_present: Optional[set],
 
     resolved: List[str] = []
     reasons = {"cancelled by GXO": 0, "shipped": 0, "fulfilled in Kibo": 0,
+               "reassigned in Kibo": 0,
                "gone from the GXO inputs": 0, "gone from the monitoring table": 0}
 
     # Kibo called these FULFILLED earlier in this run. They were written a
@@ -2284,6 +2306,12 @@ def run_resolve(client: Any, wlfs_client: Any, gxo_present: Optional[set],
     for shipment in sorted(FULFILLED_BY_KIBO & open_now):
         resolved.append(shipment)
         reasons["fulfilled in Kibo"] += 1
+    # And these Kibo moved elsewhere. Settled for the same reason and by the
+    # same route: the work, if any is left, is on the shipment Kibo created in
+    # this one's place.
+    for shipment in sorted(REASSIGNED_BY_KIBO & open_now - set(resolved)):
+        resolved.append(shipment)
+        reasons["reassigned in Kibo"] += 1
     settled = set(resolved)
 
     if events is None:
@@ -2566,16 +2594,23 @@ def attach_monitoring(rows: List[Dict[str, str]], args: argparse.Namespace,
 
         if not row.get("location_provider"):
             row["location_provider"] = str(entry.get("location_provider", "") or "").strip()
-        # The warehouse, in the order the three sources deserve: the CSV says
-        # where the shipment is now, the monitoring table where it was last
-        # seen, and Kibo's location code is what is left when neither spoke.
-        # refresh_fulfillment parked that code rather than applying it, so
+        # The warehouse, in the order the three sources deserve: the
+        # monitoring table has first say and is taken whatever format it
+        # holds — code or description — then Kibo's fulfillmentLocationCode
+        # where the table is null, and the CSV's "Location name" only when
+        # neither spoke. The CSV used to win outright, which is why this
+        # column filled up with warehouse descriptions ("TLG Italian
+        # Warehouse GXO - WF") on rows where the table had the location code
+        # the dashboard is keyed on.
+        # refresh_fulfillment parked Kibo's code rather than applying it, so
         # that this order holds however the run reached here.
-        if not str(row.get("location_name", "") or "").strip():
-            row["location_name"] = (
-                str(entry.get("location_name", "") or "").strip()
-                or str(row.get("_kibo_location", "") or "").strip()
-            )
+        location = (
+            str(entry.get("location_name", "") or "").strip()
+            or str(row.get("_kibo_location", "") or "").strip()
+            or str(row.get("location_name", "") or "").strip()
+        )
+        if location:
+            row["location_name"] = location
         # The channel only comes from the CSV, so a shipment the workbook or
         # gxo_ko brought in has none until this lookup fills it.
         if not row.get("channel"):

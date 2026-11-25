@@ -1068,7 +1068,17 @@ CANDIDATE_FIELDS = {
 # shipment is diagnosed on the stock picture it was taken against, not on the
 # warehouse's documents, so there is nothing for this workflow to re-try: it
 # would sit in the table being asked about for ever.
-EXCLUDED_STATUSES = ("BACKORDER", "CUSTOMER_CARE")
+#
+# REASSIGNED is here for a different reason: Kibo has moved the shipment to
+# another location, so this shipment number is settled and whatever is left to
+# do belongs to the shipment created in its place, on its own row. Keeping it
+# would double-count the work on the dashboard.
+#
+# This filter only governs what the monitoring table contributes. A shipment
+# that arrives through the workbook or GXO's own KO list never passes through
+# here, and is caught instead by the REASSIGNED branch in
+# build_ko_monitoring.refresh_fulfillment, which asks Kibo directly.
+EXCLUDED_STATUSES = ("BACKORDER", "CUSTOMER_CARE", "REASSIGNED")
 
 
 def fetch_monitoring_open(client: Any, log: Any) -> Optional[set]:
@@ -1129,7 +1139,8 @@ def fetch_ko_candidates(client: Any, log: Any, limit: int = 0) -> List[Dict[str,
 
     A row counts as blocked when it has a blocking_reason that is none of
     EXCLUDED_REASONS — those name things the documents API cannot fix — and
-    when its shipmentStatus is neither BACKORDER nor CUSTOMER_CARE.
+    when its shipmentStatus is none of EXCLUDED_STATUSES: BACKORDER,
+    CUSTOMER_CARE or REASSIGNED.
 
     Shipments already in the operational table are left out, because the
     merge would only update what the run already knows. Shipments in the
