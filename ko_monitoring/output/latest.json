@@ -1,8 +1,8 @@
 {
-  "run": "20261125-110117",
-  "built_at": "2026-11-25T11:01:17Z",
-  "finished_at": "2026-11-25T11:08:48Z",
-  "file": "ko_monitoring-20261125-110117.csv",
+  "run": "20261125-121125",
+  "built_at": "2026-11-25T12:11:25Z",
+  "finished_at": "2026-11-25T12:21:15Z",
+  "file": "ko_monitoring-20261125-121125.csv",
   "columns": [
     "shipment_order_number",
     "oerodp",
@@ -36,34 +36,66 @@
     "api_call_date",
     "batch"
   ],
-  "rows": 465,
+  "rows": 506,
   "batches": [
     {
-      "batch": "recheck-20261125-110117",
+      "batch": "recheck-20261125-121125",
       "csv_file": "",
       "xlsx_file": "",
-      "shipments": 465,
+      "shipments": 459,
       "from_csv": 0,
       "from_excel": 0,
       "matched_both": 0,
-      "fixed": 6,
-      "with_warehouse_attempt": 238,
-      "with_error": 460,
+      "fixed": 13,
+      "with_warehouse_attempt": 237,
+      "with_error": 449,
       "dry_run": false,
       "join": "table",
       "truncated": false,
       "recheck_only": true
+    },
+    {
+      "batch": "gxo_ko-20261125-121125",
+      "csv_file": "",
+      "xlsx_file": "",
+      "shipments": 37,
+      "from_csv": 0,
+      "from_excel": 0,
+      "matched_both": 0,
+      "fixed": 34,
+      "with_warehouse_attempt": 29,
+      "with_error": 29,
+      "dry_run": false,
+      "join": "gxo_ko",
+      "truncated": false,
+      "gxo_ko_only": true
+    },
+    {
+      "batch": "monitoring-20261125-121125",
+      "csv_file": "",
+      "xlsx_file": "",
+      "shipments": 10,
+      "from_csv": 0,
+      "from_excel": 0,
+      "matched_both": 0,
+      "fixed": 0,
+      "with_warehouse_attempt": 0,
+      "with_error": 10,
+      "dry_run": false,
+      "join": "monitoring",
+      "truncated": false,
+      "monitoring_only": true
     }
   ],
   "dry_run": false,
   "zpl_check": "printable",
   "table": {
-    "written": 465,
-    "resolved": 0,
+    "written": 506,
+    "resolved": 9,
     "before": null,
     "after": null,
     "error": "",
-    "archived": 0,
-    "still_open": 632
+    "archived": 9,
+    "still_open": 670
   }
 }

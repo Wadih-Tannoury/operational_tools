@@ -1,0 +1,98 @@
+KO monitoring run 20261125-121125
+Batches  : 0 complete, 0 incomplete
+
+  tlg-wlfs-prd.monitoring.gxo_ko: 236 shipment(s) at the latest import.
+No new files; re-checking what is still open in the table.
+  tlg-business-intelligence-prd.til.ko_operational_table: 459 shipment(s) still open and not fixed.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 438 of 459 shipment(s) matched.
+  Kibo: GET https://t<tenant>.tp3.mozu.com/api/commerce/shipments?filter=externalOrderId==<number> for 236 shipment(s) — 236 for a fulfilment status, 0 for a channel.
+    e.g. DG-EUB01690361: 3 shipment(s) from tenant 29916, site 49791 — '', 'CANCELED'
+  Kibo: 2 ready for documents, 128 in another status, 106 with no status, 231 carrying a Kibo fulfilment location.
+  80 shipment(s) are at neither GXO nor MODA ((not known), CAPACITY, FIEGE, GEODIS); they are recorded, not called.
+  234 shipment(s) not asked, fulfillment_status is (none), Accept Shipment, CANCELED, REASSIGNED, Validate Items In Stock, Wait for Payment Confirmation.
+  Authenticated against https://integrations.thelevelgroup.com/logistics/v1/oauth2/token
+  145 shipment(s) in 'Prepare For Shipment' go to https://integrations.thelevelgroup.com/logistics/v1/shipments/documents
+    e.g. sent     {"shipmentOrderNumber": "SC-EUE01302868", "brand": "SC", "weight": 1.0, "parcelsNumber": 1, "data": {"carrierCode": "", "logisticOrderNumber": "320138"}}
+    e.g. received HTTP 200, top-level keys: additionalDocuments, data, eligibleForPackageClosure, errorMessage, invoiceDocuments, labelDocuments, locationCode, logisticOrderNumber, orderDate, orderNumber, paperless, shipmentAssignedDate, shipmentOrderNumber, shipping
+  25/145 checked, 2 newly fixed.
+  50/145 checked, 2 newly fixed.
+  75/145 checked, 2 newly fixed.
+  100/145 checked, 3 newly fixed.
+  125/145 checked, 9 newly fixed.
+  145/145 checked, 13 newly fixed.
+     102 × HTTP 404: the response carries no package-closure flag
+      19 × no shipping label
+      10 × not eligible for package closure
+       1 × a RETLBL entry exists but carries no label
+  13 of 145 checked shipment(s) were fixed; 13 of 459 now carry a ko_fix_date.
+  tlg-business-intelligence-prd.bi.wh_document_api_response: 2325 row(s) read, 237 shipment(s) matched.
+  237 shipment(s) have a warehouse attempt on record, 0 of them after the fix.
+  tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table: 211 shipment(s) sent to the warehouse and not confirmed yet.
+  action_needed_from_gxo: 88 to cancel, 13 to print.
+  ko_reason: 449 of 459 filled, 279 from the monitoring table.
+  location_provider: 412 of 459 known.
+  oerodp: 379 built from brand, channel and logistics order.
+  oerodp: 379 built from brand, channel and logistics order.
+
+  37 shipment(s) taken from the latest gxo_ko import.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 37 of 37 shipment(s) matched.
+  Kibo: GET https://t<tenant>.tp3.mozu.com/api/commerce/shipments?filter=externalOrderId==<number> for 37 shipment(s) — 37 for a fulfilment status, 0 for a channel.
+    e.g. LA-FF-D8B191730864: 3 shipment(s) from tenant 30019, site 53157 — 'Prepare for Shipment', 'READY'
+  Kibo: 37 ready for documents, 37 given a channel, 37 given a logistics order number, 37 carrying a Kibo fulfilment location.
+  Authenticated against https://integrations.thelevelgroup.com/logistics/v1/oauth2/token
+  37 shipment(s) in 'Prepare For Shipment' go to https://integrations.thelevelgroup.com/logistics/v1/shipments/documents
+    e.g. sent     {"shipmentOrderNumber": "LA-FF-D8B191730864", "brand": "LA", "weight": 1.0, "parcelsNumber": 1, "data": {"carrierCode": "", "logisticOrderNumber": "12056"}}
+    e.g. received HTTP 200, top-level keys: additionalDocuments, data, eligibleForPackageClosure, errorMessage, invoiceDocuments, labelDocuments, locationCode, logisticOrderNumber, orderDate, orderNumber, paperless, shipmentAssignedDate, shipmentOrderNumber, shipping
+  25/37 checked, 22 newly fixed.
+  37/37 checked, 34 newly fixed.
+       3 × HTTP 404: the response carries no package-closure flag
+  34 of 37 checked shipment(s) were fixed; 34 of 37 now carry a ko_fix_date.
+  tlg-business-intelligence-prd.bi.wh_document_api_response: 32 row(s) read, 29 shipment(s) matched.
+  29 shipment(s) have a warehouse attempt on record, 0 of them after the fix.
+  tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table: 211 shipment(s) sent to the warehouse and not confirmed yet.
+  action_needed_from_gxo: 0 to cancel, 34 to print.
+  ko_reason: 29 of 37 filled, 0 from the monitoring table.
+  location_provider: 37 of 37 known.
+  oerodp: 37 built from brand, channel and logistics order.
+  oerodp: 37 built from brand, channel and logistics order.
+
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 10 blocked shipment(s) not in the table yet.
+  10 shipment(s) taken from the monitoring table.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 10 of 10 shipment(s) matched.
+  Kibo: GET https://t<tenant>.tp3.mozu.com/api/commerce/shipments?filter=externalOrderId==<number> for 9 shipment(s) — 9 for a fulfilment status, 0 for a channel.
+    e.g. LN-EUA01697739: 1 shipment(s) from tenant 29917, site 49801 — 'Wait for Payment Confirmation', 'READY'
+  Kibo: 9 in another status, 9 carrying a Kibo fulfilment location.
+  9 shipment(s) not asked, fulfillment_status is Validate Items In Stock, Wait for Payment Confirmation.
+  Authenticated against https://integrations.thelevelgroup.com/logistics/v1/oauth2/token
+  1 shipment(s) in 'Prepare For Shipment' go to https://integrations.thelevelgroup.com/logistics/v1/shipments/documents
+    e.g. sent     {"shipmentOrderNumber": "FE-EUA00141242", "brand": "FE", "weight": 1.0, "parcelsNumber": 1, "data": {"carrierCode": "", "logisticOrderNumber": "193260"}}
+    e.g. received HTTP 200, top-level keys: additionalDocuments, data, eligibleForPackageClosure, errorMessage, invoiceDocuments, labelDocuments, locationCode, logisticOrderNumber, orderDate, orderNumber, paperless, shipmentAssignedDate, shipmentOrderNumber, shipping
+  1/1 checked, 0 newly fixed.
+       1 × no shipping label
+  0 of 1 checked shipment(s) were fixed; 0 of 10 now carry a ko_fix_date.
+  tlg-business-intelligence-prd.bi.wh_document_api_response: 0 row(s) read, 0 shipment(s) matched.
+  0 shipment(s) have a warehouse attempt on record, 0 of them after the fix.
+  tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table: 211 shipment(s) sent to the warehouse and not confirmed yet.
+  action_needed_from_gxo: 0 to cancel, 0 to print.
+  ko_reason: 10 of 10 filled, 10 from the monitoring table.
+  location_provider: 10 of 10 known.
+  oerodp: 10 built from brand, channel and logistics order (10 differ from what was stored).
+  oerodp: 10 built from brand, channel and logistics order.
+
+  tlg-business-intelligence-prd.til.ko_operational_table: 506 row(s) merged.
+  tlg-business-intelligence-prd.til.ko_operational_table: 679 shipment(s) not resolved yet.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 311 shipment(s) still reported as blocked.
+  tlg-wlfs-prd.til.prd_shipmentStatus: the logistics order number is read from the request payload.
+  tlg-wlfs-prd.til.prd_shipmentStatus: of 589 shipment(s), 7 have a SHIPPED event and 66 a CANCELLED one.
+  88 shipment(s) GXO was asked to cancel have no CANCELLED event yet; they stay open whatever the inputs say.
+  No workbook this run, so no GXO shipment is archived for absence.
+  9 shipment(s) resolved — 4 cancelled by GXO, 5 gone from the monitoring table.
+  9 resolved shipment(s) archived to ko_operational_history_table and removed from ko_operational_table.
+  tlg-business-intelligence-prd.til.ko_operational_table: 670 shipment(s) still open.
+
+Dataset  : ko_monitoring/output/ko_monitoring-20261125-121125.csv (506 row(s)), and output/latest.csv
+
+Records  : 506 shipment(s) over 3 batch(es), 0 batch(es) failed
+Fixed    : 47
+Table    : 506 merged, 9 resolved, 9 archived
+Finished : 2026-11-25T12:21:15Z
