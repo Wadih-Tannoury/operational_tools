@@ -1,8 +1,8 @@
 {
-  "run": "20261125-123331",
-  "built_at": "2026-11-25T12:33:31Z",
-  "finished_at": "2026-11-25T12:39:47Z",
-  "file": "ko_monitoring-20261125-123331.csv",
+  "run": "20261125-133104",
+  "built_at": "2026-11-25T13:31:04Z",
+  "finished_at": "2026-11-25T13:43:03Z",
+  "file": "ko_monitoring-20261125-133104.csv",
   "columns": [
     "shipment_order_number",
     "oerodp",
@@ -36,33 +36,64 @@
     "api_call_date",
     "batch"
   ],
-  "rows": 437,
+  "rows": 882,
   "batches": [
     {
-      "batch": "20261125-123313",
-      "csv_file": "20261125-123313__Wadih__pending.csv",
+      "batch": "20261125-132843",
+      "csv_file": "20261125-132843__Wadih__pending.csv",
       "xlsx_file": "",
       "shipments": 437,
       "from_csv": 350,
       "from_excel": 236,
       "matched_both": 149,
-      "fixed": 169,
+      "fixed": 171,
       "with_warehouse_attempt": 347,
       "with_error": 430,
       "dry_run": false,
       "join": "outer",
       "truncated": false
+    },
+    {
+      "batch": "20261125-133045",
+      "csv_file": "20261125-133045__Wadih__pending.csv",
+      "xlsx_file": "",
+      "shipments": 437,
+      "from_csv": 350,
+      "from_excel": 236,
+      "matched_both": 149,
+      "fixed": 173,
+      "with_warehouse_attempt": 347,
+      "with_error": 430,
+      "dry_run": false,
+      "join": "outer",
+      "truncated": false
+    },
+    {
+      "batch": "monitoring-20261125-133104",
+      "csv_file": "",
+      "xlsx_file": "",
+      "shipments": 8,
+      "from_csv": 0,
+      "from_excel": 0,
+      "matched_both": 0,
+      "fixed": 2,
+      "with_warehouse_attempt": 0,
+      "with_error": 8,
+      "dry_run": false,
+      "join": "monitoring",
+      "truncated": false,
+      "monitoring_only": true
     }
   ],
   "dry_run": false,
   "zpl_check": "printable",
   "table": {
-    "written": 437,
-    "resolved": 37,
+    "written": 0,
+    "resolved": 0,
     "before": null,
     "after": null,
-    "error": "",
-    "archived": 37,
-    "still_open": 682
+    "error": "400 GET https://bigquery.googleapis.com/bigquery/v2/projects/tlg-business-intelligence-prd/queries/2ad9a3a4-bf61-4e85-ad8a-84819a87f126?maxResults=0&location=europe-west1&prettyPrint=false: UPDATE/MERGE must match at most one source row for each target row\n\nLocation: europe-west1\nJob ID: 2ad9a3a4-bf61-4e85-ad8a-84819a87f126\n",
+    "archived": 1,
+    "still_open": 681
   }
 }
