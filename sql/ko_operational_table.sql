@@ -42,8 +42,10 @@ CREATE TABLE IF NOT EXISTS
       OPTIONS (description = "Shipment created, from the CSV."),
   action STRING
       OPTIONS (description = "Action, from the CSV."),
-  fulfillment_status STRING
-      OPTIONS (description = "Active task, from the CSV: where the shipment has got to in fulfillment."),
+  initial_fulfillment_status STRING
+      OPTIONS (description = "What the shipment was doing when it first became a KO. Written once and never rewritten."),
+  updated_fulfillment_status STRING
+      OPTIONS (description = "What Kibo says the shipment is doing now. Refreshed on every run."),
   location_provider STRING
       OPTIONS (description = "Whose warehouse the shipment is in. GXO when the workbook carries it or the CSV's WMS says GXO, MODA when WMS says MODA, otherwise from til.prd_fulfillment_monitoring_table."),
   ko_fixed BOOL
@@ -122,7 +124,8 @@ ALTER TABLE `tlg-business-intelligence-prd.til.ko_operational_table`
   ADD COLUMN IF NOT EXISTS order_submit_date DATE,
   ADD COLUMN IF NOT EXISTS shipment_creation_date DATE,
   ADD COLUMN IF NOT EXISTS action STRING,
-  ADD COLUMN IF NOT EXISTS fulfillment_status STRING,
+  ADD COLUMN IF NOT EXISTS initial_fulfillment_status STRING,
+  ADD COLUMN IF NOT EXISTS updated_fulfillment_status STRING,
   ADD COLUMN IF NOT EXISTS location_provider STRING,
   ADD COLUMN IF NOT EXISTS ko_fixed BOOL,
   ADD COLUMN IF NOT EXISTS ko_fix_date TIMESTAMP,
