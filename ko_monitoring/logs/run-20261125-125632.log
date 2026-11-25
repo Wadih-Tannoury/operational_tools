@@ -1,0 +1,67 @@
+KO monitoring run 20261125-125632
+Batches  : 0 complete, 0 incomplete
+
+
+Backfill: the operational table.
+  tlg-business-intelligence-prd.til.ko_operational_table: 682 shipment(s) row(s) in all.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 644 of 682 shipment(s) matched.
+  tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table: 203 shipment(s) sent to the warehouse and not confirmed yet.
+  action_needed_from_gxo: 88 to cancel, 208 to print.
+  ko_reason: 591 of 682 filled, 312 from the monitoring table.
+  location_provider: 640 of 682 known.
+  oerodp: 597 built from brand, channel and logistics order.
+  Kibo: 554 row(s) have at least one gap; asking getShipments for each.
+    e.g. PA-EUA00020362: oms_shipment_number, order_submit_date, shipment_creation_date
+    100/554 asked.
+    200/554 asked.
+    300/554 asked.
+    400/554 asked.
+    500/554 asked.
+  oerodp: 597 built from brand, channel and logistics order.
+  oerodp: 682 already set, 0 newly filled, 0 still blank.
+  location_name: 354 already set, 323 newly filled (5 of them from Kibo), 5 still blank.
+  logistic_order_number: 682 already set, 0 newly filled, 0 still blank.
+  oms_shipment_number: 605 already set, 72 newly filled (72 of them from Kibo), 5 still blank.
+  ko_source: 158 already set, 0 newly filled, 524 still blank.
+  blocking_reason: 343 already set, 2 newly filled, 337 still blank.
+  order_submit_date: 605 already set, 72 newly filled (72 of them from Kibo), 5 still blank.
+  shipment_creation_date: 605 already set, 72 newly filled (72 of them from Kibo), 5 still blank.
+  fulfillment_status: 677 already set, 0 newly filled, 5 still blank.
+  location_provider: 640 already set, 0 newly filled, 42 still blank.
+  channel: 677 already set, 0 newly filled, 5 still blank.
+  tlg-business-intelligence-prd.til.ko_operational_table: 682 row(s) updated (oerodp, location_name, logistic_order_number, oms_shipment_number, ko_source, blocking_reason, order_submit_date, shipment_creation_date, fulfillment_status, location_provider, channel).
+
+Backfill: the archive.
+  tlg-business-intelligence-prd.til.ko_operational_history_table: 1007 shipment(s) row(s) in the archive.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 123 of 870 shipment(s) matched.
+  tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table: 203 shipment(s) sent to the warehouse and not confirmed yet.
+  action_needed_from_gxo: 70 to cancel, 468 to print.
+  ko_reason: 470 of 1007 filled, 109 from the monitoring table.
+  location_provider: 976 of 1007 known.
+  oerodp: 842 built from brand, channel and logistics order.
+  Kibo: 782 row(s) have at least one gap; asking getShipments for each.
+    e.g. LN-CTA1924256716-4: oms_shipment_number, order_submit_date, shipment_creation_date
+    100/782 asked.
+    200/782 asked.
+    300/782 asked.
+    400/782 asked.
+    500/782 asked.
+    600/782 asked.
+    700/782 asked.
+  oerodp: 842 built from brand, channel and logistics order.
+  oerodp: 1007 already set, 0 newly filled, 0 still blank.
+  location_name: 1007 already set, 0 newly filled, 0 still blank.
+  logistic_order_number: 1007 already set, 0 newly filled, 0 still blank.
+  oms_shipment_number: 997 already set, 10 newly filled (10 of them from Kibo), 0 still blank.
+  ko_source: 239 already set, 0 newly filled, 768 still blank.
+  blocking_reason: 481 already set, 0 newly filled, 526 still blank.
+  order_submit_date: 997 already set, 10 newly filled (10 of them from Kibo), 0 still blank.
+  shipment_creation_date: 997 already set, 10 newly filled (10 of them from Kibo), 0 still blank.
+  fulfillment_status: 1007 already set, 0 newly filled, 0 still blank.
+  location_provider: 976 already set, 0 newly filled, 31 still blank.
+  channel: 1007 already set, 0 newly filled, 0 still blank.
+  tlg-business-intelligence-prd.til.ko_operational_history_table: 1007 row(s) updated (oerodp, location_name, logistic_order_number, oms_shipment_number, ko_source, blocking_reason, order_submit_date, shipment_creation_date, fulfillment_status, location_provider, channel).
+
+Records  : backfill only — no documents API, no verdicts, nothing archived.
+Operational: 682 row(s) read, 682 updated, 554 asked of Kibo
+Archive  : 1007 row(s) read, 1007 updated, 782 asked of Kibo
