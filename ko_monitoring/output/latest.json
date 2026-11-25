@@ -1,8 +1,8 @@
 {
-  "run": "20261125-102004",
-  "built_at": "2026-11-25T10:20:04Z",
-  "finished_at": "2026-11-25T10:25:36Z",
-  "file": "ko_monitoring-20261125-102004.csv",
+  "run": "20261125-110117",
+  "built_at": "2026-11-25T11:01:17Z",
+  "finished_at": "2026-11-25T11:08:48Z",
+  "file": "ko_monitoring-20261125-110117.csv",
   "columns": [
     "shipment_order_number",
     "oerodp",
@@ -36,49 +36,34 @@
     "api_call_date",
     "batch"
   ],
-  "rows": 326,
+  "rows": 465,
   "batches": [
     {
-      "batch": "20261125-101946",
-      "csv_file": "20261125-101946__Wadih__pending.csv",
-      "xlsx_file": "",
-      "shipments": 317,
-      "from_csv": 132,
-      "from_excel": 221,
-      "matched_both": 36,
-      "fixed": 123,
-      "with_warehouse_attempt": 250,
-      "with_error": 283,
-      "dry_run": false,
-      "join": "outer",
-      "truncated": false
-    },
-    {
-      "batch": "monitoring-20261125-102004",
+      "batch": "recheck-20261125-110117",
       "csv_file": "",
       "xlsx_file": "",
-      "shipments": 9,
+      "shipments": 465,
       "from_csv": 0,
       "from_excel": 0,
       "matched_both": 0,
-      "fixed": 2,
-      "with_warehouse_attempt": 0,
-      "with_error": 9,
+      "fixed": 6,
+      "with_warehouse_attempt": 238,
+      "with_error": 460,
       "dry_run": false,
-      "join": "monitoring",
+      "join": "table",
       "truncated": false,
-      "monitoring_only": true
+      "recheck_only": true
     }
   ],
   "dry_run": false,
   "zpl_check": "printable",
   "table": {
-    "written": 326,
-    "resolved": 36,
+    "written": 465,
+    "resolved": 0,
     "before": null,
     "after": null,
     "error": "",
-    "archived": 36,
+    "archived": 0,
     "still_open": 632
   }
 }
