@@ -59,7 +59,13 @@ COLUMNS: List[Tuple[str, str, str]] = [
     ("order_submit_date", "DATE", "order_submit_date"),
     ("shipment_creation_date", "DATE", "shipment_creation_date"),
     ("action", "STRING", "action"),
-    ("fulfillment_status", "STRING", "fulfillment_status"),
+    # Two statuses, not one. initial_ is what the shipment was doing when it
+    # first became a KO and is never rewritten; updated_ is what Kibo says it
+    # is doing now, refreshed on every run. The pair is what makes a KO
+    # explainable after the fact: the first says why it was logged, the second
+    # whether that is still true.
+    ("initial_fulfillment_status", "STRING", "initial_fulfillment_status"),
+    ("updated_fulfillment_status", "STRING", "updated_fulfillment_status"),
     ("location_provider", "STRING", "location_provider"),
     ("location_name", "STRING", "location_name"),
     ("ko_fixed", "BOOL", "ko_fixed"),
@@ -226,6 +232,17 @@ def _merge_sql(staging: str) -> str:
             # Once a shipment has been seen fixed, that is history: a later run
             # that comes back KO does not erase the date it was fixed on.
             updates.append("ko_fix_date = COALESCE(T.ko_fix_date, S.ko_fix_date)")
+            continue
+        if column == "initial_fulfillment_status":
+            # Written once, by the run that first logged the shipment, and
+            # never again — that is the whole point of it. NULLIF so a blank
+            # stored value can still be filled by a later run that knows it,
+            # which is not the same as overwriting one that is already there.
+            updates.append(
+                "initial_fulfillment_status = COALESCE("
+                "NULLIF(T.initial_fulfillment_status, ''), "
+                "S.initial_fulfillment_status)"
+            )
             continue
         updates.append(f"{column} = S.{column}")
     # The column being set is never qualified with the target alias: BigQuery
@@ -723,6 +740,31 @@ def has_event(events: Dict[str, Any], kind: str, shipment: str, logistic: str) -
     if not events.get("paired"):
         return any(number == shipment for number, _ in pairs)
     return (shipment, logistic) in pairs
+
+
+def fetch_known_shipments(client: Any, log: Any) -> Optional[set]:
+    """
+    Every shipment number the operational table holds, resolved or not.
+
+    Used to tell a shipment this workflow already knows about from one it has
+    never seen. Returns None when the table could not be read: not knowing
+    must not look like an empty table, or every shipment would be treated as
+    new.
+    """
+    if bigquery is None or client is None:
+        return None
+    sql = f"""
+        SELECT DISTINCT UPPER(TRIM(shipment_order_number)) AS shipment
+        FROM `{PROJECT}.{DATASET}.{TABLE}`
+        WHERE shipment_order_number IS NOT NULL
+          AND TRIM(shipment_order_number) != ''
+    """
+    try:
+        found = {str(row["shipment"]) for row in client.query(sql).result()}
+    except Exception as exc:  # noqa: BLE001 - the run goes on without it
+        log(f"  The table's shipment numbers could not be read: {exc}")
+        return None
+    return found
 
 
 def fetch_unresolved(client: Any, log: Any) -> List[Dict[str, str]]:

@@ -213,7 +213,8 @@ OUTPUT_COLUMNS = [
     "order_submit_date",
     "shipment_creation_date",
     "action",
-    "fulfillment_status",
+    "initial_fulfillment_status",
+    "updated_fulfillment_status",
     "location_provider",
     "location_name",
     "ko_fixed",
@@ -1475,7 +1476,11 @@ def build_rows(
             "order_submit_date": csv_row.get("order_date", ""),
             "shipment_creation_date": csv_row.get("shipment_created", ""),
             "action": csv_row.get("action", ""),
-            "fulfillment_status": csv_row.get("active_task", ""),
+            # The CSV's active task is what the shipment was doing when it
+            # was listed, which is the first-seen status. The live one is
+            # Kibo's, and arrives in refresh_fulfillment.
+            "initial_fulfillment_status": csv_row.get("active_task", ""),
+            "updated_fulfillment_status": "",
             # GXO when the workbook knows the shipment at all, or when the CSV
             # says so; MODA when the CSV says that. Anything else is left for
             # the monitoring table to answer.
@@ -1588,6 +1593,19 @@ REASSIGNED_BY_KIBO: set = set()
 FULFILLED_BY_KIBO: set = set()
 
 
+def live_status(row: Dict[str, str]) -> str:
+    """
+    The freshest fulfilment status known for a row.
+
+    Kibo's answer where this run got one, and the first-seen status otherwise.
+    Every decision that asks "what is this shipment doing now" reads this
+    rather than either column directly, so a run where Kibo could not be
+    reached falls back to what was already known instead of to a blank.
+    """
+    return (str(row.get("updated_fulfillment_status", "") or "").strip()
+            or str(row.get("initial_fulfillment_status", "") or "").strip())
+
+
 def fulfillment_status_of(shipment: Dict[str, Any]) -> str:
     """
     The fulfilment status of a Kibo shipment — what the OMS table calls
@@ -1661,7 +1679,8 @@ BACKFILL_COLUMNS = (
     "blocking_reason",
     "order_submit_date",
     "shipment_creation_date",
-    "fulfillment_status",
+    "initial_fulfillment_status",
+    "updated_fulfillment_status",
     "location_provider",
     "channel",
 )
@@ -1751,7 +1770,12 @@ def kibo_details(shipment: Dict[str, Any],
         "oms_shipment_number": str(number).strip() if number not in (None, "") else "",
         "order_submit_date": str(shipment.get("orderSubmitDate") or "").strip(),
         "shipment_creation_date": assigned_date_of(shipment),
-        "fulfillment_status": status,
+        # Both, from the one answer: the live status for updated_, and the
+        # same value for initial_ so the backfill can fill a row that never
+        # had one. The backfill only ever writes into blanks, so this cannot
+        # overwrite a first-seen status that is already recorded.
+        "updated_fulfillment_status": status,
+        "initial_fulfillment_status": status,
         "location_provider": provider_from_location(
             shipment.get("fulfillmentLocationCode")
             or shipment.get("assignedLocationCode")),
@@ -1823,7 +1847,8 @@ def monitoring_for(rows: List[Dict[str, str]], args: argparse.Namespace,
 def prefill_status(rows: List[Dict[str, str]], args: argparse.Namespace,
                    log: Log, client: Any) -> None:
     """
-    Fill location_provider and fulfillment_status before anything is called.
+    Fill location_provider and initial_fulfillment_status before anything is
+    called.
 
     Both decide whether a shipment is asked about at all — the provider picks
     the endpoint, the status decides whether the documents are worth asking
@@ -1846,15 +1871,15 @@ def prefill_status(rows: List[Dict[str, str]], args: argparse.Namespace,
             if value:
                 row["location_provider"] = value.upper()
                 filled["provider"] += 1
-        if not str(row.get("fulfillment_status", "") or "").strip():
+        if not str(row.get("initial_fulfillment_status", "") or "").strip():
             value = str(entry.get("fulfillment_status", "") or "").strip()
             if value:
-                row["fulfillment_status"] = value
+                row["initial_fulfillment_status"] = value
                 filled["status"] += 1
     if filled["provider"] or filled["status"]:
         log(f"  From the monitoring table, before calling: "
             f"{filled['provider']} location_provider, "
-            f"{filled['status']} fulfillment_status filled in.")
+            f"{filled['status']} initial_fulfillment_status filled in.")
 
 
 def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
@@ -1862,11 +1887,18 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
     """
     Ask Kibo what each GXO shipment is really waiting on, and act on it.
 
-    Applies to every GXO shipment whose stored fulfilment status is not
-    "Prepare for Shipment" — the blanks, which the table never learned, and
-    the ones in some other status, which may have moved on since. They are
-    re-asked on every run, because a shipment sitting in "Validate Items In
-    Stock" today is one that may be ready tomorrow.
+    Applies to every shipment in the run, at every warehouse, whatever status
+    it is stored in. Kibo is the system of record for what a shipment is
+    actually doing, and a stored status is only ever as fresh as the run that
+    wrote it: a shipment sitting in "Validate Items In Stock" today may be
+    ready tomorrow, and one that looks ready may have shipped an hour ago.
+    Asking about all of them is what makes updated_fulfillment_status mean
+    what it says.
+
+    This used to be narrower — GXO only, and only where the stored status was
+    not already "Prepare for Shipment". The per-run cache below is what makes
+    the wider net affordable: each shipment is asked about once however many
+    batches and passes want it.
 
     What each answer does:
 
@@ -1886,20 +1918,14 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
     """
     if args.dry_run:
         return set()
-    # Two reasons to ask Kibo about a shipment, and either is enough:
-    #   a GXO shipment whose fulfilment status is not the one that matters —
-    #   the answer decides whether its documents are worth asking for;
-    #   any shipment with no channel — Kibo is the only place it is written,
-    #   and the monitoring table only carries it for the rows it brought in.
-    needs_status = [row for row in rows
-                    if GXO in provider_of(row)
-                    and str(row.get("fulfillment_status", "") or "").strip().lower()
-                    != PREPARE_FOR_SHIPMENT]
-    status_ids = {id(row) for row in needs_status}
+    # Every row, every run. The two reasons that used to narrow this — a GXO
+    # shipment whose status might have moved, and any shipment with no channel
+    # — are both still served by asking about all of them, and the live status
+    # is wanted for its own sake now rather than only as a routing decision.
+    wanted = list(rows)
+    needs_status = wanted
     needs_channel = [row for row in rows
-                     if id(row) not in status_ids
-                     and not str(row.get("channel", "") or "").strip()]
-    wanted = needs_status + needs_channel
+                     if not str(row.get("channel", "") or "").strip()]
     if not wanted:
         return set()
 
@@ -2007,13 +2033,18 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
             row["_kibo_location"] = location
             counts["location"] += 1
 
-        # A shipment asked about only for its channel has nothing more to
-        # decide: its status was already the one that matters.
-        if id(row) not in status_ids:
-            continue
-
-        if status:
-            row["fulfillment_status"] = status
+        # No active task means no fulfilment status of its own, and then the
+        # shipment's own status is the best answer there is: a FULFILLED or
+        # CANCELED shipment with no live task is still meaningfully in that
+        # state. Same rule as kibo_details, so the two cannot disagree about
+        # what a shipment with no task is doing.
+        recorded = status or state
+        if recorded:
+            row["updated_fulfillment_status"] = recorded
+            # A shipment first seen by this run has no first-seen status yet;
+            # Kibo's answer is the earliest anyone knows of it.
+            if not str(row.get("initial_fulfillment_status", "") or "").strip():
+                row["initial_fulfillment_status"] = recorded
         if state == REASSIGNED_STATUS:
             # Checked before the ready test on purpose: a reassigned shipment
             # can still carry a live "Prepare for Shipment" task, and asking
@@ -2129,22 +2160,20 @@ def check_documents(rows: List[Dict[str, str]], args: argparse.Namespace, log: L
     # The rest are recorded with the state that kept them out and left alone:
     # they keep their row, they keep ko_fixed = false, and no call is made.
     not_ready = [row for row in main_rows
-                 if str(row.get("fulfillment_status", "") or "").strip().lower()
-                 != DOCUMENTS_STATUS]
+                 if live_status(row).lower() != DOCUMENTS_STATUS]
     if not_ready:
         for row in not_ready:
-            state = str(row.get("fulfillment_status", "") or "").strip()
+            state = live_status(row)
             row["_ko_status"] = (
-                f"not asked: fulfillment_status is {state}, not "
+                f"not asked: fulfilment status is {state}, not "
                 f"'{DOCUMENTS_STATUS.title()}'" if state else
-                "not asked: no fulfillment_status")
+                "not asked: no fulfilment status")
         skipped_ids = {id(row) for row in not_ready}
         main_rows = [row for row in main_rows if id(row) not in skipped_ids]
         to_check = [row for row in to_check if id(row) not in skipped_ids]
-        states = sorted({str(row.get("fulfillment_status", "") or "").strip() or "(none)"
-                         for row in not_ready})
+        states = sorted({live_status(row) or "(none)" for row in not_ready})
         log(f"  {len(not_ready)} shipment(s) not asked, "
-            f"fulfillment_status is {', '.join(states[:6])}"
+            f"fulfilment status is {', '.join(states[:6])}"
             + (" and others" if len(states) > 6 else "") + ".")
     if not to_check:
         log("  Nothing left to ask about.")
@@ -2362,8 +2391,7 @@ def run_resolve(client: Any, wlfs_client: Any, gxo_present: Optional[set],
     # confirmed cancelled by the warehouse is settled on both sides, and the
     # rule below archives it wherever it sits.
     cancelled_rows = [row for row in rows
-                      if str(row.get("fulfillment_status", "") or "").strip().upper()
-                      == CANCELLED_STATUS]
+                      if live_status(row).upper() == CANCELLED_STATUS]
 
     # prd_shipmentStatus, read once: the CANCELLED events settle the ones GXO
     # was asked to cancel and the ones Kibo has cancelled, the SHIPPED events
@@ -2908,31 +2936,50 @@ def backfill_all(args: argparse.Namespace, log: Log, client: Any,
 
 
 def recheck_open(args: argparse.Namespace, log: Log, client: Any,
-                 run: str) -> Tuple[List[Dict[str, str]], Dict[str, Any]]:
+                 run: str, skip: Sequence[str] = ()) -> Tuple[List[Dict[str, str]],
+                                                              Dict[str, Any]]:
     """
-    A run with no new upload: re-check what the table still calls unfixed.
+    Re-check what the table still holds open. Runs whatever the uploads say.
 
-    Every shipment with ko_fixed = false and ko_resolved = false is asked
-    again, because a KO is fixed by the warehouse at its own pace and the only
-    way to find out is to ask. Nothing is resolved here: ko_resolved says a
-    shipment has dropped out of the uploads, and a run with no upload has no
-    grounds to say that of anything.
+    Every shipment with ko_resolved = false is asked again, fixed ones
+    included. A KO is fixed by the warehouse at its own pace and the only way
+    to find out is to ask; and the live fulfilment status is wanted for every
+    shipment on its own account, not only for the ones still being chased. A
+    shipment already covered by this run's batches is left out — it has just
+    been asked about, and `skip` carries those numbers.
+
+    Nothing is resolved here: ko_resolved says a shipment has dropped out of
+    the uploads, and this pass has no grounds to say that of anything.
     """
-    log("No new files; re-checking what is still open in the table.")
-    stored = table_module.fetch_open(client, log, args.limit)
+    already = {normalise_shipment(number) for number in skip}
+    stored = table_module.fetch_unresolved(client, log)
     if not stored:
         return [], {}
 
     rows: List[Dict[str, str]] = []
     for entry in stored:
+        number = entry.get("shipment_order_number", "")
+        if normalise_shipment(number) in already:
+            continue
         row = {column: entry.get(column, "") for column in OUTPUT_COLUMNS}
-        row["shipment_order_number"] = entry.get("shipment_order_number", "")
-        row["ko_fixed"] = "no"
+        row["shipment_order_number"] = number
+        # The stored verdict is carried, not reset. This pass now reads fixed
+        # rows too, and calling one unfixed because it was re-read would undo
+        # a fix that already happened.
+        row["ko_fixed"] = entry.get("ko_fixed", "") or "no"
         row["source"] = entry.get("source", "") or "table"
         row["batch"] = f"recheck-{run}"
         rows.append(row)
+        if args.limit > 0 and len(rows) >= args.limit:
+            break
 
-    truncated = args.limit > 0 and len(stored) >= args.limit
+    if not rows:
+        return [], {}
+    log(f"Re-checking {len(rows)} shipment(s) the table still holds open"
+        + (f", leaving out {len(already)} already covered by this run's uploads"
+           if already else "") + ".")
+
+    truncated = args.limit > 0 and len(rows) >= args.limit
     if truncated:
         log(f"  --limit {args.limit}: only the first {args.limit} are checked.")
 
@@ -2941,6 +2988,14 @@ def recheck_open(args: argparse.Namespace, log: Log, client: Any,
     check_documents(rows, args, log)
     attach_gxo_attempts(rows, args, log, client)
     attach_monitoring(rows, args, log, client)
+    # Same as enrich(): a re-checked shipment may have gained a warehouse
+    # attempt since the last run, and whether it came after the fix can only
+    # be judged once both dates are in. The MERGE works this out in SQL too,
+    # but the row is written to this run's CSV before that, and the two should
+    # not disagree.
+    for row in rows:
+        if tried_after_fix(row["ko_fix_date"], row["last_tried_by_gxo_date"]):
+            row["tried_by_gxo_after_the_fix"] = "yes"
     # Same reason as in enrich(): the channel may have arrived only now.
     fill_oerodp(rows, log)
 
@@ -2958,6 +3013,61 @@ def recheck_open(args: argparse.Namespace, log: Log, client: Any,
         "recheck_only": True,
     }
     return rows, summary
+
+
+# Every shipment number the operational table holds, read once per run.
+# None means it could not be read, which is not the same as an empty table.
+_KNOWN_SHIPMENTS: Dict[str, Optional[set]] = {"value": None, "asked": False}
+
+
+def known_shipments(client: Any, log: Log) -> Optional[set]:
+    """The shipment numbers the table already holds, read once per run."""
+    if not _KNOWN_SHIPMENTS["asked"]:
+        _KNOWN_SHIPMENTS["asked"] = True
+        _KNOWN_SHIPMENTS["value"] = table_module.fetch_known_shipments(client, log)
+    return _KNOWN_SHIPMENTS["value"]
+
+
+def drop_fulfilled_newcomers(rows: List[Dict[str, str]], log: Log,
+                             client: Any) -> List[Dict[str, str]]:
+    """
+    A shipment Kibo calls FULFILLED that the table has never held is not logged.
+
+    A KO is a shipment that needs work; one that has already left the
+    warehouse needs none. Logging it only to archive it in the same run would
+    put a row in the history table that was never a KO to anybody.
+
+    A shipment the table already holds is kept and settled the normal way: it
+    was logged when it still was a KO, the record of that is worth having, and
+    the resolve pass archives it as fixed and resolved.
+
+    If the table could not be read, nothing is dropped. Guessing wrong here
+    loses a KO silently, and a row too many is cheaper than a row missing.
+    """
+    if not FULFILLED_BY_KIBO:
+        return rows
+    known = known_shipments(client, log)
+    if known is None:
+        log("  The table's shipment numbers could not be read, so no FULFILLED "
+            "shipment is dropped; they are logged and settled as usual.")
+        return rows
+    kept: List[Dict[str, str]] = []
+    dropped: List[str] = []
+    for row in rows:
+        number = normalise_shipment(row["shipment_order_number"])
+        if number in FULFILLED_BY_KIBO and number not in known:
+            dropped.append(number)
+            continue
+        kept.append(row)
+    for number in dropped:
+        # Not in the table, so there is nothing for the resolve pass to
+        # archive; leaving it in the set would only make the log overcount.
+        FULFILLED_BY_KIBO.discard(number)
+    if dropped:
+        log(f"  {len(dropped)} shipment(s) Kibo calls FULFILLED are new to the "
+            "table and are not logged: they have left the warehouse, so there "
+            "is no KO to record.")
+    return kept
 
 
 def enrich(rows: List[Dict[str, str]], args: argparse.Namespace, log: Log,
@@ -3078,7 +3188,8 @@ def monitoring_candidates(args: argparse.Namespace, log: Log, client: Any,
         row["oms_shipment_number"] = entry.get("oms_shipment_number", "")
         row["order_submit_date"] = entry.get("order_submit_date", "")
         row["shipment_creation_date"] = entry.get("shipment_creation_date", "")
-        row["fulfillment_status"] = entry.get("fulfillment_status", "")
+        row["initial_fulfillment_status"] = entry.get("fulfillment_status", "")
+        row["updated_fulfillment_status"] = ""
         row["location_provider"] = (entry.get("location_provider", "") or "").upper()
         row["brand"] = entry.get("brand", "") or shipment[:2]
         row["channel"] = entry.get("channel", "")
@@ -3492,19 +3603,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     # An empty queue is not an idle run. A KO is fixed by the warehouse at its
     # own pace, so every run asks again about the shipments the table still
     # calls unfixed, upload or no upload.
-    if not complete:
-        if client is None:
-            log("")
-            log("Records: nothing to do — no files to process and no table to re-check.")
-            logs_dir = Path(args.logs_dir)
-            logs_dir.mkdir(parents=True, exist_ok=True)
-            (logs_dir / f"run-{run_stamp}.log").write_text(log.text(), encoding="utf-8")
-            return 0
-        rows, summary = recheck_open(args, log, client, run_stamp)
-        if rows:
-            all_rows.extend(rows)
-            summaries.append(summary)
+    if not complete and client is None:
         log("")
+        log("Records: nothing to do — no files to process and no table to re-check.")
+        logs_dir = Path(args.logs_dir)
+        logs_dir.mkdir(parents=True, exist_ok=True)
+        (logs_dir / f"run-{run_stamp}.log").write_text(log.text(), encoding="utf-8")
+        return 0
 
     for key, csv_path, xlsx_path in complete:
         try:
@@ -3544,6 +3649,25 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     # Taken on every run, upload or no upload, and after the batches so that a
     # shipment this run already carries is not added a second time. A backfill
     # adds nothing: it fills in what is there rather than finding more.
+    # Every run asks Kibo about every shipment the table still holds open,
+    # upload or no upload: the live fulfilment status is the point, and a
+    # shipment nobody uploaded today can still have shipped, been cancelled or
+    # moved on since the last run. The batches above have just covered their
+    # own shipments, so those are left out rather than asked twice.
+    if client is not None and table_module is not None:
+        try:
+            rows, summary = recheck_open(
+                args, log, client, run_stamp,
+                skip=[row["shipment_order_number"] for row in all_rows],
+            )
+        except Exception as exc:  # noqa: BLE001 - the rest of the run still stands
+            log(f"  The table's open shipments could not be re-checked: {exc}")
+            rows, summary = [], {}
+        if rows:
+            all_rows.extend(rows)
+            summaries.append(summary)
+            log("")
+
     if client is not None and table_module is not None:
         try:
             rows, summary = monitoring_candidates(
@@ -3563,6 +3687,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     # already there is updated rather than added again, and one that has
     # dropped out of the uploads is marked ko_resolved instead of deleted.
     table_outcome: Dict[str, Any] = {}
+    if all_rows and client is not None and table_module is not None:
+        all_rows = drop_fulfilled_newcomers(all_rows, log, client)
     if all_rows:
         if table_module is None:
             log("ko_operational_table.py is not beside this script; the table was not written.")
