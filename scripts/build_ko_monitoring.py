@@ -1573,6 +1573,11 @@ FULFILLED_STATUS = "FULFILLED"
 # its own row. Nothing here is worth asking the warehouse about, so it is kept
 # off the operational table and off the dashboard.
 REASSIGNED_STATUS = "REASSIGNED"
+# Kibo's spelling of a cancelled shipment — one L, against the warehouse
+# event's CANCELLED, which has two. They are different systems and the
+# resolve pass needs both, so the difference is kept visible here rather than
+# normalised away.
+CANCELLED_STATUS = "CANCELED"
 # Every shipment this run found REASSIGNED. Mirrors FULFILLED_BY_KIBO: the
 # resolve pass reads it at the end, once the rows have been written.
 REASSIGNED_BY_KIBO: set = set()
@@ -1773,6 +1778,27 @@ def kibo_client_for(args: argparse.Namespace, log: Log):
     return client, load_tenant_map(args.tenant_map)
 
 
+# Kibo's answer for each shipment, remembered for the run. A run can hold
+# several batches — the pending CSV and GXO's own KO list arrive separately,
+# and the same file can be uploaded twice — and they overlap heavily. Kibo's
+# answer cannot change between two batches of one run, so it is asked once and
+# every later row is served from here. Failures are remembered too: a lookup
+# that failed is not worth repeating a minute later, and the row still gets
+# the reason it failed.
+_KIBO_FACTS: Dict[str, Dict[str, str]] = {}
+
+# The same, for the documents and MODA label APIs. Keyed by shipment number,
+# holding the whole outcome, so a repeat row is judged exactly as the first
+# was — same verdict, same ko_fix_date, no second call.
+_DOCUMENTS_RESULTS: Dict[str, Dict[str, Any]] = {}
+
+
+def _kibo_failure(reason: str) -> Dict[str, str]:
+    """A remembered Kibo failure: no facts, and why."""
+    return {"status": "", "state": "", "channel": "", "logistic": "",
+            "location": "", "error": reason}
+
+
 # The monitoring table, read once per run and remembered. Two stages want it
 # — the prefill below, before any call is made, and attach_monitoring after —
 # and reading it twice would be the same query for the same answer.
@@ -1881,59 +1907,88 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
     if client is None:
         return set()
 
+    already = sum(1 for row in wanted
+                  if normalise_shipment(row["shipment_order_number"]) in _KIBO_FACTS)
     log(f"  Kibo: GET https://t<tenant>.{args.kibo_host}"
         "/api/commerce/shipments?filter=externalOrderId==<number> for "
-        f"{len(wanted)} shipment(s) — {len(needs_status)} for a fulfilment "
-        f"status, {len(needs_channel)} for a channel.")
+        f"{len(wanted) - already} shipment(s) — {len(needs_status)} for a "
+        f"fulfilment status, {len(needs_channel)} for a channel"
+        + (f"; {already} already answered earlier in this run" if already else "")
+        + ".")
     fulfilled: set = set()
     shown = False
     counts = {"channel": 0, "logistic": 0, "location": 0, "ready": 0,
               "fulfilled": 0, "reassigned": 0, "other": 0, "unknown": 0,
-              "failed": 0}
+              "failed": 0, "reused": 0}
     for row in wanted:
         number = row["shipment_order_number"]
-        tenant, site, tenant_error = tenant_and_site(
-            number, tenant_map, args.default_tenant_id, args.default_site_id)
-        if tenant_error:
-            counts["failed"] += 1
-            row["_ko_status"] = f"not asked: {tenant_error}"
-            continue
-        try:
-            shipments, _, error = client.get_shipments_for_order(tenant, site, number)
-        except Exception as exc:  # noqa: BLE001 - one shipment, not the run
-            counts["failed"] += 1
-            row["_ko_status"] = f"not asked: the Kibo lookup failed: {exc}"
-            continue
-        if error:
-            counts["failed"] += 1
-            row["_ko_status"] = f"not asked: the Kibo lookup failed: {error}"
-            continue
+        key = normalise_shipment(number)
+        remembered = _KIBO_FACTS.get(key)
+        if remembered is not None:
+            # Asked already, earlier in this run. The row is filled from the
+            # answer rather than from a second identical call.
+            counts["reused"] += 1
+            if remembered["error"]:
+                counts["failed"] += 1
+                row["_ko_status"] = remembered["error"]
+                continue
+            status = remembered["status"]
+            state = remembered["state"]
+            channel = remembered["channel"]
+            logistic = remembered["logistic"]
+            location = remembered["location"]
+        else:
+            tenant, site, tenant_error = tenant_and_site(
+                number, tenant_map, args.default_tenant_id, args.default_site_id)
+            if tenant_error:
+                counts["failed"] += 1
+                reason = f"not asked: {tenant_error}"
+                row["_ko_status"] = reason
+                _KIBO_FACTS[key] = _kibo_failure(reason)
+                continue
+            try:
+                shipments, _, error = client.get_shipments_for_order(tenant, site, number)
+            except Exception as exc:  # noqa: BLE001 - one shipment, not the run
+                counts["failed"] += 1
+                reason = f"not asked: the Kibo lookup failed: {exc}"
+                row["_ko_status"] = reason
+                _KIBO_FACTS[key] = _kibo_failure(reason)
+                continue
+            if error:
+                counts["failed"] += 1
+                reason = f"not asked: the Kibo lookup failed: {error}"
+                row["_ko_status"] = reason
+                _KIBO_FACTS[key] = _kibo_failure(reason)
+                continue
 
-        if not shown:
-            # The first lookup is shown in full, so the log says plainly that
-            # Kibo was called and what came back. The rest are counted.
-            shown = True
-            log(f"    e.g. {number}: {len(shipments)} shipment(s) from tenant "
-                f"{tenant}" + (f", site {site}" if site else "")
-                + (f" — {fulfillment_status_of(shipments[0])!r}, "
-                   f"{shipment_status_of(shipments[0])!r}" if shipments else ""))
+            if not shown:
+                # The first lookup is shown in full, so the log says plainly that
+                # Kibo was called and what came back. The rest are counted.
+                shown = True
+                log(f"    e.g. {number}: {len(shipments)} shipment(s) from tenant "
+                    f"{tenant}" + (f", site {site}" if site else "")
+                    + (f" — {fulfillment_status_of(shipments[0])!r}, "
+                       f"{shipment_status_of(shipments[0])!r}" if shipments else ""))
 
-        mine = [shipment for shipment in shipments
-                if normalise_shipment(shipment_order_number_of(shipment))
-                == normalise_shipment(number)] or shipments
-        status = ""
-        state = ""
-        channel = ""
-        logistic = ""
-        location = ""
-        for shipment in mine:
-            status = status or fulfillment_status_of(shipment)
-            state = state or str(shipment_status_of(shipment) or "").strip().upper()
-            channel = channel or channel_of(shipment)
-            logistic = logistic or logistic_from_kibo(shipment, number)
-            location = location or str(shipment.get("fulfillmentLocationCode")
-                                       or shipment.get("assignedLocationCode")
-                                       or "").strip()
+            mine = [shipment for shipment in shipments
+                    if normalise_shipment(shipment_order_number_of(shipment))
+                    == normalise_shipment(number)] or shipments
+            status = ""
+            state = ""
+            channel = ""
+            logistic = ""
+            location = ""
+            for shipment in mine:
+                status = status or fulfillment_status_of(shipment)
+                state = state or str(shipment_status_of(shipment) or "").strip().upper()
+                channel = channel or channel_of(shipment)
+                logistic = logistic or logistic_from_kibo(shipment, number)
+                location = location or str(shipment.get("fulfillmentLocationCode")
+                                           or shipment.get("assignedLocationCode")
+                                           or "").strip()
+            _KIBO_FACTS[key] = {"status": status, "state": state,
+                                "channel": channel, "logistic": logistic,
+                                "location": location, "error": ""}
         if channel and not str(row.get("channel", "") or "").strip():
             row["channel"] = channel
             counts["channel"] += 1
@@ -2000,6 +2055,8 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
             ("in another status", counts["other"]),
             ("with no status", counts["unknown"]),
             ("that could not be read", counts["failed"]),
+            ("answered from an earlier batch of this run",
+             counts["reused"]),
             ("given a channel", counts["channel"]),
             ("given a logistics order number", counts["logistic"]),
             ("carrying a Kibo fulfilment location", counts["location"]),
@@ -2114,21 +2171,31 @@ def check_documents(rows: List[Dict[str, str]], args: argparse.Namespace, log: L
             moda_ids = set()
             to_check = main_rows
     fixed_count = 0
+    reused_count = 0
     sampled = False
     for position, row in enumerate(to_check, start=1):
-        if id(row) in moda_ids:
-            outcome = call_moda_label(
-                session, moda_key, args.moda_url,
-                row["shipment_order_number"], args.zpl_check,
-            )
+        key = normalise_shipment(row["shipment_order_number"])
+        outcome = _DOCUMENTS_RESULTS.get(key)
+        fresh = outcome is None
+        if fresh:
+            if id(row) in moda_ids:
+                outcome = call_moda_label(
+                    session, moda_key, args.moda_url,
+                    row["shipment_order_number"], args.zpl_check,
+                )
+            else:
+                outcome = call_documents_api(
+                    session, token, args.url, row["shipment_order_number"],
+                    row["logistic_order_number"], args.zpl_check,
+                    row.get("_weight", ""), row.get("_parcels", ""),
+                )
+            _DOCUMENTS_RESULTS[key] = outcome
         else:
-            outcome = call_documents_api(
-                session, token, args.url, row["shipment_order_number"],
-                row["logistic_order_number"], args.zpl_check,
-                row.get("_weight", ""), row.get("_parcels", ""),
-            )
+            # Asked already, earlier in this run. The verdict is applied
+            # again — same answer, same ko_fix_date — without a second call.
+            reused_count += 1
         flags = outcome["flags"]
-        if not sampled:
+        if not sampled and fresh:
             # One call shown in full per run: what was sent, and what came
             # back. Field names are where this has gone wrong before, and a
             # log that shows them settles it without a Postman session.
@@ -2150,7 +2217,9 @@ def check_documents(rows: List[Dict[str, str]], args: argparse.Namespace, log: L
             row["ko_fixed"] = "yes"
             fixed_count += 1
         if position % 25 == 0 or position == len(to_check):
-            log(f"  {position}/{len(to_check)} checked, {fixed_count} newly fixed.")
+            log(f"  {position}/{len(to_check)} checked, {fixed_count} newly fixed"
+                + (f", {reused_count} from an earlier batch of this run"
+                   if reused_count else "") + ".")
 
     # Why the rest are not fixed, grouped. A run that fixes nothing should say
     # what the API actually answered rather than leaving it to be queried for.
@@ -2165,7 +2234,9 @@ def check_documents(rows: List[Dict[str, str]], args: argparse.Namespace, log: L
             time.sleep(args.sleep)
     log(f"  {fixed_count} of {len(to_check)} checked shipment(s) were fixed; "
         f"{sum(1 for row in rows if row['ko_fixed'] == 'yes')} of {len(rows)} "
-        "now carry a ko_fix_date.")
+        "now carry a ko_fix_date."
+        + (f" {reused_count} of them were answered from an earlier batch of "
+           "this run rather than called again." if reused_count else ""))
 
 
 def tried_after_fix(ko_fix_date: str, last_tried: str) -> bool:
@@ -2251,6 +2322,10 @@ def run_resolve(client: Any, wlfs_client: Any, gxo_present: Optional[set],
       any    Kibo called it FULFILLED during this run — it has left the
              warehouse, which settles it whatever anything else says.
 
+      any    Kibo calls it CANCELED and prd_shipmentStatus has a CANCELLED
+             event for the same pair. Cancelled on both sides, so there is
+             nothing to chase; either half on its own is not enough.
+
       other  the shipment is no longer in the filtered view of the monitoring
              table — the same filters the intake applies. Once that table has
              stopped calling it blocked there is nothing left to do with it.
@@ -2282,22 +2357,32 @@ def run_resolve(client: Any, wlfs_client: Any, gxo_present: Optional[set],
     if other_rows:
         monitoring_open = table_module.fetch_monitoring_open(client, log)
 
-    # prd_shipmentStatus, read once for every GXO shipment: the CANCELLED
-    # events settle the ones GXO was asked to cancel, the SHIPPED events
+    # Every shipment Kibo calls CANCELED, at any warehouse. These are asked
+    # about even when they are not GXO's: a shipment cancelled in Kibo and
+    # confirmed cancelled by the warehouse is settled on both sides, and the
+    # rule below archives it wherever it sits.
+    cancelled_rows = [row for row in rows
+                      if str(row.get("fulfillment_status", "") or "").strip().upper()
+                      == CANCELLED_STATUS]
+
+    # prd_shipmentStatus, read once: the CANCELLED events settle the ones GXO
+    # was asked to cancel and the ones Kibo has cancelled, the SHIPPED events
     # settle the rest. None means the table could not be read at all, and then
     # neither applies — not knowing is not the same as nothing having happened.
+    event_rows = gxo_all + [row for row in cancelled_rows if id(row) not in gxo_ids]
     events: Optional[Dict[str, Any]] = None
-    if gxo_all:
+    if event_rows:
         events = table_module.fetch_status_events(
             wlfs_client,
             [(normalise_shipment(row["shipment_order_number"]),
-              normalise_shipment(row["logistic_order_number"])) for row in gxo_all],
+              normalise_shipment(row["logistic_order_number"])) for row in event_rows],
             log,
         )
 
     resolved: List[str] = []
     reasons = {"cancelled by GXO": 0, "shipped": 0, "fulfilled in Kibo": 0,
                "reassigned in Kibo": 0,
+               "cancelled in Kibo and at the warehouse": 0,
                "gone from the GXO inputs": 0, "gone from the monitoring table": 0}
 
     # Kibo called these FULFILLED earlier in this run. They were written a
@@ -2331,6 +2416,33 @@ def run_resolve(client: Any, wlfs_client: Any, gxo_present: Optional[set],
         if waiting:
             log(f"  {waiting} shipment(s) GXO was asked to cancel have no CANCELLED "
                 "event yet; they stay open whatever the inputs say.")
+
+    # Cancelled on both sides: Kibo's shipmentStatus is CANCELED and
+    # prd_shipmentStatus carries a CANCELLED event for the same pair. Nothing
+    # is waiting on such a shipment anywhere, so it is archived instead of
+    # being counted on the dashboard.
+    #
+    # Both halves are required, and for different reasons. A Kibo
+    # cancellation the warehouse has not confirmed is still open work — that
+    # is the whole point of the rule above this one. A CANCELLED event for a
+    # shipment Kibo has not cancelled is somebody else's cancellation, not
+    # this one's.
+    if events is not None and cancelled_rows:
+        done = set(resolved)
+        for row in cancelled_rows:
+            shipment = normalise_shipment(row["shipment_order_number"])
+            if shipment in done:
+                continue
+            if table_module.has_event(events, "cancelled", shipment,
+                                      normalise_shipment(row["logistic_order_number"])):
+                resolved.append(shipment)
+                done.add(shipment)
+                settled.add(shipment)
+                reasons["cancelled in Kibo and at the warehouse"] += 1
+        still_open = len(cancelled_rows) - reasons["cancelled in Kibo and at the warehouse"]
+        if still_open:
+            log(f"  {still_open} shipment(s) Kibo calls {CANCELLED_STATUS} have no "
+                "CANCELLED event at the warehouse yet; they stay open.")
 
     shipped_ids = set()
     if events is not None:
