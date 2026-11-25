@@ -21,7 +21,7 @@
 -- dashboard opens empty on the day of the migration. From the first run after
 -- this script, the two go their separate ways.
 --
--- Run 1 and 2, check 3, then create the views in 4.
+-- Run 1 and 2, check 3, then 4 to drop the views that are no longer used.
 
 -- ---------------------------------------------------------------------------
 -- 1. The operational table
@@ -73,32 +73,20 @@ GROUP BY table_name
 ORDER BY table_name;
 
 -- ---------------------------------------------------------------------------
--- 4. The two dashboards
+-- 4. No dashboard views
 -- ---------------------------------------------------------------------------
--- Point each dashboard at its view rather than at the table, so which columns
--- it shows is settled here in one place instead of in the dashboard's own
--- field list. SELECT * EXCEPT means a column added to the table later shows up
--- in both views without either being edited.
+-- Both dashboards read ko_operational_table directly. Which of the two status
+-- columns each one shows is a field choice in the dashboard, not something
+-- this schema decides: the GXO board shows updated_fulfillment_status only,
+-- the troubleshooting board shows both.
+--
+-- An earlier version of this script created ko_dashboard_gxo and
+-- ko_dashboard_troubleshooting. They are not used; these drops remove them.
+-- Both are safe to run when the views were never created.
+DROP VIEW IF EXISTS `tlg-business-intelligence-prd.til.ko_dashboard_gxo`;
+DROP VIEW IF EXISTS `tlg-business-intelligence-prd.til.ko_dashboard_troubleshooting`;
 
--- GXO's list: the live status only. GXO is being asked to act on what the
--- shipment is doing now, and the status it was logged in is this workflow's
--- own history, not theirs. The filters are the ones in ko_dashboard_reconcile.sql.
-CREATE OR REPLACE VIEW `tlg-business-intelligence-prd.til.ko_dashboard_gxo` AS
-SELECT * EXCEPT (initial_fulfillment_status)
-FROM `tlg-business-intelligence-prd.til.ko_operational_table`
-WHERE NOT IFNULL(ko_resolved, FALSE)
-  AND TRIM(IFNULL(blocking_reason, '')) NOT LIKE
-      'Stock still reserved to the cancelled shipment%'
-  AND (UPPER(IFNULL(location_provider, '')) = 'GXO'
-       OR STRPOS(UPPER(IFNULL(source, '')), 'GXO') > 0);
-
--- Troubleshooting: both columns. The pair is the diagnosis — a shipment
--- logged in one status and sitting in another has moved, and one that has not
--- moved at all is a different problem.
-CREATE OR REPLACE VIEW `tlg-business-intelligence-prd.til.ko_dashboard_troubleshooting` AS
-SELECT *
-FROM `tlg-business-intelligence-prd.til.ko_operational_table`
-WHERE NOT IFNULL(ko_resolved, FALSE)
-  AND TRIM(IFNULL(blocking_reason, '')) NOT LIKE
-      'Stock still reserved to the cancelled shipment%'
-  AND NOT IFNULL(ko_fixed, FALSE);
+-- Confirm: expect no rows.
+SELECT table_name, table_type
+FROM `tlg-business-intelligence-prd.til`.INFORMATION_SCHEMA.TABLES
+WHERE table_name IN ('ko_dashboard_gxo', 'ko_dashboard_troubleshooting');
