@@ -1,8 +1,8 @@
 {
-  "run": "20261125-133104",
-  "built_at": "2026-11-25T13:31:04Z",
-  "finished_at": "2026-11-25T13:43:03Z",
-  "file": "ko_monitoring-20261125-133104.csv",
+  "run": "20261125-140113",
+  "built_at": "2026-11-25T14:01:13Z",
+  "finished_at": "2026-11-25T14:09:12Z",
+  "file": "ko_monitoring-20261125-140113.csv",
   "columns": [
     "shipment_order_number",
     "oerodp",
@@ -36,40 +36,26 @@
     "api_call_date",
     "batch"
   ],
-  "rows": 882,
+  "rows": 460,
   "batches": [
     {
-      "batch": "20261125-132843",
-      "csv_file": "20261125-132843__Wadih__pending.csv",
+      "batch": "recheck-20261125-140113",
+      "csv_file": "",
       "xlsx_file": "",
-      "shipments": 437,
-      "from_csv": 350,
-      "from_excel": 236,
-      "matched_both": 149,
-      "fixed": 171,
-      "with_warehouse_attempt": 347,
-      "with_error": 430,
+      "shipments": 452,
+      "from_csv": 0,
+      "from_excel": 0,
+      "matched_both": 0,
+      "fixed": 7,
+      "with_warehouse_attempt": 229,
+      "with_error": 441,
       "dry_run": false,
-      "join": "outer",
-      "truncated": false
+      "join": "table",
+      "truncated": false,
+      "recheck_only": true
     },
     {
-      "batch": "20261125-133045",
-      "csv_file": "20261125-133045__Wadih__pending.csv",
-      "xlsx_file": "",
-      "shipments": 437,
-      "from_csv": 350,
-      "from_excel": 236,
-      "matched_both": 149,
-      "fixed": 173,
-      "with_warehouse_attempt": 347,
-      "with_error": 430,
-      "dry_run": false,
-      "join": "outer",
-      "truncated": false
-    },
-    {
-      "batch": "monitoring-20261125-133104",
+      "batch": "monitoring-20261125-140113",
       "csv_file": "",
       "xlsx_file": "",
       "shipments": 8,
@@ -88,12 +74,12 @@
   "dry_run": false,
   "zpl_check": "printable",
   "table": {
-    "written": 0,
-    "resolved": 0,
+    "written": 460,
+    "resolved": 15,
     "before": null,
     "after": null,
-    "error": "400 GET https://bigquery.googleapis.com/bigquery/v2/projects/tlg-business-intelligence-prd/queries/2ad9a3a4-bf61-4e85-ad8a-84819a87f126?maxResults=0&location=europe-west1&prettyPrint=false: UPDATE/MERGE must match at most one source row for each target row\n\nLocation: europe-west1\nJob ID: 2ad9a3a4-bf61-4e85-ad8a-84819a87f126\n",
-    "archived": 1,
-    "still_open": 681
+    "error": "",
+    "archived": 15,
+    "still_open": 667
   }
 }
