@@ -758,8 +758,16 @@ def run_picked_cancellations(bi_client: Any, wlfs_client: Any,
         done, problems = [], []
         for shipment in targets:
             number = clean(shipment.get("shipmentNumber"))
+            # The tenant and site the shipment itself came back with, exactly
+            # as stage 1 does it. The order lookup is deliberately tenant-wide
+            # because a brand can have several sites, so the shipment in hand
+            # is the only thing that knows which one it is on, and a PUT to
+            # the wrong site is a cancellation that does not land: Kibo
+            # answers 404 for a shipment the search had just returned.
+            shipment_tenant = clean(str(shipment.get("tenantId") or "")) or tenant
+            shipment_site = clean(str(shipment.get("siteId") or "")) or site
             ok, send_error, excerpt = kibo.cancel_shipment(
-                tenant, site, number, args.kibo_reason_code,
+                shipment_tenant, shipment_site, number, args.kibo_reason_code,
                 f"Picked and cancelled at the warehouse "
                 f"(event {item.cancelled_event_id})"[:200],
                 args.kibo_send_notifications,
@@ -770,7 +778,12 @@ def run_picked_cancellations(bi_client: Any, wlfs_client: Any,
                 problems.append(f"{number}: {send_error} {excerpt}"[:200])
 
         outcomes.append(Outcome(
-            **base, tenant_id=tenant, kibo_shipment_number=", ".join(done),
+            # The numbers that were tried, not only the ones that worked: a
+            # failed row with an empty column is a row that cannot be looked
+            # up from the log it was reported in.
+            **base, tenant_id=tenant,
+            kibo_shipment_number=", ".join(done) or ", ".join(
+                clean(shipment.get("shipmentNumber")) for shipment in targets),
             outcome="failed" if problems and not done else
                     ("cancelled" if done else "skipped"),
             detail="; ".join(problems) if problems else
