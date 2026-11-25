@@ -1,0 +1,700 @@
+﻿stage,shipment_order_number,shipment_items,order_number,tenant_id,kibo_shipment_number,event_id,outcome,detail
+monitoring,OW-FF-OW7191749743,,OW-FF-OW7191749743,,,2E8638F1-5C04-4793-922C-240530A42959,sent,kibo says CANCELED; TLITGX0051: HTTP 200; the ledger was written
+monitoring,PA-FF-PA7191772179,,PA-FF-PA7191772179,,,A51F2621-59CE-4F1C-9E66-CFFB13C29DEA,sent,kibo says CANCELED; TLITGX0053: HTTP 200; the ledger was written
+picked,BB-BSA2311790011-1,42888782314405x1,,33694,89869,,skipped,Kibo already has shipment 89869 as REASSIGNED; nothing was sent
+picked,BB-BSB2311428016-1,42500011876422x1,,33694,90059,,skipped,Kibo already has shipment 90059 as REASSIGNED; nothing was sent
+picked,BB-FF-TGK191736696,"42500012132671x1, 42500012206907x1",,33694,90010,,skipped,Kibo already has shipment 90010 as REASSIGNED; nothing was sent
+picked,BB-ZLA10103747686367,42500012132718x1,,33694,89613,,skipped,Kibo already has shipment 89613 as REASSIGNED; nothing was sent
+picked,BB-ZLA10111748412045,42500011841765x1,,33694,89933,,skipped,Kibo already has shipment 89933 as REASSIGNED; nothing was sent
+picked,BB-ZLA10906167158316,42196781979595x1,,33694,89345,,skipped,Kibo already has shipment 89345 as REASSIGNED; nothing was sent
+picked,BB-ZLB10911166814699,42500011841765x1,,33694,90058,,skipped,Kibo already has shipment 90058 as REASSIGNED; nothing was sent
+picked,CA-EUA00858982,058053173909221x1,,29993,54352,,skipped,Kibo already has shipment 54352 as REASSIGNED; nothing was sent
+picked,CA-EUA00860879,058053173705021x1,,29993,55817,,skipped,Kibo already has shipment 55817 as REASSIGNED; nothing was sent
+picked,CA-EUA00860945,058055828250078x1,,29993,55740,,skipped,Kibo already has shipment 55740 as REASSIGNED; nothing was sent
+picked,CA-EUB00859254,058053173971990x1,,29993,55571,,skipped,Kibo already has shipment 55571 as REASSIGNED; nothing was sent
+picked,CA-FF-TGC191732502,058055828064989x1,,29993,55793,,skipped,Kibo already has shipment 55793 as REASSIGNED; nothing was sent
+picked,CV-FF-T9R191688725,508059915853050x1,,30014,150751,,skipped,Kibo already has shipment 150751 as REASSIGNED; nothing was sent
+picked,DG-FF-DWH191662093,158054802730988x1,,29916,775165,,skipped,Kibo already has shipment 775165 as REASSIGNED; nothing was sent
+picked,DG-FF-DWH191731318,158057576305215x1,,29916,775758,,skipped,Kibo already has shipment 775758 as REASSIGNED; nothing was sent
+picked,DG-FF-DWH191731348,158056265231972x1,,29916,775759,,skipped,Kibo already has shipment 775759 as REASSIGNED; nothing was sent
+picked,DG-FF-DWH191732217,158056810179452x1,,29916,775766,,skipped,Kibo already has shipment 775766 as REASSIGNED; nothing was sent
+picked,DG-FF-DWH191732437,158054802372348x1,,29916,775770,,skipped,Kibo already has shipment 775770 as REASSIGNED; nothing was sent
+picked,DG-FF-DWH191743308,158056810994222x1,,29916,775884,,skipped,Kibo already has shipment 775884 as REASSIGNED; nothing was sent
+picked,DG-FF-DWH191766344,158054797391980x1,,29916,776166,,skipped,Kibo already has shipment 776166 as REASSIGNED; nothing was sent
+picked,DG-FF-DWH191789977,158056265180843x1,,29916,776413,,skipped,Kibo already has shipment 776413 as REASSIGNED; nothing was sent
+picked,DJ-FF-LDJ191650617,"118053682267263x1, 118053682267508x1",,30018,,,failed,"153185: HTTP 404 {""message"":""Could not find shipment 153185""}"
+picked,DJ-FF-LDJ191667624,118053682452652x1,,30018,153239,,skipped,Kibo already has shipment 153239 as REASSIGNED; nothing was sent
+picked,DJ-FF-LDJ191824359,118053682526278x1,,30018,153620,,skipped,Kibo already has shipment 153620 as REASSIGNED; nothing was sent
+picked,DJ-USD00032514,118053682409243x1,,30018,149908[READY],,cancelled,"picked 2026-11-04T11:02:08+00:00, cancelled 2026-11-25T10:27:22+00:00"
+picked,DJ-USEST0000124454,118053682089407x1,,30018,153413,,skipped,Kibo already has shipment 153413 as REASSIGNED; nothing was sent
+picked,FE-EUA00140465,"484070034503583x1, 484070034503583x1, 484070034503583x1, 484070034503583x1",,30022,192374,,skipped,Kibo already has shipment 192374 as REASSIGNED; nothing was sent
+picked,FE-EUB00139112,488052591297941x1,,30022,191139,,skipped,Kibo already has shipment 191139 as REASSIGNED; nothing was sent
+picked,FE-EUB00139234,488051525641003x1,,30022,192368,,skipped,Kibo already has shipment 192368 as REASSIGNED; nothing was sent
+picked,FE-EUB00140103,484070034503583x1,,30022,192366,,skipped,Kibo already has shipment 192366 as REASSIGNED; nothing was sent
+picked,FE-EUQ00134476,484070032550510x1,,30022,192286,,skipped,Kibo already has shipment 192286 as REASSIGNED; nothing was sent
+picked,FE-USB00059214,488051525641003x1,,30022,192220,,skipped,Kibo already has shipment 192220 as REASSIGNED; nothing was sent
+picked,FE-USB00060363,484070034503590x1,,30022,192758,,skipped,Kibo already has shipment 192758 as REASSIGNED; nothing was sent
+picked,FE-USI00058846,488051525639567x1,,30022,192288,,skipped,Kibo already has shipment 192288 as REASSIGNED; nothing was sent
+picked,FE-USP00057813,484070032531762x1,,30022,192287,,skipped,Kibo already has shipment 192287 as REASSIGNED; nothing was sent
+picked,FE-USR00057643,484070032531762x1,,30022,192285,,skipped,Kibo already has shipment 192285 as REASSIGNED; nothing was sent
+picked,HE-EUA00140886,338055403567157x1,,30021,112590,,skipped,Kibo already has shipment 112590 as REASSIGNED; nothing was sent
+picked,HE-EUA00141123,338055403701339x1,,30021,112966,,skipped,Kibo already has shipment 112966 as REASSIGNED; nothing was sent
+picked,HE-EUA00141143,338055403464326x1,,30021,112993,,skipped,Kibo already has shipment 112993 as REASSIGNED; nothing was sent
+picked,HE-EUA00141401,338055403593545x1,,30021,113180,,skipped,Kibo already has shipment 113180 as REASSIGNED; nothing was sent
+picked,HE-EUA00141411,338055403462155x1,,30021,113224,,skipped,Kibo already has shipment 113224 as REASSIGNED; nothing was sent
+picked,HE-EUA00141458,338055403483112x1,,30021,113397,,skipped,Kibo already has shipment 113397 as REASSIGNED; nothing was sent
+picked,HE-EUA00141651,338056140776758x1,,30021,113727,,skipped,Kibo already has shipment 113727 as REASSIGNED; nothing was sent
+picked,HE-EUB00140377,338055403582334x1,,30021,112744,,skipped,Kibo already has shipment 112744 as REASSIGNED; nothing was sent
+picked,HE-EUC00140195,338055403469963x1,,30021,112578,,skipped,Kibo already has shipment 112578 as REASSIGNED; nothing was sent
+picked,HE-FF-TH5191691619,338055403461486x1,,30021,,,failed,"113594: HTTP 404 {""message"":""Could not find shipment 113594""}"
+picked,HE-FF-TH5191708450,338055403463275x1,,30021,,,failed,"113623: HTTP 404 {""message"":""Could not find shipment 113623""}"
+picked,HE-FF-TH5191713145,338055403643165x1,,30021,,,failed,"113640: HTTP 404 {""message"":""Could not find shipment 113640""}"
+picked,HE-FF-TH5191713362,338055403491773x1,,30021,,,failed,"113641: HTTP 404 {""message"":""Could not find shipment 113641""}"
+picked,HE-FF-TH5191736314,338055403458479x1,,30021,,,failed,"113707: HTTP 404 {""message"":""Could not find shipment 113707""}"
+picked,HE-FF-TH5191785962,338055403461509x1,,30021,,,failed,"113801: HTTP 404 {""message"":""Could not find shipment 113801""}"
+picked,LA-FF-D8B191730864,573612456657409x1,,30019,11996,,skipped,Kibo already has shipment 11996 as REASSIGNED; nothing was sent
+picked,LA-FF-IK2191035878,573612457038962x1,,30019,11717,,skipped,Kibo already has shipment 11717 as REASSIGNED; nothing was sent
+picked,LN-CTA1920062177-4,174260461221062x1,,29917,689529,,skipped,Kibo already has shipment 689529 as REASSIGNED; nothing was sent
+picked,LN-CTA1920102947-4,511200190028856x1,,29917,689392,,skipped,Kibo already has shipment 689392 as REASSIGNED; nothing was sent
+picked,LN-CTA1920155721-4,511200189728880x1,,29917,688840,,skipped,Kibo already has shipment 688840 as REASSIGNED; nothing was sent
+picked,LN-CTA1920172540-4,098053813281298x1,,29917,688912,,skipped,Kibo already has shipment 688912 as REASSIGNED; nothing was sent
+picked,LN-CTA1920212310-4,174260461287242x1,,29917,,,failed,"689094: HTTP 404 {""message"":""Could not find shipment 689094""}"
+picked,LN-CTA1920305391-4,511200189812107x1,,29917,688216,,skipped,Kibo already has shipment 688216 as REASSIGNED; nothing was sent
+picked,LN-CTA1920435036-4,058055828332811x1,,29917,688700,,skipped,Kibo already has shipment 688700 as REASSIGNED; nothing was sent
+picked,LN-CTA1920505775-4,508059915414664x1,,29917,688800,,skipped,Kibo already has shipment 688800 as REASSIGNED; nothing was sent
+picked,LN-CTA1920535701-4,518055266607847x1,,29917,688802,,skipped,Kibo already has shipment 688802 as REASSIGNED; nothing was sent
+picked,LN-CTA1920542035-4,518055266269106x1,,29917,689795,,skipped,Kibo already has shipment 689795 as REASSIGNED; nothing was sent
+picked,LN-CTA1920542765-4,538055167661351x1,,29917,,,failed,"689891: HTTP 404 {""message"":""Could not find shipment 689891""}"
+picked,LN-CTA1920592748-4,538055167661351x1,,29917,,,failed,"689897: HTTP 404 {""message"":""Could not find shipment 689897""}"
+picked,LN-CTA1920605282-4,040198682635518x1,,29917,688565,,skipped,Kibo already has shipment 688565 as REASSIGNED; nothing was sent
+picked,LN-CTA1920653555-4,098053195262847x1,,29917,,,failed,"689967: HTTP 404 {""message"":""Could not find shipment 689967""}"
+picked,LN-CTA1920672499-4,098139414510x1,,29917,,,failed,"689139: HTTP 404 {""message"":""Could not find shipment 689139""}"
+picked,LN-CTA1920715093-4,040198682562913x1,,29917,688675,,skipped,Kibo already has shipment 688675 as REASSIGNED; nothing was sent
+picked,LN-CTA1920715396-4,508059915307805x1,,29917,688161,,skipped,Kibo already has shipment 688161 as REASSIGNED; nothing was sent
+picked,LN-CTA1920753398-4,098809983946778x1,,29917,,,failed,"690116: HTTP 404 {""message"":""Could not find shipment 690116""}"
+picked,LN-CTA1920915602-4,09198269977727x1,,29917,688112,,skipped,Kibo already has shipment 688112 as REASSIGNED; nothing was sent
+picked,LN-CTA1929071604-4,174260461381360x1,,29917,683879,,skipped,Kibo already has shipment 683879 as REASSIGNED; nothing was sent
+picked,LN-CTA1929090605-4,174260461293212x1,,29917,,,failed,"683025: HTTP 404 {""message"":""Could not find shipment 683025""}"
+picked,LN-CTA1929096779-4,174260399529957x1,,29917,686979,,skipped,Kibo already has shipment 686979 as REASSIGNED; nothing was sent
+picked,LN-CTA1929130824-4,174260461342781x1,,29917,,,failed,"683221: HTTP 404 {""message"":""Could not find shipment 683221""}"
+picked,LN-CTA1929143761-4,518055266529743x1,,29917,,,failed,"681693: HTTP 404 {""message"":""Could not find shipment 681693""}"
+picked,LN-CTA1929162133-4,174260461375369x1,,29917,680939,,skipped,Kibo already has shipment 680939 as REASSIGNED; nothing was sent
+picked,LN-CTA1929171346-4,511200193320599x1,,29917,,,failed,"684021: HTTP 404 {""message"":""Could not find shipment 684021""}"
+picked,LN-CTA1929226662-4,511200190038879x1,,29917,,,failed,"686285: HTTP 404 {""message"":""Could not find shipment 686285""}"
+picked,LN-CTA1929240264-4,174260461144736x1,,29917,683495,,skipped,Kibo already has shipment 683495 as REASSIGNED; nothing was sent
+picked,LN-CTA1929340614-4,040199690527222x1,,29917,,,failed,"683036: HTTP 404 {""message"":""Could not find shipment 683036""}"
+picked,LN-CTA1929491598-4,174260461427891x1,,29917,683757,,skipped,Kibo already has shipment 683757 as REASSIGNED; nothing was sent
+picked,LN-CTA1929577818-4,174260461296459x1,,29917,682726,,skipped,Kibo already has shipment 682726 as REASSIGNED; nothing was sent
+picked,LN-CTA1929608284-4,174260461361713x1,,29917,682242,,skipped,Kibo already has shipment 682242 as REASSIGNED; nothing was sent
+picked,LN-CTA1929678113-4,174260461277946x1,,29917,,,failed,"682176: HTTP 404 {""message"":""Could not find shipment 682176""}"
+picked,LN-CTA1929713001-4,511200190029457x1,,29917,,,failed,"681581: HTTP 404 {""message"":""Could not find shipment 681581""}"
+picked,LN-CTA1929749910-4,174260461377974x1,,29917,685740,,skipped,Kibo already has shipment 685740 as REASSIGNED; nothing was sent
+picked,LN-CTA1929779766-4,538055167759768x1,,29917,,,failed,"686040: HTTP 404 {""message"":""Could not find shipment 686040""}"
+picked,LN-CTA1929850047-4,174260461245815x1,,29917,,,failed,"683587: HTTP 404 {""message"":""Could not find shipment 683587""}"
+picked,LN-CTA1929949125-4,508059915964503x1,,29917,,,failed,"685871: HTTP 404 {""message"":""Could not find shipment 685871""}"
+picked,LN-CTB1920394614-4,518055266531258x1,,29917,689152,,skipped,Kibo already has shipment 689152 as REASSIGNED; nothing was sent
+picked,LN-CTB1920594986-4,097323336791538x1,,29917,687917,,skipped,Kibo already has shipment 687917 as REASSIGNED; nothing was sent
+picked,LN-CTB1929085801-4,511200193321862x1,,29917,687595,,skipped,Kibo already has shipment 687595 as REASSIGNED; nothing was sent
+picked,LN-CTB1929088062-4,174260461193802x1,,29917,,,failed,"683818: HTTP 404 {""message"":""Could not find shipment 683818""}"
+picked,LN-CTB1929158240-4,174260461342781x1,,29917,,,failed,"683817: HTTP 404 {""message"":""Could not find shipment 683817""}"
+picked,LN-CTB1929247586-4,511200190021383x1,,29917,,,failed,"686023: HTTP 404 {""message"":""Could not find shipment 686023""}"
+picked,LN-CTB1929518262-4,174260461333604x1,,29917,,,failed,"683819: HTTP 404 {""message"":""Could not find shipment 683819""}"
+picked,LN-CTB1929840462-4,174260461387997x1,,29917,,,failed,"686028: HTTP 404 {""message"":""Could not find shipment 686028""}"
+picked,LN-EUB01697255,09195292731104x1,,29917,689860,,skipped,Kibo already has shipment 689860 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191480392,098050889278849x1,,29917,689655,,skipped,Kibo already has shipment 689655 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191485398,09198605316135x1,,29917,689666,,skipped,Kibo already has shipment 689666 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191486291,09198605277443x1,,29917,689674,,skipped,Kibo already has shipment 689674 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191487377,098054492743459x1,,29917,689677,,skipped,Kibo already has shipment 689677 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191488565,098057626033709x1,,29917,689682,,skipped,Kibo already has shipment 689682 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191662397,09198960022351x1,,29917,687912,,skipped,Kibo already has shipment 687912 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191666181,09198605791598x1,,29917,687961,,skipped,Kibo already has shipment 687961 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191666672,098053819046143x1,,29917,687978,,skipped,Kibo already has shipment 687978 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191666987,098053195614202x1,,29917,687975,,skipped,Kibo already has shipment 687975 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191667625,098050994165874x1,,29917,687983,,skipped,Kibo already has shipment 687983 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191671445,098058427067146x1,,29917,688050,,skipped,Kibo already has shipment 688050 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191679397,09195149331907x1,,29917,688165,,skipped,Kibo already has shipment 688165 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191680466,09198605319457x1,,29917,,,failed,"688177: HTTP 404 {""message"":""Could not find shipment 688177""}"
+picked,LN-FF-NTP191682615,098050568226994x1,,29917,,,failed,"688203: HTTP 404 {""message"":""Could not find shipment 688203""}"
+picked,LN-FF-NTP191684048,095715897118862x1,,29917,688219,,skipped,Kibo already has shipment 688219 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191684813,097300000670153x1,,29917,688226,,skipped,Kibo already has shipment 688226 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191691617,09198605296697x1,,29917,688297,,skipped,Kibo already has shipment 688297 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191700125,094068818614525x1,,29917,688388,,skipped,Kibo already has shipment 688388 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191702190,098057626200422x1,,29917,,,failed,"688423: HTTP 404 {""message"":""Could not find shipment 688423""}"
+picked,LN-FF-NTP191705260,095714667399548x1,,29917,,,failed,"688476: HTTP 404 {""message"":""Could not find shipment 688476""}"
+picked,LN-FF-NTP191709631,09198488546063x1,,29917,688523,,skipped,Kibo already has shipment 688523 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191737026,098059525440145x1,,29917,688865,,skipped,Kibo already has shipment 688865 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191751484,098053819655307x1,,29917,689077,,skipped,Kibo already has shipment 689077 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191761284,098053195581412x1,,29917,689216,,skipped,Kibo already has shipment 689216 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191761707,094069987751639x1,,29917,,,failed,"689211: HTTP 404 {""message"":""Could not find shipment 689211""}"
+picked,LN-FF-P2N191312354,585059107945016x1,,29917,,,failed,"682390: HTTP 404 {""message"":""Could not find shipment 682390""}"
+picked,LN-FF-P2N191529650,"585061107361475x1, 585061107361604x1",,29917,686201,,skipped,Kibo already has shipment 686201 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191529650,585061107361475x1,,29917,,,failed,"686924: HTTP 404 {""message"":""Could not find shipment 686924""}"
+picked,LN-FF-P2N191529650,585061107361604x1,,29917,687353,,skipped,Kibo already has shipment 687353 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191529650,585061107361604x1,,29917,,,failed,"689148: HTTP 404 {""message"":""Could not find shipment 689148""}"
+picked,LN-FF-P2N191643967,584255622760634x1,,29917,687689,,skipped,Kibo already has shipment 687689 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191666162,581000000130959x1,,29917,687959,,skipped,Kibo already has shipment 687959 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191693724,58840213257125x1,,29917,688316,,skipped,Kibo already has shipment 688316 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191697830,585059107948826x1,,29917,688361,,skipped,Kibo already has shipment 688361 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191697831,585059107948826x1,,29917,688360,,skipped,Kibo already has shipment 688360 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191698947,585059107924424x1,,29917,688372,,skipped,Kibo already has shipment 688372 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191699288,585059107847686x1,,29917,688376,,skipped,Kibo already has shipment 688376 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191699872,585059107948949x1,,29917,688381,,skipped,Kibo already has shipment 688381 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191700236,585059107957033x1,,29917,688393,,skipped,Kibo already has shipment 688393 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191700911,585059107847662x1,,29917,688399,,skipped,Kibo already has shipment 688399 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191701166,585061107364407x1,,29917,688403,,skipped,Kibo already has shipment 688403 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191701355,585061107360638x1,,29917,688401,,skipped,Kibo already has shipment 688401 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191705219,585059107949212x1,,29917,688469,,skipped,Kibo already has shipment 688469 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191705518,585059107948826x1,,29917,688467,,skipped,Kibo already has shipment 688467 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191712575,585057890803636x1,,29917,688570,,skipped,Kibo already has shipment 688570 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191715108,585057890946388x1,,29917,688597,,skipped,Kibo already has shipment 688597 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191715205,585059107643431x1,,29917,688601,,skipped,Kibo already has shipment 688601 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191715787,585059107650149x1,,29917,688615,,skipped,Kibo already has shipment 688615 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191716810,585057890431808x1,,29917,688632,,skipped,Kibo already has shipment 688632 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191717471,585057890434144x1,,29917,688645,,skipped,Kibo already has shipment 688645 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191721418,581000000155549x1,,29917,688711,,skipped,Kibo already has shipment 688711 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191723456,585059107650125x1,,29917,688729,,skipped,Kibo already has shipment 688729 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191725672,585059107958351x1,,29917,688751,,skipped,Kibo already has shipment 688751 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191725817,585057890803520x1,,29917,688752,,skipped,Kibo already has shipment 688752 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191727163,585057890707927x1,,29917,688768,,skipped,Kibo already has shipment 688768 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191728099,585059107650057x1,,29917,688783,,skipped,Kibo already has shipment 688783 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191728318,585057890981617x1,,29917,688779,,skipped,Kibo already has shipment 688779 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191728598,585057890960728x1,,29917,688788,,skipped,Kibo already has shipment 688788 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191730604,585061107361604x1,,29917,688801,,skipped,Kibo already has shipment 688801 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191731753,585057890987909x1,,29917,688813,,skipped,Kibo already has shipment 688813 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191733169,585059107651320x1,,29917,688832,,skipped,Kibo already has shipment 688832 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191756773,585059107948932x1,,29917,,,failed,"689169: HTTP 404 {""message"":""Could not find shipment 689169""}"
+picked,LN-IMAP26112163065,098053819502090x1,,29917,687902,,skipped,Kibo already has shipment 687902 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163066,098053819193120x1,,29917,687905,,skipped,Kibo already has shipment 687905 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163067,098053819191041x1,,29917,687903,,skipped,Kibo already has shipment 687903 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163071,098053819784526x1,,29917,687908,,skipped,Kibo already has shipment 687908 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163077,098059525448783x1,,29917,687907,,skipped,Kibo already has shipment 687907 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163134,098059525448349x1,,29917,687918,,skipped,Kibo already has shipment 687918 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163299,098059525444877x1,,29917,687933,,skipped,Kibo already has shipment 687933 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163599,09195149443358x1,,29917,687955,,skipped,Kibo already has shipment 687955 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163787,098053819295268x1,,29917,687962,,skipped,Kibo already has shipment 687962 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112164413,098059525294564x1,,29917,688024,,skipped,Kibo already has shipment 688024 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112164532,098053819191188x1,,29917,688040,,skipped,Kibo already has shipment 688040 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112164648,098142590566x1,,29917,688060,,skipped,Kibo already has shipment 688060 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112165302,098055770196158x1,,29917,688181,,skipped,Kibo already has shipment 688181 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112266661,098059525445515x1,,29917,688386,,skipped,Kibo already has shipment 688386 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112371849,098059525444907x1,,29917,689092,,skipped,Kibo already has shipment 689092 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112373069,040198682721266x1,,29917,689194,,skipped,Kibo already has shipment 689194 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112474739,098056035847631x1,,29917,689550,,skipped,Kibo already has shipment 689550 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112477222,040198682720429x1,,29917,689863,,skipped,Kibo already has shipment 689863 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112581567,098056035800100x1,,29917,690287,,skipped,Kibo already has shipment 690287 as REASSIGNED; nothing was sent
+picked,LN-MTAPL1741EFD9F3DD,09198605742767x1,,29917,688537,,skipped,Kibo already has shipment 688537 as REASSIGNED; nothing was sent
+picked,LN-NAA00001767,098098675401x1,,29917,688894,,skipped,Kibo already has shipment 688894 as REASSIGNED; nothing was sent
+picked,MA-EUA00013044,528055384143418x1,,33693,82799,,skipped,Kibo already has shipment 82799 as REASSIGNED; nothing was sent
+picked,MA-EUA00013161,528055384143074x1,,33693,83712,,skipped,Kibo already has shipment 83712 as REASSIGNED; nothing was sent
+picked,MA-EUB00012966,528055384129252x1,,33693,83173,,skipped,Kibo already has shipment 83173 as REASSIGNED; nothing was sent
+picked,MA-EUB00013248,528055384142015x1,,33693,84332,,skipped,Kibo already has shipment 84332 as REASSIGNED; nothing was sent
+picked,MA-FF-TM8191315622,528055384141537x1,,33693,83649,,skipped,Kibo already has shipment 83649 as REASSIGNED; nothing was sent
+picked,MA-FF-TM8191315622,528055384141537x1,,33693,84629,,skipped,Kibo already has shipment 84629 as REASSIGNED; nothing was sent
+picked,MA-FF-TM8191315622,528055384141537x1,,33693,85068,,skipped,Kibo already has shipment 85068 as REASSIGNED; nothing was sent
+picked,OW-EUB00052325,511200193299864x1,,30016,112454,,skipped,Kibo already has shipment 112454 as REASSIGNED; nothing was sent
+picked,OW-EUB00052452,511200193252135x1,,30016,112596,,skipped,Kibo already has shipment 112596 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191316329,"511200190008391x1, 511200193247827x1",,30016,106388[READY],,cancelled,"picked 2026-11-12T16:11:55+00:00, cancelled 2026-11-25T11:11:54+00:00"
+picked,OW-FF-OW7191491621,"511200190039425x1, 511200190039432x1",,30016,108918,,skipped,Kibo already has shipment 108918 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191491907,511200190039425x1,,30016,108920,,skipped,Kibo already has shipment 108920 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191524935,"511200190010141x1, 511200193246585x1",,30016,109290[READY],,cancelled,"picked 2026-11-18T06:29:03+00:00, cancelled 2026-11-25T11:19:07+00:00"
+picked,OW-FF-OW7191661982,518055266373582x1,,30016,111155,,skipped,Kibo already has shipment 111155 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191663540,518721137228724x1,,30016,111187,,skipped,Kibo already has shipment 111187 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191682308,51824411009946x1,,30016,111401,,skipped,Kibo already has shipment 111401 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191683607,51824411000011x1,,30016,111416,,skipped,Kibo already has shipment 111416 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191703149,511200193320599x1,,30016,111673,,skipped,Kibo already has shipment 111673 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191719367,518055266612018x1,,30016,111867,,skipped,Kibo already has shipment 111867 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191727420,518055266269069x1,,30016,111980,,skipped,Kibo already has shipment 111980 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191730551,511200193330963x1,,30016,112064,,skipped,Kibo already has shipment 112064 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191730585,511200193247070x1,,30016,112070,,skipped,Kibo already has shipment 112070 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191731153,511200193246103x1,,30016,112067,,skipped,Kibo already has shipment 112067 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191731322,518721137234480x1,,30016,112069,,skipped,Kibo already has shipment 112069 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191731861,518055266303510x1,,30016,112076,,skipped,Kibo already has shipment 112076 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191731878,518051594409412x1,,30016,112077,,skipped,Kibo already has shipment 112077 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191732464,511200189728934x1,,30016,112081,,skipped,Kibo already has shipment 112081 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191732467,518051594700649x1,,30016,112082,,skipped,Kibo already has shipment 112082 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191732869,514894626351891x1,,30016,112088,,skipped,Kibo already has shipment 112088 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191732909,511200190008414x1,,30016,112086,,skipped,Kibo already has shipment 112086 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191732916,518055266610472x1,,30016,112085,,skipped,Kibo already has shipment 112085 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191733179,511200190010073x1,,30016,112089,,skipped,Kibo already has shipment 112089 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191733217,511200190024032x1,,30016,112087,,skipped,Kibo already has shipment 112087 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191741046,511200189768633x1,,30016,112201,,skipped,Kibo already has shipment 112201 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191767799,518055266381235x1,,30016,112564,,skipped,Kibo already has shipment 112564 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191782649,511200193246257x1,,30016,112838,,skipped,Kibo already has shipment 112838 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191802391,"518051594409436x1, 518055266269199x1",,30016,113131,,skipped,Kibo already has shipment 113131 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191828228,511200193252081x1,,30016,113540,,skipped,Kibo already has shipment 113540 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191832607,511200193243331x1,,30016,113585,,skipped,Kibo already has shipment 113585 as REASSIGNED; nothing was sent
+picked,OW-USB00040948,511200193299864x1,,30016,112455,,skipped,Kibo already has shipment 112455 as REASSIGNED; nothing was sent
+picked,OW-USB00041033,511200193299864x1,,30016,112456,,skipped,Kibo already has shipment 112456 as REASSIGNED; nothing was sent
+picked,PA-FF-PA7191659049,538055167759010x1,,33693,84728,,skipped,Kibo already has shipment 84728 as REASSIGNED; nothing was sent
+picked,PA-FF-PA7191775654,538055167759775x1,,33693,85145,,skipped,Kibo already has shipment 85145 as REASSIGNED; nothing was sent
+picked,PJ-EUA01022228,358059382795457x1,,30475,153979,,skipped,Kibo already has shipment 153979 as REASSIGNED; nothing was sent
+picked,PJ-EUA01023960,358059382853751x1,,30475,155750,,skipped,Kibo already has shipment 155750 as REASSIGNED; nothing was sent
+picked,PJ-FF-TGP191706366,358059382852501x1,,30475,,,failed,"156246: HTTP 404 {""message"":""Could not find shipment 156246""}"
+picked,PJ-FF-TGP191764321,"358059382807129x1, 358059382807143x1",,30475,,,failed,"156551: HTTP 404 {""message"":""Could not find shipment 156551""}"
+picked,PJ-FF-TGP191766496,358059382778962x1,,30475,,,failed,"156569: HTTP 404 {""message"":""Could not find shipment 156569""}"
+picked,PJ-FF-TGP191794788,358059382785465x1,,30475,,,failed,"156727: HTTP 404 {""message"":""Could not find shipment 156727""}"
+picked,RC-EUA00016343,468051205451953x1,,29990,73783,,skipped,Kibo already has shipment 73783 as REASSIGNED; nothing was sent
+picked,RC-USA00021219,468051817344704x1,,29990,73813,,skipped,Kibo already has shipment 73813 as REASSIGNED; nothing was sent
+picked,RC-USA00021302,468051817501428x1,,29990,73839,,skipped,Kibo already has shipment 73839 as REASSIGNED; nothing was sent
+picked,SC-BSA2311598854-1,174260461256439x1,,29989,319096,,skipped,Kibo already has shipment 319096 as REASSIGNED; nothing was sent
+picked,SC-BSA2311749222-1,174260461335646x1,,29989,319462,,skipped,Kibo already has shipment 319462 as REASSIGNED; nothing was sent
+picked,SC-BSA2311967288-1,174260461406261x1,,29989,319906,,skipped,Kibo already has shipment 319906 as REASSIGNED; nothing was sent
+picked,SC-FF-TGA191699743,174260461396326x1,,29989,,,failed,"319504: HTTP 404 {""message"":""Could not find shipment 319504""}"
+picked,SC-FF-TGA191731791,174260461391680x1,,29989,319705,,skipped,Kibo already has shipment 319705 as REASSIGNED; nothing was sent
+picked,SC-FF-TGA191732405,174260461213623x1,,29989,319707,,skipped,Kibo already has shipment 319707 as REASSIGNED; nothing was sent
+picked,SC-FF-TGA191757428,174260461403345x1,,29989,,,failed,"319846: HTTP 404 {""message"":""Could not find shipment 319846""}"
+picked,SC-FF-TGA191816377,174260461256460x1,,29989,320219,,skipped,Kibo already has shipment 320219 as REASSIGNED; nothing was sent
+picked,SC-NPA1074101715-000,174260461141018x1,,29989,320262,,skipped,Kibo already has shipment 320262 as REASSIGNED; nothing was sent
+picked,SC-ZLA10206213049439,174260461385337x1,,29989,320010,,skipped,Kibo already has shipment 320010 as REASSIGNED; nothing was sent
+picked,SC-ZLA10213212793344,174260461206472x1,,29989,319315,,skipped,Kibo already has shipment 319315 as REASSIGNED; nothing was sent
+picked,SC-ZLA10401244068544,174260461333048x1,,29989,320009,,skipped,Kibo already has shipment 320009 as REASSIGNED; nothing was sent
+picked,SC-ZLA11311064999265,174260461206502x1,,29989,320029,,skipped,Kibo already has shipment 320029 as REASSIGNED; nothing was sent
+picked,SW-EUA00828928,040198682629760x1,,29992,71513,,skipped,Kibo already has shipment 71513 as REASSIGNED; nothing was sent
+picked,SW-EUA00829035,040198682672193x1,,29992,71557,,skipped,Kibo already has shipment 71557 as REASSIGNED; nothing was sent
+picked,SW-EUA00829041,040198682671295x1,,29992,71569,,skipped,Kibo already has shipment 71569 as REASSIGNED; nothing was sent
+picked,SW-EUA00829042,040198682762443x1,,29992,71574,,skipped,Kibo already has shipment 71574 as REASSIGNED; nothing was sent
+picked,SW-EUA00829050,040198682613059x1,,29992,71578,,skipped,Kibo already has shipment 71578 as REASSIGNED; nothing was sent
+picked,SW-EUA00829053,040198682572066x1,,29992,71588,,skipped,Kibo already has shipment 71588 as REASSIGNED; nothing was sent
+picked,SW-EUA00829094,"040198682644374x1, 040198682783004x1",,29992,71729,,skipped,Kibo already has shipment 71729 as REASSIGNED; nothing was sent
+picked,SW-EUA00829148,040198682725370x1,,29992,71591,,skipped,Kibo already has shipment 71591 as REASSIGNED; nothing was sent
+picked,SW-EUA00829152,040197073793448x1,,29992,71600,,skipped,Kibo already has shipment 71600 as REASSIGNED; nothing was sent
+picked,SW-EUA00829219,040198682584465x1,,29992,71911,,skipped,Kibo already has shipment 71911 as REASSIGNED; nothing was sent
+picked,SW-EUA00829343,040198682562487x1,,29992,72374,,skipped,Kibo already has shipment 72374 as REASSIGNED; nothing was sent
+picked,SW-EUA00829385,040198683034440x1,,29992,72164,,skipped,Kibo already has shipment 72164 as REASSIGNED; nothing was sent
+picked,SW-EUA00829542,040199690272344x1,,29992,72734,,skipped,Kibo already has shipment 72734 as REASSIGNED; nothing was sent
+picked,SW-EUB00829082,040197073357862x1,,29992,71733,,skipped,Kibo already has shipment 71733 as REASSIGNED; nothing was sent
+picked,SW-EUC00828870,040199690238142x1,,29992,71789,,skipped,Kibo already has shipment 71789 as REASSIGNED; nothing was sent
+picked,SW-EUC00828976,040199690238142x1,,29992,71791,,skipped,Kibo already has shipment 71791 as REASSIGNED; nothing was sent
+picked,SW-EUH00828075,040199690238142x1,,29992,71785,,skipped,Kibo already has shipment 71785 as REASSIGNED; nothing was sent
+picked,SW-FF-SW5191188422,040198682569424x1,,29992,71582[READY],,cancelled,"picked 2026-11-09T12:51:42+00:00, cancelled 2026-11-25T11:06:39+00:00"
+picked,SW-FF-SW5191498101,040199690500515x1,,29992,72341,,skipped,Kibo already has shipment 72341 as REASSIGNED; nothing was sent
+picked,SW-FF-SW5191648795,040198682906779x1,,29992,72570,,skipped,Kibo already has shipment 72570 as REASSIGNED; nothing was sent
+picked,SW-FF-SW5191732566,040199689288189x1,,29992,72735,,skipped,Kibo already has shipment 72735 as REASSIGNED; nothing was sent
+picked,SW-FF-SW5191733178,040198682749796x1,,29992,72736,,skipped,Kibo already has shipment 72736 as REASSIGNED; nothing was sent
+picked,WF-EUA00021929,"569010352840026x1, 569010352840026x1, 569010352840026x1",,32147,40051,,skipped,Kibo already has shipment 40051 as REASSIGNED; nothing was sent
+picked,WF-EUG00019249,569010352841542x1,,32147,40006,,skipped,Kibo already has shipment 40006 as REASSIGNED; nothing was sent
+picked,WF-EUL00014175,"569010352840064x1, 569010352842761x1",,32147,40018,,skipped,Kibo already has shipment 40018 as REASSIGNED; nothing was sent
+picked,WF-EUP00014844,569010352841566x1,,32147,40005,,skipped,Kibo already has shipment 40005 as REASSIGNED; nothing was sent
+picked,WF-EUQ00014087,569008731994521x1,,32147,40004,,skipped,Kibo already has shipment 40004 as REASSIGNED; nothing was sent
+picked,WF-EUQ00015192,"569008731994521x1, 569008731994569x1",,32147,40019,,skipped,Kibo already has shipment 40019 as REASSIGNED; nothing was sent
+picked,WF-EUR00013381,569008731994569x1,,32147,40003,,skipped,Kibo already has shipment 40003 as REASSIGNED; nothing was sent
+picked,WF-FF-T3W191649967,569010968135523x1,,32147,41609,,skipped,Kibo already has shipment 41609 as REASSIGNED; nothing was sent
+picked,WF-FF-T3W191731217,569010968147823x1,,32147,43324,,skipped,Kibo already has shipment 43324 as REASSIGNED; nothing was sent
+picked,WF-USA00014219,569009752803847x1,,32147,,,failed,"43647: HTTP 404 {""message"":""Could not find shipment 43647""}"
+picked,WF-USA00014220,569009752803908x1,,32147,,,failed,"43648: HTTP 404 {""message"":""Could not find shipment 43648""}"
+picked,WF-USA00014222,569009752803847x1,,32147,,,failed,"43856: HTTP 404 {""message"":""Could not find shipment 43856""}"
+picked,WF-USA00014223,569009752803847x1,,32147,,,failed,"43896: HTTP 404 {""message"":""Could not find shipment 43896""}"
+picked,WF-USA00014317,569009752803847x1,,32147,,,failed,"43645: HTTP 404 {""message"":""Could not find shipment 43645""}"
+picked,WF-USA00014318,569009752803847x1,,32147,,,failed,"43646: HTTP 404 {""message"":""Could not find shipment 43646""}"
+picked,WF-USA00014319,569009752803847x1,,32147,,,failed,"43650: HTTP 404 {""message"":""Could not find shipment 43650""}"
+picked,WF-USA00014320,569009752803847x1,,32147,,,failed,"43649: HTTP 404 {""message"":""Could not find shipment 43649""}"
+picked,WF-USA00014324,569009752803922x1,,32147,,,failed,"43875: HTTP 404 {""message"":""Could not find shipment 43875""}"
+picked,WF-ZLA10103749166732,569009752964845x1,,32147,44613,,skipped,Kibo already has shipment 44613 as REASSIGNED; nothing was sent
+picked,WF-ZLA10203212755176,569009752400329x1,,32147,41788,,skipped,Kibo already has shipment 41788 as REASSIGNED; nothing was sent
+picked,WF-ZLA10703208645599,569010352963886x1,,32147,41774,,skipped,Kibo already has shipment 41774 as REASSIGNED; nothing was sent
+picked,WF-ZLB10113748813684,569010968079148x1,,32147,44230,,skipped,Kibo already has shipment 44230 as REASSIGNED; nothing was sent
+picked,WF-ZLB11311064851127,"569010352102124x1, 569010352102124x1",,32147,42679,,skipped,Kibo already has shipment 42679 as REASSIGNED; nothing was sent
+picked,WL-BSA2311820384-1,125709262139248x1,,29991,186627,,skipped,Kibo already has shipment 186627 as REASSIGNED; nothing was sent
+picked,WL-CTA1920874202-4,128032397070177x1,,29991,186336,,skipped,Kibo already has shipment 186336 as REASSIGNED; nothing was sent
+picked,WL-EUA00592125,125713551011030x1,,29991,184713,,skipped,Kibo already has shipment 184713 as REASSIGNED; nothing was sent
+picked,WL-EUA00592305,128059607035887x1,,29991,183727,,skipped,Kibo already has shipment 183727 as REASSIGNED; nothing was sent
+picked,WL-EUA00592416,129781649805867x1,,29991,186798,,skipped,Kibo already has shipment 186798 as REASSIGNED; nothing was sent
+picked,WL-EUB00592152,128031638068164x1,,29991,185561,,skipped,Kibo already has shipment 185561 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191057470,"128718142067462x1, 128718142078277x1",,29991,,,failed,"183797: HTTP 404 {""message"":""Could not find shipment 183797""}"
+picked,WL-FF-WST191342627,"128003299455430x1, 128003299455430x1",,29991,,,failed,"184941: HTTP 404 {""message"":""Could not find shipment 184941""}"
+picked,WL-FF-WST191363151,"128032397064909x1, 128032397071396x1",,29991,,,failed,"185061: HTTP 404 {""message"":""Could not find shipment 185061""}"
+picked,WL-FF-WST191503487,"120842625120677x1, 120842625121315x1",,29991,,,failed,"185729: HTTP 404 {""message"":""Could not find shipment 185729""}"
+picked,WL-FF-WST191650730,128059607006375x1,,29991,186326,,skipped,Kibo already has shipment 186326 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191659054,128003299509669x1,,29991,,,failed,"186357: HTTP 404 {""message"":""Could not find shipment 186357""}"
+picked,WL-FF-WST191667744,128056265025427x1,,29991,186393,,skipped,Kibo already has shipment 186393 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191673271,129781649806864x1,,29991,186417,,skipped,Kibo already has shipment 186417 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191694109,125710441300359x1,,29991,186509,,skipped,Kibo already has shipment 186509 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191694109,125710441300359x1,,29991,187006,,skipped,Kibo already has shipment 187006 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191698177,125600413606025x1,,29991,,,failed,"186529: HTTP 404 {""message"":""Could not find shipment 186529""}"
+picked,WL-FF-WST191698178,128718591932977x1,,29991,,,failed,"186530: HTTP 404 {""message"":""Could not find shipment 186530""}"
+picked,WL-FF-WST191709018,129781649804976x1,,29991,186571,,skipped,Kibo already has shipment 186571 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191731356,125012548577307x1,,29991,186700,,skipped,Kibo already has shipment 186700 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191731457,124251501413318x1,,29991,186702,,skipped,Kibo already has shipment 186702 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191732005,125713551006449x1,,29991,186703,,skipped,Kibo already has shipment 186703 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191732072,128003299395873x1,,29991,186706,,skipped,Kibo already has shipment 186706 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191732328,129781649803917x1,,29991,186707,,skipped,Kibo already has shipment 186707 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191732900,129781649801999x1,,29991,186709,,skipped,Kibo already has shipment 186709 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191732933,128032397053576x1,,29991,186711,,skipped,Kibo already has shipment 186711 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191733005,129781614285915x1,,29991,186710,,skipped,Kibo already has shipment 186710 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191736895,125415198124707x1,,29991,186731,,skipped,Kibo already has shipment 186731 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191737926,129781649801722x1,,29991,186732,,skipped,Kibo already has shipment 186732 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191739694,128008215141503x1,,29991,186740,,skipped,Kibo already has shipment 186740 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191746582,129781614289456x1,,29991,186765,,skipped,Kibo already has shipment 186765 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191746582,129781614289456x1,,29991,187016,,skipped,Kibo already has shipment 187016 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191828316,124012437404142x1,,29991,187168,,skipped,Kibo already has shipment 187168 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191829006,129781649807649x1,,29991,187172,,skipped,Kibo already has shipment 187172 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191831062,129781649804358x1,,29991,187178,,skipped,Kibo already has shipment 187178 as REASSIGNED; nothing was sent
+confirm,PA-FF-PA7191772179,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLB1300463750885,118053682355755,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DJ-GLA1300463359004,118053682267454,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191749743,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLB1300463570352,118053682361268,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-CTB1929088062-4,094260461193802,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTB1929518262-4,094260461333604,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929171346-4,091200193320599,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTB1929247586-4,091200190021383,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,DG-EUA01689168,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,HE-EUB00137654,338055403580545,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,FE-EUB0012TSTGQ2,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-EUA00044066,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190209854,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-FF-LDJ189583747,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLA1300463101095,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLB1300462608867,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,BB-EUA00067647,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,CA-EUC00859181,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SW-FF-SW5190748948,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190288579,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA1926638756-4,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SW-FF-SW5190748251,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-EUB00365195,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-FF-LDJ188803691,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST189911192,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00120954,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00128782,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-USA00050519,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUA01676184,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,PA-FF-PA7190615960,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190609741,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA1924944305-4,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00120798,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,BB-EUA00068288,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WF-FF-T3W190601223,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SC-FF-TGA190379039,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLB1300462671527,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUB01690361,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190337587,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7189507622,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUA01687270,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7189551176,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7190511533,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,PA-FF-PA7190295095,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00126452,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUB00126014,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-FF-LDJ190215366,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7190536304,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SC-MTBFR0D235F14C991,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,BB-EUA00068872,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7190768129,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-FF-LDJ190100785,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA88990903-4,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7189523133,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUA01679053,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST189913310,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SC-MTAPL8E3506568BE8,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SC-MTAPLB95040693C1F,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190563558,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,BB-EUA00068868,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLA1300463059448,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUC01678571,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190432073,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00127057,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUA01677688,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,BB-EUA00073447,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-FF-LDJ190452813,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUA01675498,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-USA00054257,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-FF-NTP190205371,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7189505899,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7189489343,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7190393889,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-USA11607626,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190469548,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00130566,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190324412,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190056580,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-EUA00025115,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-USA11603346,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00120956,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-USC00050519,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,BB-EUA00068736,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLA1300463059890,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-EUA01680037,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-EUA00044918,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-USB00050519,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUB01678772,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WF-FF-T3W190061346,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7189538616,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLA1300463155071,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLB1300462707383,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-USB00035434,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA1929954198-4,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00124011,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-MTASEA2FFD2D9E6AA,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-FF-LDJ190302544,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-EUF0189215344,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,PA-EUF0183380392,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-EUF2177325053,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189393288,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189952773,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0188444522,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0188532777,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0188365364,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0188750394,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189566228,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189638635,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189900239,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189812068,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189513539,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-EUF0188942475,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0188667541,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189635299,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-EUF2177468950,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-EUF0189432590,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-EUF0189434506,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0190012649,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189681836,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0187991190,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-EUF0189810822,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA1920212310-4,094260461287242,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1920902394-4,094260461405806,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-IMAP26111639216,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7191656115,511200190008391;518055266607120,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191658665,511200193316912;511200193339973,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191715342,511200193247193,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191075597,128008215229119,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,HE-FF-TH5191077354,338055403458615;338055403458622,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191108000,518721137251173,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191520959,511200193244147,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191073207,121200000144936,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190682967,511200193157638,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH190823533,158059579694464,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH191181493,158059579705696,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WF-FF-T3W190903152,569010352371605,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191609005,511200193244130,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190659097,518055266619604,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190969915,518055266619567,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH190951903,158057001090358,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190927322,518051594721354,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH191193878,158056810157962,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191582617,511200189387735,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DJ-FF-LDJ190970740,118053682409694,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191047637,518051594699721,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,SW-FF-SW5191515971,040197073327629,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190674814,514894626351334,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191160455,125600413638958,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190989181,514894626351587,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190927345,511200190020478,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191120476,514894626351884,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH191062899,158056262866108,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191068167,129781614288534;129781649800435;129781649803399;129781649804471,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191086664,518051594408149,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-FF-P2N191480512,585059107644896,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WF-FF-T3W191434649,569010352660181;569010968125067,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191085579,12810009646631,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190988008,518051594721354,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191602547,511200193340689,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191189540,125600413632697,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191013950,125710441275862,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191076321,128008215228181,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190757871,518051594408194,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,CA-FF-TGC190671618,058053173415210,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH190987028,158053286386445,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191079893,511200190020355,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191039003,514894626352096,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST190949014,129783836502931,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,CA-FF-TGC191111280,058053173728655,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DJ-FF-LDJ191452246,118053682346210;118053682346234,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,HE-FF-TH5191085896,338055403541713;338055403541720,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,SC-FF-TGA191507957,174260461324381,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,SW-MTAUK95C709254B98,04196036571475,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-CTA1929231769-4,090900112444870;093607935429202,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-CTA1929090605-4,094260461293212,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1920435036-4,098055828332811,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,WL-FF-WST191627542,128053147781464;128059037131975,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,SW-EUE00828053,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,CV-EUC00084838,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,CA-EUC00859254,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,CV-USA00044668,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SW-EUG00828299,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-FF-DWH191125486,158056810409603,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WF-MKA032805-3118708,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LA-EUA10000004,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SC-USB00009597,174260461331631,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-CTA1929678113-4,094260461277946,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929340614-4,090199690527222,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929949125-4,098059915964503,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,WL-FF-WST191325611,125400959027076,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,BB-MTAIT07516B3B88C5,42500011612075,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-CTA1929130824-4,094260461342781,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929850047-4,094260461245815,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929226662-4,091200190038879,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,WL-FF-WST191057470,128718142078277,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929143761-4,098055266529743,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929713001-4,091200190029457,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929779766-4,098055167759768,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,DG-FF-DWH191090938,158057576191962;158057576475413,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DJ-USD00032514,118053682409243,,,,,confirmed,confirmed from the CANCELLED event of 2026-11-25T10:27:22+00:00
+confirm,LN-FF-P2N191312354,585059107945016,,,,,confirmed,confirmed from the CANCELLED event of 2026-11-25T11:22:12+00:00
+confirm,SW-FF-SW5191188422,040198682569424,,,,,confirmed,confirmed from the CANCELLED event of 2026-11-25T11:06:39+00:00
+confirm,WL-FF-WST191342627,128003299455430,,,,,confirmed,confirmed from the CANCELLED event of 2026-11-25T10:39:47+00:00
+confirm,OW-FF-OW7191524935,511200190010141;511200193246585,,,,,confirmed,confirmed from the CANCELLED event of 2026-11-25T11:19:07+00:00
+resend,FE-EUB0012TSTGQ2,,FE-EU-0012TSTGQ2,,,95B76FEE-AD25-42E8-807C-B3017037F086,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,OW-EUA00044066,,OW-EU-00044066,,,70F9049D-BAB5-426E-9945-C03CC91BC4FE,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,WL-FF-WST190209854,,WL-FF-WST190209854,,,FEEE054B-89BE-4943-BC06-9253FE516B21,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,DJ-FF-LDJ189583747,,DJ-FF-LDJ189583747,,,23AA8B0B-31CE-48CA-BC03-829200FC7286,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,DJ-GLA1300463101095,,DJ-GL-1300463101095,,,3070ACB3-E028-4D9D-8377-B372833E03A6,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,DJ-GLB1300462608867,,DJ-GL-1300462608867,,,7BF4F6C8-368E-42CF-BE43-51B2A3AF46BA,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,BB-EUA00067647,,BB-EU-00067647,,,3E95BAAF-D083-4541-9E8E-C23176E214C4,sent,"resent, attempt 3; TLITGX0042: HTTP 200; the ledger was updated"
+resend,CA-EUC00859181,,CA-EU-00859181,,,A5229CC5-3CA7-49B1-BD30-3AD5B200C951,sent,"resent, attempt 3; TLITGX0005: HTTP 200; the ledger was updated"
+resend,SW-FF-SW5190748948,,SW-FF-SW5190748948,,,479EDF01-1BDB-48E9-A2FC-A22BE474A037,sent,"resent, attempt 3; TLITGX0004: HTTP 200; the ledger was updated"
+resend,WL-FF-WST190288579,,WL-FF-WST190288579,,,E0992637-02CA-4919-A863-E2491ECF11EB,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,LN-CTA1926638756-4,,LN-CT-1926638756-4,,,050EBBC1-B821-416C-87C6-E529F4B77F22,sent,"resent, attempt 3; TLITGX0009: HTTP 200; the ledger was updated"
+resend,SW-FF-SW5190748251,,SW-FF-SW5190748251,,,F9BB8A97-ACEC-41EC-9394-ABA7842B29B2,sent,"resent, attempt 3; TLITGX0004: HTTP 200; the ledger was updated"
+resend,DJ-EUB00365195,,DJ-EU-00365195,,,49D86DD8-DAFA-4EBB-8882-18E5398B953D,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,DJ-FF-LDJ188803691,,DJ-FF-LDJ188803691,,,C7E371B2-9CB4-48D2-851D-06FF22C18C34,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,WL-FF-WST189911192,,WL-FF-WST189911192,,,B464577D-641E-43DA-B10A-3C289BD60F9C,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,FE-EUA00120954,,FE-EU-00120954,,,CE5A6D08-CC81-49C8-91A4-A34529F59EED,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,FE-EUA00128782,,FE-EU-00128782,,,38A32145-2195-430F-A21E-C5BAB4BE09A6,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,FE-USA00050519,,FE-US-00050519,,,F7004612-7E81-45B1-825D-D54296A731E6,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,DG-EUA01676184,,DG-EU-01676184,,,FD17D26F-12BE-4936-B172-E4BE2CAD0076,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,PA-FF-PA7190615960,,PA-FF-PA7190615960,,,"8BA0D9EB-6B74-4F2B-B1CD-B035A4FEEF64, D9E13D98-D4D1-4E8D-BEE9-BEF7BDC73273, 67A28CC8-1FDE-4745-9C66-3E4A5622D0B0, C8B3FF95-EB7D-49BA-9382-384ACF95E16E, DF5F4751-AFE6-415E-9C6A-C0B8A4D75424, 2259FF39-D841-41EE-8BCB-0E0B814AAABA",sent,"resent, attempt 3; TLITGX0053: HTTP 200; TLITGX0053: HTTP 200; TLITGX0053: HTTP 200; TLITGX0053: HTTP 200; TLITGX0053: HTTP 200; TLITGX0053: HTTP 200; the ledger was updated"
+resend,WL-FF-WST190609741,,WL-FF-WST190609741,,,9EC0FA9D-DAC8-447A-9E7D-64DB9A47E923,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,LN-CTA1924944305-4,,LN-CT-1924944305-4,,,E821FCB8-F9A8-41B9-B730-340B500DC4A9,sent,"resent, attempt 3; TLITGX0009: HTTP 200; the ledger was updated"
+resend,FE-EUA00120798,,FE-EU-00120798,,,CF90F2EE-C25B-419C-9BC1-72554232A16F,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,BB-EUA00068288,,BB-EU-00068288,,,5EBA584A-2EAD-4FAF-AA3C-5A74147E2FB6,sent,"resent, attempt 3; TLITGX0042: HTTP 200; the ledger was updated"
+resend,WF-FF-T3W190601223,,WF-FF-T3W190601223,,,2F98C96B-4F4A-4CE4-BCD9-AE3C18130922,sent,"resent, attempt 3; TLITGX0056: HTTP 200; the ledger was updated"
+resend,SC-FF-TGA190379039,,SC-FF-TGA190379039,,,6B3CF08A-6C68-4A0F-B5BB-BB901FE695DC,sent,"resent, attempt 3; TLITGX0017: HTTP 200; the ledger was updated"
+resend,DJ-GLB1300462671527,,DJ-GL-1300462671527,,,D1E65B7D-34D8-4CEC-B364-39490F2E96C9,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,DG-EUB01690361,,DG-EU-01690361,,,FAEEB943-CB3A-4E87-8164-80FF0946C5EF,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,WL-FF-WST190337587,,WL-FF-WST190337587,,,6BAE8263-BB14-4C4F-B250-76C8E3EB0E0B,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,OW-FF-OW7189507622,,OW-FF-OW7189507622,,,CB72944B-26CA-4DD5-BA92-79A6F9EDDC19,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,DG-EUA01687270,,DG-EU-01687270,,,E55265F0-54BB-4C79-8740-1CEDBC853529,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,OW-FF-OW7189551176,,OW-FF-OW7189551176,,,7736626A-A720-4EE8-AB9E-68B8D7120329,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,OW-FF-OW7190511533,,OW-FF-OW7190511533,,,0670E03C-E070-4E5F-82F3-69ADC3B33FA2,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,PA-FF-PA7190295095,,PA-FF-PA7190295095,,,F6D739EC-21F8-4DA4-B414-10CF603BEECE,sent,"resent, attempt 3; TLITGX0053: HTTP 200; the ledger was updated"
+resend,FE-EUA00126452,,FE-EU-00126452,,,4AF7A65C-634D-4DB4-A1C4-628693C1E68B,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,FE-EUB00126014,,FE-EU-00126014,,,CDBEF946-64C0-449C-93A5-D340FF11D6BE,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,DJ-FF-LDJ190215366,,DJ-FF-LDJ190215366,,,5C949F11-B0EB-496B-8327-9E145A6DA4F7,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,OW-FF-OW7190536304,,OW-FF-OW7190536304,,,1098B44E-CF1D-41B4-AFA0-EB78FAE94C82,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,SC-MTBFR0D235F14C991,,SC-MT-FR0D235F14C991,,,5B202873-F396-415C-ACB9-07C3ED873218,sent,"resent, attempt 3; TLITGX0017: HTTP 200; the ledger was updated"
+resend,BB-EUA00068872,,BB-EU-00068872,,,CB407C88-C9E2-4D83-90E4-C60DA0182FAA,sent,"resent, attempt 3; TLITGX0042: HTTP 200; the ledger was updated"
+resend,OW-FF-OW7190768129,,OW-FF-OW7190768129,,,0FD977F9-8719-49EF-92B2-B47DF59993EE,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,DJ-FF-LDJ190100785,,DJ-FF-LDJ190100785,,,A8863E36-4DA5-4B7B-93ED-2BFBF243DE67,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,LN-CTA88990903-4,,LN-CT-88990903-4,,,A8AE03F5-B207-43E7-90F1-DB66AF79635A,sent,"resent, attempt 3; TLITGX0009: HTTP 200; the ledger was updated"
+resend,OW-FF-OW7189523133,,OW-FF-OW7189523133,,,39A1FE5B-BD82-4AD9-9A52-2F8775E13F72,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,DG-EUA01679053,,DG-EU-01679053,,,63B42ACE-7762-4154-8F33-37776594B72B,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,WL-FF-WST189913310,,WL-FF-WST189913310,,,44693E56-2628-472F-8D4B-FDA59C115334,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,SC-MTAPL8E3506568BE8,,SC-MT-PL8E3506568BE8,,,2BF785B6-0B10-4429-B36B-15992DA99F92,sent,"resent, attempt 3; TLITGX0017: HTTP 200; the ledger was updated"
+resend,SC-MTAPLB95040693C1F,,SC-MT-PLB95040693C1F,,,AA6C765E-EF03-4B3F-B355-E3F7415463CA,sent,"resent, attempt 3; TLITGX0017: HTTP 200; the ledger was updated"
+resend,WL-FF-WST190563558,,WL-FF-WST190563558,,,57662003-E0CC-452E-BF54-2642C58C604B,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,BB-EUA00068868,,BB-EU-00068868,,,719B7A7F-952E-4464-9086-E2B30941E65A,sent,"resent, attempt 3; TLITGX0042: HTTP 200; the ledger was updated"
+resend,DJ-GLA1300463059448,,DJ-GL-1300463059448,,,8FC74729-BB1A-4935-963D-505B9C95309C,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,DG-EUC01678571,,DG-EU-01678571,,,C3F031E0-7DEF-49A2-B719-6448DBFDD4C7,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,WL-FF-WST190432073,,WL-FF-WST190432073,,,5A6BE482-D1F7-46D2-B134-6614061A8FF5,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,FE-EUA00127057,,FE-EU-00127057,,,8B427176-DBC9-449D-8B03-03FD58D9BD90,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,DG-EUA01677688,,DG-EU-01677688,,,46EBD7D7-3092-4CD7-ACDA-CADF5CCB5A4C,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,BB-EUA00073447,,BB-EU-00073447,,,EABCC344-6CE9-46C8-9606-3B934906D6A6,sent,"resent, attempt 3; TLITGX0042: HTTP 200; the ledger was updated"
+resend,DJ-FF-LDJ190452813,,DJ-FF-LDJ190452813,,,E66212FC-5D9E-4D09-BF52-380188C846EC,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,DG-EUA01675498,,DG-EU-01675498,,,D539921C-7113-4693-882D-6DC92612F4D0,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,FE-USA00054257,,FE-US-00054257,,,AF489118-AF40-467D-A165-D6A5FFBC9AFB,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,LN-FF-NTP190205371,,LN-FF-NTP190205371,,,F25DCDD8-D970-492C-8F0F-2F223C3F8D87,sent,"resent, attempt 3; TLITGX0009: HTTP 200; the ledger was updated"
+resend,OW-FF-OW7189505899,,OW-FF-OW7189505899,,,9F405920-4CF0-4163-8DF7-A56174B3A3DA,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,OW-FF-OW7189489343,,OW-FF-OW7189489343,,,D9F2A369-C759-4922-A186-23F716F607E8,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,OW-FF-OW7190393889,,OW-FF-OW7190393889,,,0BC80DBB-6729-4978-9E8E-8FF93D9ECAD4,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,DG-USA11607626,,DG-US-11607626,,,46821298-CA04-4EC9-B581-E4297BC06F87,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,WL-FF-WST190469548,,WL-FF-WST190469548,,,2AF46C49-660B-4027-B54A-B9D5118BF322,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,FE-EUA00130566,,FE-EU-00130566,,,32F9EE09-EE35-4713-9524-2633E625BEDB,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,WL-FF-WST190324412,,WL-FF-WST190324412,,,2E15BC98-9803-4F52-A1CD-57CE1C6ECC68,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,WL-FF-WST190056580,,WL-FF-WST190056580,,,A557A66F-7716-4A05-8E7D-78D6629D29AB,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,OW-EUA00025115,,OW-EU-00025115,,,3225A473-EFDC-4344-A892-718D2C5BABB4,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,DG-USA11603346,,DG-US-11603346,,,99E4C7BF-8832-4162-9BD8-6E443F92BBBE,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,FE-EUA00120956,,FE-EU-00120956,,,A1DC2164-AC24-4F0B-A8FC-132E6A2D9BA4,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,FE-USC00050519,,FE-US-00050519,,,68E3384C-A914-4213-95B2-CEDAC80EFC52,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,BB-EUA00068736,,BB-EU-00068736,,,9BA8353D-9F66-4483-B9BF-D8EA7106EFB8,sent,"resent, attempt 3; TLITGX0042: HTTP 200; the ledger was updated"
+resend,DJ-GLA1300463059890,,DJ-GL-1300463059890,,,ACF15A52-3B8A-40A3-8C71-E0062E127B75,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,LN-EUA01680037,,LN-EU-01680037,,,22CB911F-FBEC-4A2B-A37C-E82F1C9D4E6C,sent,"resent, attempt 3; TLITGX0009: HTTP 200; the ledger was updated"
+resend,OW-EUA00044918,,OW-EU-00044918,,,4DFECC6F-BDD5-42AB-9BFB-F468AB03A3B3,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,FE-USB00050519,,FE-US-00050519,,,934C63DA-9CFB-4BD1-929A-94AD0A1CC723,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,DG-EUB01678772,,DG-EU-01678772,,,145DB7E1-E5A3-4C0E-95C6-C56446934F7E,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,WF-FF-T3W190061346,,WF-FF-T3W190061346,,,535ED345-CC99-4992-9672-7C49BD0C4590,sent,"resent, attempt 3; TLITGX0056: HTTP 200; the ledger was updated"
+resend,OW-FF-OW7189538616,,OW-FF-OW7189538616,,,6C98E7CE-E559-437D-8EC4-CA253687F4CA,sent,"resent, attempt 3; TLITGX0051: HTTP 200; the ledger was updated"
+resend,DJ-GLA1300463155071,,DJ-GL-1300463155071,,,A77EC625-FD62-487A-9DE5-86621873BF5C,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,DJ-GLB1300462707383,,DJ-GL-1300462707383,,,71FFE6B4-7CAD-42EA-B025-68FDB5DF32F9,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,DJ-USB00035434,,DJ-US-00035434,,,0A1340AB-B633-4363-9880-13ACBFA5B74B,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,LN-CTA1929954198-4,,LN-CT-1929954198-4,,,3B50FD91-AE56-4EF8-BF3D-5F43B4109BD7,sent,"resent, attempt 3; TLITGX0009: HTTP 200; the ledger was updated"
+resend,FE-EUA00124011,,FE-EU-00124011,,,37453D01-9A3B-4E5C-9E57-208CE612BEB5,sent,"resent, attempt 3; TLITGX0048: HTTP 200; the ledger was updated"
+resend,LN-MTASEA2FFD2D9E6AA,,LN-MT-SEA2FFD2D9E6AA,,,DAAA87A6-E862-44F9-A6B6-C84962080282,sent,"resent, attempt 3; TLITGX0009: HTTP 200; the ledger was updated"
+resend,DJ-FF-LDJ190302544,,DJ-FF-LDJ190302544,,,036862B5-38D4-4B99-BEBD-C2FA57B2B121,sent,"resent, attempt 3; TLITGX0011: HTTP 200; the ledger was updated"
+resend,WL-EUF0189215344,,WL-EUF0189215344,,,012A6E5C-2BCB-4C1F-9EC5-881CA6892891,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,PA-EUF0183380392,,PA-EUF0183380392,,,ECB40B70-1AEE-4005-8336-51458E7F415E,sent,"resent, attempt 3; TLITGX0053: HTTP 200; the ledger was updated"
+resend,LN-EUF2177325053,,LN-EUF2177325053,,,208BE879-A496-4DEC-A7F5-07FFA7856600,sent,"resent, attempt 3; TLITGX0009: HTTP 200; the ledger was updated"
+resend,DG-EUF0189393288,,DG-EUF0189393288,,,4530356D-CC40-42C8-A770-F25A9BB0210C,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0189952773,,DG-EUF0189952773,,,13C3F052-4089-4290-9FDD-C887D3693F7A,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0188444522,,DG-EUF0188444522,,,59BDA4F3-A19D-45FF-8537-2D1525DB37F1,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0188532777,,DG-EUF0188532777,,,507C51AF-E308-472F-BC31-F8CB55758107,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0188365364,,DG-EUF0188365364,,,1145CFC7-C209-450A-AFCF-2A12315168CA,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0188750394,,DG-EUF0188750394,,,1AC8B335-E3F6-48DC-93CF-9603306E6B87,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0189566228,,DG-EUF0189566228,,,970DAB1D-FE4A-4687-A427-7914DE9B1088,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0189638635,,DG-EUF0189638635,,,E6BB83DB-8D6B-4C15-B783-2DCE6C44C2A0,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0189900239,,DG-EUF0189900239,,,94E67482-D5DC-49C0-8CCF-CF55F15F85F7,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0189812068,,DG-EUF0189812068,,,C4A58940-0C44-4752-8DDB-60E4CF116D60,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0189513539,,DG-EUF0189513539,,,3FBA3C82-7B94-42CF-A924-F2F1056FE4E3,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,WL-EUF0188942475,,WL-EUF0188942475,,,F1EA83DF-545E-492F-88C7-8B7E3FBC8DAB,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,DG-EUF0188667541,,DG-EUF0188667541,,,D1A30B10-041C-4632-9D24-2A5CABCDC7CC,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0189635299,,DG-EUF0189635299,,,9A354F65-6FF8-40AE-ACB8-B7ABB9343D7A,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,LN-EUF2177468950,,LN-EUF2177468950,,,2B6F215C-C506-4BCA-AB0C-3FB187700D1E,sent,"resent, attempt 3; TLITGX0009: HTTP 200; the ledger was updated"
+resend,WL-EUF0189432590,,WL-EUF0189432590,,,99FAE508-77EC-4881-AE6A-13F42DE074EE,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,WL-EUF0189434506,,WL-EUF0189434506,,,AB5DDDD7-8059-487B-BA9B-A7CA7CF9F7DB,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,DG-EUF0190012649,,DG-EUF0190012649,,,D4317E5B-099B-49C3-9D57-9355242ABBDB,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0189681836,,DG-EUF0189681836,,,69A1CA73-AA3C-4BA4-B448-933E1078A82E,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,DG-EUF0187991190,,DG-EUF0187991190,,,C950608C-9E88-4F77-A396-09062AD5CFD5,sent,"resent, attempt 3; TLITGX0015: HTTP 200; the ledger was updated"
+resend,WL-EUF0189810822,,WL-EUF0189810822,,,D6B46677-2E96-4198-AA38-AD4BB63FD012,sent,"resent, attempt 3; TLITGX0012: HTTP 200; the ledger was updated"
+resend,SW-MTAUK95C709254B98,04196036571475,SW-MT-UK95C709254B98,,,7D9ADEBA-FDF4-4654-B1F0-B431EE192D27,sent,"resent, attempt 4; TLITGX0004: HTTP 200; the ledger was updated"
+resend,LN-CTA1929231769-4,090900112444870;093607935429202,LN-CT-1929231769-4,,,BD9FBA66-659A-4258-BA81-86F1B9E07839,sent,"resent, attempt 4; TLITGX0009: HTTP 200; the ledger was updated"
+resend,SW-EUE00828053,,SW-EU-00828053,,,1C0FF616-D2A9-4A17-8AF2-E2DEE725D504,sent,"resent, attempt 5; TLITGX0004: HTTP 200; the ledger was updated"
+resend,CV-EUC00084838,,CV-EU-00084838,,,D667F7B3-0723-4B75-BCBF-F4B8D93B58C4,sent,"resent, attempt 5; TLITGX0050: HTTP 200; the ledger was updated"
+resend,CA-EUC00859254,,CA-EU-00859254,,,8BFD3EAA-3903-4934-8D96-83491DBD5529,sent,"resent, attempt 5; TLITGX0005: HTTP 200; the ledger was updated"
+resend,CV-USA00044668,,CV-US-00044668,,,7C1C4BF0-5E1A-4626-AAFC-40A085C8AA8C,sent,"resent, attempt 5; TLITGX0050: HTTP 200; the ledger was updated"
+resend,SW-EUG00828299,,SW-EU-00828299,,,62853D96-57AA-4699-BBC3-6C9278B54600,sent,"resent, attempt 5; TLITGX0004: HTTP 200; the ledger was updated"
+resend,DG-FF-DWH191125486,158056810409603,DG-FF-DWH191125486,,,0C4807EF-BF99-4A87-9044-3257E37D23A0,sent,"resent, attempt 5; TLITGX0015: HTTP 200; the ledger was updated"
+resend,WF-MKA032805-3118708,,WF-MK-032805-3118708,,,13C25FD5-87B1-4762-9BDB-AA88FE28696B,sent,"resent, attempt 5; TLITGX0056: HTTP 200; the ledger was updated"
+resend,LA-EUA10000004,,LA-EU-10000004,,,6FBDAD79-16DB-419B-BA42-8ED37E59EAAD,sent,"resent, attempt 5; TLITGX0057: HTTP 200; the ledger was updated"
+resend,BB-MTAIT07516B3B88C5,42500011612075,BB-MT-IT07516B3B88C5,,,E5572452-0977-4EE6-B904-315F6C5A5B71,sent,"resent, attempt 6; TLITGX0042: HTTP 200; the ledger was updated"
+kibo,OW-FF-OW7191606895,511200190031535,OW-FF-OW7191606895,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-FF-T3W191456445,569010352504782;569010352915809,WF-FF-T3W191456445,32147,,,skipped,"none of the 3 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191580032,158056810035567,DG-FF-DWH191580032,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191637776,158058990825495,DG-FF-DWH191637776,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191565378,158057996242879,DG-FF-DWH191565378,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191563500,511200190030514,OW-FF-OW7191563500,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191602976,518051594895093,OW-FF-OW7191602976,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191552032,158051200936615,DG-FF-DWH191552032,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191555924,518721137244137,OW-FF-OW7191555924,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,SW-FF-SW5191555874,040199690623092,SW-FF-SW5191555874,29992,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191551328,511200193244130,OW-FF-OW7191551328,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191556936,511200190029433,OW-FF-OW7191556936,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191613442,518051594700656,OW-FF-OW7191613442,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-FF-T3W191542641,569009752700740,WF-FF-T3W191542641,32147,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191377104,158057996628802,DG-FF-DWH191377104,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191552514,158051200936196;158056810179407,DG-FF-DWH191552514,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191138283,158056265355340,DG-FF-DWH191138283,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191155650,158057576370527,DG-FF-DWH191155650,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,CV-MTANO75605F17D563,508059915494659,CV-MT-NO75605F17D563,30014,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-MTAPL9BDEA4FA6878,569010968114368;569010968167609,WF-MT-PL9BDEA4FA6878,32147,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-MTANOB800864985B3,569009752904063,WF-MT-NOB800864985B3,32147,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-EUB00011993,569010352897303;569010352897402,WF-EU-00011993,32147,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DJ-USD00032514,118053682409243,DJ-US-00032514,30018,,,skipped,"none of the 6 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191697152,511200189728880,OW-FF-OW7191697152,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,PA-FF-PA7191702748,536295155308611;536295155365713,PA-FF-PA7191702748,33693,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191603145,158054802811731,DG-FF-DWH191603145,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,SW-MTADE38A70C7B89CD,040199690296234,SW-MT-DE38A70C7B89CD,29992,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191616507,511200193238023;511200193246172;511200193247421;511200193340085,OW-FF-OW7191616507,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191484355,158056810039091,DG-FF-DWH191484355,29916,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191494021,158058990966105,DG-FF-DWH191494021,29916,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191494020,158058990242988,DG-FF-DWH191494020,29916,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191508810,158059579237333,DG-FF-DWH191508810,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,SW-FF-SW5191188422,040198682569424,SW-FF-SW5191188422,29992,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191524935,511200190010141;511200193246585,OW-FF-OW7191524935,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191386132,158054802769131;158056810798905;158056810799988,DG-FF-DWH191386132,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,CV-MTAPL44BC256B37F1,508054323747083,CV-MT-PL44BC256B37F1,30014,,,skipped,"none of the 4 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,FE-EUA00120259,484070032317434,FE-EU-00120259,30022,,,skipped,"none of the 3 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,SC-USA00009368,174260461257184,SC-US-00009368,29989,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-CTA1929956875-4,098053195614288,LN-CT-1929956875-4,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191117181,158056597048903;158057576989477,DG-FF-DWH191117181,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-FF-P2N191312354,585059107945016,LN-FF-P2N191312354,29917,682390[READY],,cancelled,1 matched by items; cancelled 682390[READY]; the ledger was updated
+kibo,WL-FF-WST191342627,128003299455430,WL-FF-WST191342627,29991,184941[READY],,cancelled,1 matched by items; cancelled 184941[READY]; the ledger was updated
