@@ -1878,8 +1878,8 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
         f"status, {len(needs_channel)} for a channel.")
     fulfilled: set = set()
     shown = False
-    counts = {"channel": 0, "logistic": 0, "ready": 0, "fulfilled": 0,
-              "other": 0, "unknown": 0, "failed": 0}
+    counts = {"channel": 0, "logistic": 0, "location": 0, "ready": 0,
+              "fulfilled": 0, "other": 0, "unknown": 0, "failed": 0}
     for row in wanted:
         number = row["shipment_order_number"]
         tenant, site, tenant_error = tenant_and_site(
@@ -1915,11 +1915,15 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
         state = ""
         channel = ""
         logistic = ""
+        location = ""
         for shipment in mine:
             status = status or fulfillment_status_of(shipment)
             state = state or str(shipment_status_of(shipment) or "").strip().upper()
             channel = channel or channel_of(shipment)
             logistic = logistic or logistic_from_kibo(shipment, number)
+            location = location or str(shipment.get("fulfillmentLocationCode")
+                                       or shipment.get("assignedLocationCode")
+                                       or "").strip()
         if channel and not str(row.get("channel", "") or "").strip():
             row["channel"] = channel
             counts["channel"] += 1
@@ -1931,6 +1935,12 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
         if logistic and not str(row.get("logistic_order_number", "") or "").strip():
             row["logistic_order_number"] = logistic
             counts["logistic"] += 1
+        # The fulfilment location, parked rather than applied: this pass runs
+        # before attach_monitoring, and the monitoring table has first say. It
+        # is applied there, and only where nothing else answered.
+        if location and not str(row.get("_kibo_location", "") or "").strip():
+            row["_kibo_location"] = location
+            counts["location"] += 1
 
         # A shipment asked about only for its channel has nothing more to
         # decide: its status was already the one that matters.
@@ -1971,6 +1981,7 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
             ("that could not be read", counts["failed"]),
             ("given a channel", counts["channel"]),
             ("given a logistics order number", counts["logistic"]),
+            ("carrying a Kibo fulfilment location", counts["location"]),
         ) if count) + ".")
     return fulfilled
 
@@ -2555,6 +2566,16 @@ def attach_monitoring(rows: List[Dict[str, str]], args: argparse.Namespace,
 
         if not row.get("location_provider"):
             row["location_provider"] = str(entry.get("location_provider", "") or "").strip()
+        # The warehouse, in the order the three sources deserve: the CSV says
+        # where the shipment is now, the monitoring table where it was last
+        # seen, and Kibo's location code is what is left when neither spoke.
+        # refresh_fulfillment parked that code rather than applying it, so
+        # that this order holds however the run reached here.
+        if not str(row.get("location_name", "") or "").strip():
+            row["location_name"] = (
+                str(entry.get("location_name", "") or "").strip()
+                or str(row.get("_kibo_location", "") or "").strip()
+            )
         # The channel only comes from the CSV, so a shipment the workbook or
         # gxo_ko brought in has none until this lookup fills it.
         if not row.get("channel"):

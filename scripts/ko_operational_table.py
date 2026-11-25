@@ -740,6 +740,7 @@ MONITORING_FIELDS = {
     "error_message": ("error_message", "errorMessage"),
     "blocking_reason": ("blocking_reason", "blockingReason"),
     "location_provider": ("location_provider", "locationProvider"),
+    "location_name": ("location_name", "locationName", "location"),
     "channel": ("channel",),
     "ko_source": ("ko_source", "koSource"),
 }
@@ -798,7 +799,7 @@ def fetch_monitoring(
 
     wanted = [name for name in
               ("external_error_message", "error_message", "blocking_reason",
-               "location_provider")
+               "location_provider", "location_name")
               if name in columns]
     if not wanted:
         return {}
