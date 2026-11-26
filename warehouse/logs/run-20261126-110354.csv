@@ -1,0 +1,2 @@
+﻿source_file,row_number,stage,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,kibo_shipment_number,outcome,status_code,error,response_excerpt
+20261126-110338__backoffice__shipment.csv,2,warehouse,LN-CTA1920358535-4,,,,,LN690710,TLITGX0009,LN,09,9F2531E4-904C-4C94-BF48-949A3E74CACD,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
