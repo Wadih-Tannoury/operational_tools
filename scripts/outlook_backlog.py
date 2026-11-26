@@ -47,12 +47,27 @@ except ImportError:  # pragma: no cover - reported where it matters
     load_workbook = None  # type: ignore
 
 SUBJECT = "GXO Carisio: backlog OB"
-IMAP_HOST = os.getenv("IMAP_HOST", "outlook.office365.com")
-IMAP_PORT = int(os.getenv("IMAP_PORT", "993") or 993)
-IMAP_FOLDER = os.getenv("IMAP_FOLDER", "INBOX")
+
+
+def _setting(name: str, default: str) -> str:
+    """
+    An environment variable's value, or the default when it says nothing.
+
+    `os.getenv(name, default)` is not enough here. A GitHub Actions `env:`
+    block that maps an unset repository variable sets the variable to the
+    empty string rather than leaving it out, so the default never applies and
+    the host comes out blank — which is how this first failed, trying to
+    reach ":993".
+    """
+    return (os.getenv(name) or "").strip() or default
+
+
+IMAP_HOST = _setting("IMAP_HOST", "outlook.office365.com")
+IMAP_PORT = int(_setting("IMAP_PORT", "993"))
+IMAP_FOLDER = _setting("IMAP_FOLDER", "INBOX")
 # How far back to look. One email a day, so a week is generous and keeps the
 # search cheap on a large mailbox.
-SEARCH_DAYS = int(os.getenv("IMAP_SEARCH_DAYS", "7") or 7)
+SEARCH_DAYS = int(_setting("IMAP_SEARCH_DAYS", "7"))
 
 EXCEL_SUFFIXES = (".xlsx", ".xlsm", ".xls")
 
