@@ -123,6 +123,20 @@ jobs:
           # til.prd_shipmentStatus. Without it the run still builds the
           # dashboard; gxo_ko and the SHIPPED check are skipped.
           WLFS_BIGQUERY_CREDS: ${{ secrets.WLFS_BIGQUERY_CREDS }}
+          # The mailbox, for GXO Carisio's daily backlog workbook. The same
+          # pair the reporting system sends with; here they are used to read
+          # over IMAP rather than to send. Without them the mailbox is not
+          # searched, the run says so and carries on, and the workbook has to
+          # be uploaded by hand as before.
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          # Only needed if the app password was copied with spaces in it.
+          SMTP_REMOVE_PASSWORD_SPACES: ${{ vars.SMTP_REMOVE_PASSWORD_SPACES }}
+          # Optional, to point the search somewhere other than the default
+          # outlook.office365.com:993 / INBOX / the last 7 days.
+          IMAP_HOST: ${{ vars.IMAP_HOST }}
+          IMAP_FOLDER: ${{ vars.IMAP_FOLDER }}
+          IMAP_SEARCH_DAYS: ${{ vars.IMAP_SEARCH_DAYS }}
           # Optional repository variables, to point a run at a test endpoint.
           GET_DOCUMENTS_AUTH_URL: ${{ vars.GET_DOCUMENTS_AUTH_URL }}
           GET_DOCUMENTS_URL: ${{ vars.GET_DOCUMENTS_URL }}
