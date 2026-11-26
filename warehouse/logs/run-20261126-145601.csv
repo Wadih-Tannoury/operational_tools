@@ -1,0 +1,2 @@
+﻿source_file,row_number,stage,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,kibo_shipment_number,outcome,status_code,error,response_excerpt
+20261126-145546__backoffice__shipment.csv,2,warehouse,RC-US-00021107,,,,,,,,,,,failed,,RC-US-00021107 has no GX location row in tlg-wlfs-prd.til.prd_orders,
