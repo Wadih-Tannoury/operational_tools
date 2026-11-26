@@ -1573,24 +1573,85 @@ PREPARE_FOR_SHIPMENT = "prepare for shipment"
 # A shipment Kibo calls FULFILLED has left; there is nothing left to fix.
 FULFILLED_STATUS = "FULFILLED"
 # Kibo moved the shipment to another location rather than fulfilling or
-# cancelling it. The shipment number on this row is settled: whatever is left
-# to do belongs to the shipment Kibo created in its place, which arrives on
-# its own row. Nothing here is worth asking the warehouse about, so it is kept
-# off the operational table and off the dashboard.
+# cancelling it. The work moves with it, but the warehouse does not know that
+# until somebody tells them: the old shipment is still open on their side and
+# still holding its stock, so it has to be cancelled there.
+#
+# So a reassigned shipment is not settled by itself. It is settled when GXO
+# confirms the cancellation, and until then it belongs on the dashboard with
+# "To cancel the shipment" against it — the same shape as the rule for a
+# shipment Kibo has cancelled, and for the same reason.
 REASSIGNED_STATUS = "REASSIGNED"
 # Kibo's spelling of a cancelled shipment — one L, against the warehouse
 # event's CANCELLED, which has two. They are different systems and the
 # resolve pass needs both, so the difference is kept visible here rather than
 # normalised away.
 CANCELLED_STATUS = "CANCELED"
-# Every shipment this run found REASSIGNED. Mirrors FULFILLED_BY_KIBO: the
-# resolve pass reads it at the end, once the rows have been written.
+# Where a shipment stops. Kibo will not move a REASSIGNED or CANCELED
+# shipment on to anything else: the work, if there is any left, is on the
+# shipment created in its place or on nobody. Asking about one again costs a
+# call and cannot change the answer, so these are left out of the Kibo pass
+# whichever of the two status columns says so.
+#
+# They are not finished with this workflow, though. A reassigned or cancelled
+# shipment still has to be cancelled at the warehouse, and stays on the
+# dashboard until GXO confirms it — that is the resolve pass's job, and it
+# reads the stored status rather than a fresh answer.
+TERMINAL_STATUSES = (REASSIGNED_STATUS, CANCELLED_STATUS)
+
+
+def terminal_status(row: Dict[str, str]) -> str:
+    """
+    The terminal status on this row, from either column, or "".
+
+    Either column is enough. initial_ says the shipment was already reassigned
+    or cancelled when it was first seen; updated_ says a later run found it
+    so. Neither can be undone by asking again.
+    """
+    for column in ("updated_fulfillment_status", "initial_fulfillment_status"):
+        value = str(row.get(column, "") or "").strip().upper()
+        if value in TERMINAL_STATUSES:
+            return value
+    return ""
+# Every shipment this run found REASSIGNED. attach_monitoring reads it to put
+# "To cancel the shipment" against them; the resolve pass reads it at the end
+# and archives the ones GXO has confirmed cancelled.
 REASSIGNED_BY_KIBO: set = set()
 # Every shipment this run found FULFILLED, from whichever stage found it. The
 # resolve pass archives them at the end, by which point they have been
 # written. A module-level set rather than a parameter through five stages:
 # one run, one pass, nothing concurrent.
 FULFILLED_BY_KIBO: set = set()
+
+
+def kibo_shipments_for(row: Dict[str, str], shipments: List[Dict[str, Any]],
+                       number: str) -> List[Dict[str, Any]]:
+    """
+    The Kibo shipments that are this row's, narrowed as far as the row allows.
+
+    One externalOrderId can carry several Kibo shipments. An order that was
+    split, reassigned, split again and part-cancelled comes back as the whole
+    family, each member with its own shipmentStatus and its own active task,
+    and every one of them carrying the same data.shipmentOrderNumber. Matching
+    on that alone picks the family, not the member: the fields below are then
+    filled from whichever relative happens to have each one first, so a row
+    can end up reported as "Validate Items In Stock" because a sibling is,
+    while the shipment itself was reassigned days ago.
+
+    oms_shipment_number names the member. Where the row has it and Kibo
+    returns it, that shipment is the only one whose answer belongs here.
+    Without it the order-level match is the best available, and it is what
+    this did for every row before.
+    """
+    oms = str(row.get("oms_shipment_number", "") or "").strip()
+    if oms:
+        exact = [shipment for shipment in shipments
+                 if str(shipment.get("shipmentNumber") or "").strip() == oms]
+        if exact:
+            return exact
+    return [shipment for shipment in shipments
+            if normalise_shipment(shipment_order_number_of(shipment))
+            == normalise_shipment(number)] or shipments
 
 
 def live_status(row: Dict[str, str]) -> str:
@@ -1922,10 +1983,15 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
     # shipment whose status might have moved, and any shipment with no channel
     # — are both still served by asking about all of them, and the live status
     # is wanted for its own sake now rather than only as a routing decision.
-    wanted = list(rows)
+    wanted = [row for row in rows if not terminal_status(row)]
+    settled_already = len(rows) - len(wanted)
     needs_status = wanted
-    needs_channel = [row for row in rows
+    needs_channel = [row for row in wanted
                      if not str(row.get("channel", "") or "").strip()]
+    if settled_already:
+        log(f"  {settled_already} shipment(s) are already "
+            f"{' or '.join(TERMINAL_STATUSES)} and are not asked again; Kibo "
+            "will not move them on from there.")
     if not wanted:
         return set()
 
@@ -1996,9 +2062,7 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
                     + (f" — {fulfillment_status_of(shipments[0])!r}, "
                        f"{shipment_status_of(shipments[0])!r}" if shipments else ""))
 
-            mine = [shipment for shipment in shipments
-                    if normalise_shipment(shipment_order_number_of(shipment))
-                    == normalise_shipment(number)] or shipments
+            mine = kibo_shipments_for(row, shipments, number)
             status = ""
             state = ""
             channel = ""
@@ -2049,12 +2113,14 @@ def refresh_fulfillment(rows: List[Dict[str, str]], args: argparse.Namespace,
             # Checked before the ready test on purpose: a reassigned shipment
             # can still carry a live "Prepare for Shipment" task, and asking
             # the warehouse for documents against a shipment Kibo has moved
-            # would be asking about the wrong one. Not ko_fixed — nothing was
-            # fixed — just settled, and resolved by the pass at the end.
+            # would be asking about the wrong one. It is not fixed and not
+            # settled: the warehouse still has to cancel it, which becomes the
+            # action below and is closed by the resolve pass once GXO's
+            # CANCELLED event arrives.
             counts["reassigned"] += 1
             REASSIGNED_BY_KIBO.add(normalise_shipment(number))
             row["_ko_status"] = ("Kibo says REASSIGNED: the shipment moved to "
-                                 "another location and is not this row's work")
+                                 "another location and GXO has to cancel this one")
         elif status.strip().lower() == PREPARE_FOR_SHIPMENT:
             counts["ready"] += 1
         elif state == FULFILLED_STATUS:
@@ -2399,7 +2465,10 @@ def run_resolve(client: Any, wlfs_client: Any, gxo_present: Optional[set],
     # confirmed cancelled by the warehouse is settled on both sides, and the
     # rule below archives it wherever it sits.
     cancelled_rows = [row for row in rows
-                      if live_status(row).upper() == CANCELLED_STATUS]
+                      if live_status(row).upper() in (CANCELLED_STATUS,
+                                                      REASSIGNED_STATUS)
+                      or normalise_shipment(row["shipment_order_number"])
+                      in REASSIGNED_BY_KIBO]
 
     # prd_shipmentStatus, read once: the CANCELLED events settle the ones GXO
     # was asked to cancel and the ones Kibo has cancelled, the SHIPPED events
@@ -2427,12 +2496,6 @@ def run_resolve(client: Any, wlfs_client: Any, gxo_present: Optional[set],
     for shipment in sorted(FULFILLED_BY_KIBO & open_now):
         resolved.append(shipment)
         reasons["fulfilled in Kibo"] += 1
-    # And these Kibo moved elsewhere. Settled for the same reason and by the
-    # same route: the work, if any is left, is on the shipment Kibo created in
-    # this one's place.
-    for shipment in sorted(REASSIGNED_BY_KIBO & open_now - set(resolved)):
-        resolved.append(shipment)
-        reasons["reassigned in Kibo"] += 1
     settled = set(resolved)
 
     if events is None:
@@ -2474,11 +2537,18 @@ def run_resolve(client: Any, wlfs_client: Any, gxo_present: Optional[set],
                 resolved.append(shipment)
                 done.add(shipment)
                 settled.add(shipment)
+                # Fixed as well as resolved: the thing that was asked of the
+                # warehouse was done, and the dashboard counts a fixed row
+                # differently from one that merely went away.
+                if not row.get("ko_fix_date"):
+                    row["ko_fix_date"] = iso(now_utc())
+                row["ko_fixed"] = "yes"
                 reasons["cancelled in Kibo and at the warehouse"] += 1
         still_open = len(cancelled_rows) - reasons["cancelled in Kibo and at the warehouse"]
         if still_open:
-            log(f"  {still_open} shipment(s) Kibo calls {CANCELLED_STATUS} have no "
-                "CANCELLED event at the warehouse yet; they stay open.")
+            log(f"  {still_open} shipment(s) Kibo calls {CANCELLED_STATUS} or "
+                f"{REASSIGNED_STATUS} have no CANCELLED event at the warehouse "
+                "yet; they stay open, to be cancelled.")
 
     shipped_ids = set()
     if events is not None:
@@ -2611,7 +2681,8 @@ def is_gxo(row: Dict[str, str]) -> bool:
 
 
 def gxo_action(provider: str, blocking_reason: str, ko_fixed: str,
-               source: str = "", awaiting_cancellation: bool = False) -> str:
+               source: str = "", awaiting_cancellation: bool = False,
+               reassigned: bool = False) -> str:
     """
     What GXO has to do about this shipment, or nothing.
 
@@ -2627,6 +2698,12 @@ def gxo_action(provider: str, blocking_reason: str, ko_fixed: str,
     for GXO' while GXO still owes an answer, and the action has to outlive the
     reason that raised it.
 
+    `reassigned` is Kibo saying it moved the shipment elsewhere. It asks for
+    the same thing as a cancellation: the warehouse is still holding stock
+    against a shipment that is not going to be picked, and only they can
+    release it. The replacement shipment arrives on its own row and is chased
+    on its own terms.
+
     `source` is the fallback for a row whose location_provider was never
     filled — the column arrived after those rows were written, and a shipment
     that came from the GXO side of an upload is GXO's whether or not anything
@@ -2637,7 +2714,9 @@ def gxo_action(provider: str, blocking_reason: str, ko_fixed: str,
         return ""
     if known != GXO and GXO not in normalise_source(source).upper():
         return ""
-    if awaiting_cancellation or str(blocking_reason or "").strip() == CANCEL_ON_KIBO:
+    if (awaiting_cancellation
+            or reassigned
+            or str(blocking_reason or "").strip() == CANCEL_ON_KIBO):
         return ACTION_CANCEL
     if str(ko_fixed or "").strip().lower() in ("yes", "true", "1"):
         return ACTION_PRINT
@@ -2775,7 +2854,15 @@ def attach_monitoring(rows: List[Dict[str, str]], args: argparse.Namespace,
         action = gxo_action(
             row.get("location_provider", ""), row.get("blocking_reason", ""),
             row.get("ko_fixed", ""), row.get("source", ""),
-            awaiting_cancellation=pending_cancel)
+            awaiting_cancellation=pending_cancel,
+            # Either this run heard it from Kibo, or the row already says
+            # so. The second half matters now that a reassigned shipment is
+            # not asked about again: without it the action would be blanked
+            # on the very next run, and the warehouse would stop being told
+            # to cancel a shipment nobody has cancelled.
+            reassigned=(normalise_shipment(row["shipment_order_number"])
+                        in REASSIGNED_BY_KIBO
+                        or terminal_status(row) == REASSIGNED_STATUS))
         # An unreadable ledger leaves the stored action alone rather than
         # blanking it; everything else is recomputed from scratch each run.
         if action or awaiting is not None:
@@ -2844,9 +2931,7 @@ def backfill_from_kibo(rows: List[Dict[str, str]], args: argparse.Namespace,
             counts["failed"] += 1
             continue
 
-        mine = [shipment for shipment in shipments
-                if normalise_shipment(shipment_order_number_of(shipment))
-                == normalise_shipment(number)] or shipments
+        mine = kibo_shipments_for(row, shipments, number)
         details: Dict[str, str] = {}
         for shipment in mine:
             for column, value in kibo_details(shipment, number).items():
