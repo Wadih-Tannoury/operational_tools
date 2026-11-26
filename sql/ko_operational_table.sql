@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS
   tried_by_gxo_after_the_fix BOOL
       OPTIONS (description = "FALSE by default. TRUE once last_tried_by_gxo_date is later than ko_fix_date. Never goes back to FALSE."),
   ko_reason STRING
-      OPTIONS (description = "Why the shipment is stuck. The first of these with anything to say: external_error_message, error_message or blocking_reason from til.prd_fulfillment_monitoring_table, then the documents API's error, then the CSV's action."),
+      OPTIONS (description = "Why the shipment is stuck. The first of these with anything to say: external_error_message, error_message or mon_blocking_reason from til.prd_fulfillment_monitoring_table, then the documents API's error, then the CSV's action."),
   ko_resolved BOOL
       OPTIONS (description = "FALSE while the shipment keeps appearing in the uploads. TRUE once an upload no longer carries it, which is how a shipment leaves the dashboard without being deleted."),
   ko_resolved_date TIMESTAMP
@@ -101,9 +101,9 @@ OPTIONS (
 -- Adds whatever an existing table is missing, and leaves the rest alone.
 
 ALTER TABLE `tlg-business-intelligence-prd.til.ko_operational_table`
-  ADD COLUMN IF NOT EXISTS ko_source STRING
+  ADD COLUMN IF NOT EXISTS mon_ko_source STRING
     OPTIONS (description = 'Who owns the KO, as til.prd_fulfillment_monitoring_table has it.'),
-  ADD COLUMN IF NOT EXISTS blocking_reason STRING
+  ADD COLUMN IF NOT EXISTS mon_blocking_reason STRING
     OPTIONS (description = 'Why the monitoring table says this shipment is blocked, as it has it.'),
   ADD COLUMN IF NOT EXISTS action_needed_from_gxo STRING
     OPTIONS (description = 'What GXO has to do: To cancel the shipment, To print shipping documents, or empty.'),

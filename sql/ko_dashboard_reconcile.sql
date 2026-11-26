@@ -20,7 +20,7 @@ WITH rows_ AS (
   SELECT
     IFNULL(ko_fixed, FALSE)                                       AS fixed,
     IFNULL(ko_resolved, FALSE)                                    AS resolved,
-    TRIM(IFNULL(blocking_reason, '')) LIKE
+    TRIM(IFNULL(mon_blocking_reason, '')) LIKE
       'Stock still reserved to the cancelled shipment%'            AS stock_reserved
   FROM `tlg-business-intelligence-prd.til.ko_operational_table`
   WHERE UPPER(IFNULL(location_provider, '')) = 'GXO'
@@ -45,7 +45,7 @@ FROM rows_;
 SELECT COUNT(*) AS on_gxos_list
 FROM `tlg-business-intelligence-prd.til.ko_operational_table`
 WHERE NOT IFNULL(ko_resolved, FALSE)
-  AND TRIM(IFNULL(blocking_reason, '')) NOT LIKE
+  AND TRIM(IFNULL(mon_blocking_reason, '')) NOT LIKE
       'Stock still reserved to the cancelled shipment%'
   AND (UPPER(IFNULL(location_provider, '')) = 'GXO'
        OR STRPOS(UPPER(IFNULL(source, '')), 'GXO') > 0);
@@ -56,7 +56,7 @@ WHERE NOT IFNULL(ko_resolved, FALSE)
 SELECT COUNT(*) AS everything_open
 FROM `tlg-business-intelligence-prd.til.ko_operational_table`
 WHERE NOT IFNULL(ko_resolved, FALSE)
-  AND TRIM(IFNULL(blocking_reason, '')) NOT LIKE
+  AND TRIM(IFNULL(mon_blocking_reason, '')) NOT LIKE
       'Stock still reserved to the cancelled shipment%'
   AND NOT IFNULL(ko_fixed, FALSE);
 
@@ -70,11 +70,11 @@ SELECT
   ko_resolved,
   last_tried_by_gxo_date,
   in_latest_gxo_input,
-  blocking_reason,
+  mon_blocking_reason,
   ko_status
 FROM `tlg-business-intelligence-prd.til.ko_operational_table`
 WHERE UPPER(IFNULL(location_provider, '')) = 'GXO'
   AND (IFNULL(ko_resolved, FALSE)
-       OR TRIM(IFNULL(blocking_reason, '')) LIKE
+       OR TRIM(IFNULL(mon_blocking_reason, '')) LIKE
           'Stock still reserved to the cancelled shipment%')
 ORDER BY shipment_order_number;

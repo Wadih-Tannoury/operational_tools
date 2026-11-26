@@ -97,6 +97,16 @@ except ImportError:  # pragma: no cover - the run still writes its CSV
     table_module = None  # type: ignore[assignment]
 
 try:
+    import outlook_backlog
+except ImportError:  # pragma: no cover - the mailbox is simply not searched
+    outlook_backlog = None  # type: ignore[assignment]
+
+try:
+    import pending_query
+except ImportError:  # pragma: no cover - the uploaded CSV still works
+    pending_query = None  # type: ignore[assignment]
+
+try:
     from google.cloud import bigquery
     from google.oauth2 import service_account
 except ImportError:  # pragma: no cover - the run continues without BigQuery
@@ -228,8 +238,13 @@ OUTPUT_COLUMNS = [
     "source",
     "brand",
     "channel",
-    "ko_source",
-    "blocking_reason",
+    "mon_ko_source",
+    "mon_blocking_reason",
+    "mon_external_error_message",
+    "mon_error_message",
+    "b2c_action",
+    "gxo_ko_reason",
+    "docs_reason",
     "action_needed_from_gxo",
     "in_latest_gxo_input",
     "eligible_for_package_closure",
@@ -1432,10 +1447,20 @@ def build_rows(
     # workbook does not.
     gxo_ko = gxo_ko or {}
     gxo_side = dict(xlsx_rows)
-    for key, logistic in gxo_ko.items():
+    for key, entry in gxo_ko.items():
+        # fetch_gxo_ko used to hand back the logistics order number alone and
+        # now hands back a small dict; a plain string is still accepted so a
+        # half-deployed pair of files does not fall over.
+        if isinstance(entry, str):
+            entry = {"logistic": entry, "reason": "", "location": ""}
         if key not in gxo_side:
-            gxo_side[key] = {"shipment": key, "oerodp": "", "ub_imko": "",
-                             "logistic": logistic}
+            gxo_side[key] = {"shipment": key, "oerodp": "",
+                             # The emailed workbook's ub_imko reaches the run
+                             # through this column and nowhere else.
+                             "ub_imko": entry.get("location", ""),
+                             "logistic": entry.get("logistic", "")}
+        elif not gxo_side[key].get("ub_imko") and entry.get("location"):
+            gxo_side[key]["ub_imko"] = entry["location"]
 
     if join == "csv":
         order = list(csv_rows.keys())
@@ -1465,6 +1490,11 @@ def build_rows(
                 number, csv_row.get("channel", ""), csv_row.get("logistic_order", "")
             ),
             "ub_imko": xlsx_row.get("ub_imko", ""),
+            # The warehouse's own reason, straight from gxo_ko and not
+            # reconciled with anything: that is the point of keeping a column
+            # per source.
+            "gxo_ko_reason": (gxo_ko.get(number, {}) or {}).get("reason", "")
+            if isinstance(gxo_ko.get(number), dict) else "",
             # The CSV first; failing that, what OERODP carries. An excel-only
             # shipment has no CSV row at all, so this is the only source it has.
             "logistic_order_number": (
@@ -1476,6 +1506,12 @@ def build_rows(
             "order_submit_date": csv_row.get("order_date", ""),
             "shipment_creation_date": csv_row.get("shipment_created", ""),
             "action": csv_row.get("action", ""),
+            # The same value, kept a second time under the name of where it
+            # came from. `action` is the working column the rest of the run
+            # reads and may yet be overwritten; b2c_action is the record of
+            # what b2c_pending_shipments_analysis said, which is what makes
+            # it comparable with the other reason columns.
+            "b2c_action": csv_row.get("action", ""),
             # The CSV's active task is what the shipment was doing when it
             # was listed, which is the first-seen status. The live one is
             # Kibo's, and arrives in refresh_fulfillment.
@@ -1736,8 +1772,10 @@ BACKFILL_COLUMNS = (
     # not fill this in could not fill in oerodp either. Kibo answers it.
     "logistic_order_number",
     "oms_shipment_number",
-    "ko_source",
-    "blocking_reason",
+    "mon_ko_source",
+    "mon_blocking_reason",
+    "mon_external_error_message",
+    "mon_error_message",
     "order_submit_date",
     "shipment_creation_date",
     "initial_fulfillment_status",
@@ -2315,6 +2353,11 @@ def check_documents(rows: List[Dict[str, str]], args: argparse.Namespace, log: L
         # names the ones that carried the verdict, so the reasoning survives
         # in ko_reason without seven columns of yes/no beside it.
         row["_ko_status"] = outcome["why"]
+        # The documents API's own verdict, kept beside the other sources
+        # rather than only inside _ko_status. It is the one reason here that
+        # this workflow produces itself, so it is also the one that is right
+        # about now rather than about whenever a feed last ran.
+        row["docs_reason"] = outcome["why"]
         if outcome["fixed"]:
             row["ko_fix_date"] = iso(outcome["called_at"])
             row["ko_fixed"] = "yes"
@@ -2845,14 +2888,22 @@ def attach_monitoring(rows: List[Dict[str, str]], args: argparse.Namespace,
         # Both are taken as the monitoring table has them, overwritten on
         # every run: they describe the shipment now, not when it was first
         # seen, and the table is the authority on both.
-        if entry.get("ko_source"):
-            row["ko_source"] = str(entry["ko_source"]).strip()
-        if entry.get("blocking_reason"):
-            row["blocking_reason"] = str(entry["blocking_reason"]).strip()
+        # Each monitoring-table reason into its own column, kept verbatim.
+        # They are written whenever the table has them and left alone when it
+        # does not, so a run that could not read the table does not blank
+        # what an earlier one learned.
+        for source_field, column in (
+                ("ko_source", "mon_ko_source"),
+                ("blocking_reason", "mon_blocking_reason"),
+                ("external_error_message", "mon_external_error_message"),
+                ("error_message", "mon_error_message")):
+            value = str(entry.get(source_field, "") or "").strip()
+            if value:
+                row[column] = value
         pending_cancel = (awaiting is not None
                           and normalise_shipment(row["shipment_order_number"]) in awaiting)
         action = gxo_action(
-            row.get("location_provider", ""), row.get("blocking_reason", ""),
+            row.get("location_provider", ""), row.get("mon_blocking_reason", ""),
             row.get("ko_fixed", ""), row.get("source", ""),
             awaiting_cancellation=pending_cancel,
             # Either this run heard it from Kibo, or the row already says
@@ -3289,8 +3340,8 @@ def monitoring_candidates(args: argparse.Namespace, log: Log, client: Any,
         # ko_reason is left to attach_monitoring, which reads the same table
         # and applies the priority the dashboard expects; the blocking reason
         # is only the fallback for a row it cannot match.
-        row["blocking_reason"] = entry.get("blocking_reason", "")
-        row["ko_source"] = entry.get("ko_source", "")
+        row["mon_blocking_reason"] = entry.get("blocking_reason", "")
+        row["mon_ko_source"] = entry.get("ko_source", "")
         row["_ko_status"] = entry.get("blocking_reason", "")
         row["ko_fixed"] = "no"
         row["source"] = MONITORING_SOURCE
@@ -3327,12 +3378,23 @@ def monitoring_candidates(args: argparse.Namespace, log: Log, client: Any,
 def process_batch(
     key: str, csv_path: Optional[Path], xlsx_path: Optional[Path],
     args: argparse.Namespace, log: Log,
-    client: Any = None, gxo_ko: Optional[Dict[str, str]] = None,
+    client: Any = None, gxo_ko: Optional[Dict[str, Any]] = None,
+    queried: Optional[List[Dict[str, str]]] = None,
 ) -> Tuple[List[Dict[str, str]], Dict[str, Any]]:
+    """
+    `queried` is the pending list fetched from BigQuery rather than uploaded.
+    It arrives in read_csv's shape and is treated exactly as an uploaded CSV
+    would be, so nothing downstream has to know which it was.
+    """
     log(f"Batch {key}"
-        + ("" if csv_path and xlsx_path
-           else f" ({'CSV' if csv_path else 'workbook'} only)"))
-    csv_rows = collapse_csv(read_csv(csv_path, log), log) if csv_path else {}
+        + ("" if (csv_path or queried) and xlsx_path
+           else f" ({'CSV' if csv_path or queried else 'workbook'} only)"))
+    if csv_path:
+        csv_rows = collapse_csv(read_csv(csv_path, log), log)
+    elif queried:
+        csv_rows = collapse_csv(queried, log)
+    else:
+        csv_rows = {}
     xlsx_rows = collapse_workbook(read_workbook(xlsx_path, log)) if xlsx_path else {}
 
     # The join describes how two sides meet, so with only one side it has
@@ -3340,7 +3402,7 @@ def process_batch(
     # one file that was uploaded is the batch, and the run says so rather than
     # reporting nought shipments and leaving someone to work out why.
     join = args.join
-    if not (csv_path and xlsx_path) and join != "outer":
+    if not ((csv_path or queried) and xlsx_path) and join != "outer":
         log(f"  --join {join} needs both files; this batch has one, "
             "so every shipment in it is taken.")
         join = "outer"
@@ -3454,6 +3516,12 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
                         help="where MODA shipments are checked")
     parser.add_argument("--dry-run", action="store_true",
                         help="join the two files and report, call nothing")
+    parser.add_argument("--no-outlook", action="store_true",
+                        help="Do not search the mailbox for the GXO backlog "
+                             "workbook. An uploaded workbook already skips it.")
+    parser.add_argument("--no-pending-query", action="store_true",
+                        help="Do not query the pending-shipments list. An "
+                             "uploaded pending CSV already skips it.")
     parser.add_argument("--backfill", action="store_true",
                         help="fill in the descriptive columns of every shipment "
                              "in the operational table and the archive: oerodp, "
@@ -3661,8 +3729,27 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     # just added to its KO file is a KO whether or not anyone uploaded
     # anything today. On a run with an upload it also forms the GXO side of
     # the join; on a run without one it only ever adds shipments.
-    gxo_ko: Dict[str, str] = {}
+    #
+    # Before it is read, the day's backlog workbook goes in. GXO Carisio email
+    # one every morning, and until now somebody downloaded it and uploaded it
+    # here; outlook_backlog does that instead. An uploaded workbook still
+    # wins: if one came in with this run, the mailbox is left alone and the
+    # upload takes the same route into gxo_ko.
+    gxo_ko: Dict[str, Any] = {}
     if wlfs_client is not None and not args.backfill:
+        if outlook_backlog is not None and not args.no_outlook:
+            uploaded = [path for _, _, path in complete if path]
+            workbook = None
+            if uploaded:
+                # The newest, if somebody uploaded more than one.
+                chosen = sorted(uploaded)[-1]
+                workbook = (chosen.name, chosen.read_bytes())
+                log(f"  {chosen.name} was uploaded, so the mailbox is not searched.")
+            try:
+                outlook_backlog.ingest(wlfs_client, log, workbook=workbook)
+            except Exception as exc:  # noqa: BLE001 - the run goes on without it
+                log(f"  The backlog workbook could not be ingested: {exc}")
+            log("")
         gxo_ko = table_module.fetch_gxo_ko(wlfs_client, log)
 
     # --backfill is its own pass and ends the run: both tables, nine
@@ -3718,6 +3805,36 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         summaries.append(summary)
         if not args.keep_input and not args.dry_run:
             discard((csv_path, xlsx_path), log, "processed")
+        log("")
+
+    # ---- the pending list, queried rather than uploaded --------------------
+    # What somebody used to export and upload as the pending CSV is a query,
+    # and it runs on any run that did not get one by hand. An uploaded CSV
+    # wins: it is what the person in front of the console meant to use, and
+    # querying beside it would only argue with them.
+    uploaded_csv = any(path for _, path, _ in complete)
+    if (client is not None and pending_query is not None
+            and not uploaded_csv and not args.no_pending_query
+            and not args.backfill):
+        try:
+            queried = pending_query.fetch(client, log, args.limit)
+        except Exception as exc:  # noqa: BLE001 - the run goes on without it
+            log(f"  The pending-shipments query failed: {exc}")
+            queried = []
+        if queried:
+            key = f"query-{run_stamp}"
+            try:
+                rows, summary = process_batch(key, None, None, args, log,
+                                              client, gxo_ko, queried=queried)
+                all_rows.extend(rows)
+                summaries.append(summary)
+            except Exception as exc:  # noqa: BLE001
+                failed_batches += 1
+                log(f"  Batch {key} failed: {exc}")
+            log("")
+    elif uploaded_csv:
+        log("  A pending CSV was uploaded, so the pending-shipments query is "
+            "not run.")
         log("")
 
     # ---- shipments the latest gxo_ko import carries ------------------------

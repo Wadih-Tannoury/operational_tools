@@ -39,8 +39,8 @@ WHERE TRUE
   -- AND UPPER(TRIM(shipment_order_number)) IN (
   --   SELECT UPPER(TRIM(CAST(shipment_order_number AS STRING)))
   --   FROM `tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table`
-  --   WHERE blocking_reason IS NOT NULL
-  --     AND TRIM(CAST(blocking_reason AS STRING)) NOT IN (
+  --   WHERE mon_blocking_reason IS NOT NULL
+  --     AND TRIM(CAST(mon_blocking_reason AS STRING)) NOT IN (
   --       'KO fixed, already shipped',
   --       'Shipment packed at GXO but not shipped and still READY in OMS',
   --       'GXO shared the wrong quantity')
@@ -121,8 +121,8 @@ WHEN NOT MATCHED THEN INSERT (
     source,
     brand,
     channel,
-    ko_source,
-    blocking_reason,
+    mon_ko_source,
+    mon_blocking_reason,
     action_needed_from_gxo,
     in_latest_gxo_input,
     eligible_for_package_closure,
@@ -162,8 +162,8 @@ WHEN NOT MATCHED THEN INSERT (
     S.source,
     S.brand,
     S.channel,
-    S.ko_source,
-    S.blocking_reason,
+    S.mon_ko_source,
+    S.mon_blocking_reason,
     S.action_needed_from_gxo,
     S.in_latest_gxo_input,
     S.eligible_for_package_closure,

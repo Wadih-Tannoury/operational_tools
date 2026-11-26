@@ -81,8 +81,24 @@ COLUMNS: List[Tuple[str, str, str]] = [
     ("channel", "STRING", "channel"),
     # Who owns the KO, and why the monitoring table says it is one. Both come
     # from til.prd_fulfillment_monitoring_table as they stand there.
-    ("ko_source", "STRING", "ko_source"),
-    ("blocking_reason", "STRING", "blocking_reason"),
+    # One column per place a KO reason can come from, each named for its
+    # source and never for what it means. Nothing here decides which reason
+    # is the right one: that is a judgement, it changes as the feeds change,
+    # and a column that quietly picked a winner would hide the disagreement
+    # that makes these worth keeping apart. ko_reason is still the one the
+    # dashboard reads today.
+    #
+    #   mon_*         til.prd_fulfillment_monitoring_table
+    #   b2c_action    til.b2c_pending_shipments_analysis, column `action`
+    #   gxo_ko_reason monitoring.gxo_ko, column `reason`
+    #   docs_reason   what the documents API said when it was last called
+    ("mon_ko_source", "STRING", "mon_ko_source"),
+    ("mon_blocking_reason", "STRING", "mon_blocking_reason"),
+    ("mon_external_error_message", "STRING", "mon_external_error_message"),
+    ("mon_error_message", "STRING", "mon_error_message"),
+    ("b2c_action", "STRING", "b2c_action"),
+    ("gxo_ko_reason", "STRING", "gxo_ko_reason"),
+    ("docs_reason", "STRING", "docs_reason"),
     # What GXO has to do about it, worked out from the blocking reason and
     # from ko_fixed. Empty when there is nothing for the warehouse to do.
     ("action_needed_from_gxo", "STRING", "action_needed_from_gxo"),
@@ -564,6 +580,12 @@ STATUS_FIELDS = {
 # row its number, not the whole query an error.
 PAYLOAD_LOGISTIC_PATTERN = r'"logisticOrderNumber"\s*:\s*"([^"]*)"'
 GXO_KO_FIELDS = {
+    # The warehouse's own words for why it went KO, when the feed carries
+    # them. Empty on the rows the emailed workbook inserts: that file has no
+    # reason column, and inventing one there would outrank the sources that
+    # do know.
+    "reason": ("reason",),
+    "location": ("location", "ub_imko"),
     # The warehouse file calls the shipment number orderNumber — the same
     # spelling til.prd_fulfillment_monitoring_table reads it by. The others
     # are kept in case the feed is ever renamed.
@@ -607,9 +629,15 @@ def fetch_gxo_ko(client: Any, log: Any) -> Dict[str, str]:
         SELECT * FROM `tlg-wlfs-prd`.monitoring.gxo_ko
         WHERE importDate = (SELECT MAX(importDate) FROM the same)
 
-    Returns {normalised shipment number: logistics order number}, the second
-    empty when the table does not carry one. These shipments are GXO's, so a
-    shipment here that neither file mentions still belongs on the dashboard.
+    Returns {normalised shipment number: {"logistic", "reason", "location"}},
+    each empty where the feed does not carry it. These shipments are GXO's,
+    so a shipment here that neither file mentions still belongs on the
+    dashboard.
+
+    It used to return just the logistics order number. The reason and the
+    ub_imko location come back too now: the reason is one of the KO-reason
+    columns, and the location is the only place the emailed workbook's
+    ub_imko survives once the workbook itself is gone.
     """
     if bigquery is None or client is None:
         return {}
@@ -620,10 +648,16 @@ def fetch_gxo_ko(client: Any, log: Any) -> Dict[str, str]:
 
     logistic = (f"CAST(`{columns['logistic']}` AS STRING)" if "logistic" in columns
                 else "CAST(NULL AS STRING)")
+    reason = (f"CAST(`{columns['reason']}` AS STRING)" if "reason" in columns
+              else "CAST(NULL AS STRING)")
+    location = (f"CAST(`{columns['location']}` AS STRING)" if "location" in columns
+                else "CAST(NULL AS STRING)")
     sql = f"""
         SELECT
           UPPER(TRIM(CAST(`{columns['shipment']}` AS STRING))) AS shipment,
-          {logistic} AS logistic
+          {logistic} AS logistic,
+          {reason} AS reason,
+          {location} AS location
         FROM `{GXO_KO_TABLE}`
         WHERE `{columns['import_date']}` = (
           SELECT MAX(`{columns['import_date']}`) FROM `{GXO_KO_TABLE}`
@@ -635,11 +669,15 @@ def fetch_gxo_ko(client: Any, log: Any) -> Dict[str, str]:
         log(f"  The {GXO_KO_TABLE} read failed: {exc}")
         return {}
 
-    found: Dict[str, str] = {}
+    found: Dict[str, Dict[str, str]] = {}
     for row in rows:
         shipment = str(row["shipment"] or "").strip()
         if shipment:
-            found.setdefault(shipment, str(row["logistic"] or "").strip())
+            found.setdefault(shipment, {
+                "logistic": str(row["logistic"] or "").strip(),
+                "reason": str(row["reason"] or "").strip(),
+                "location": str(row["location"] or "").strip(),
+            })
     log(f"  {GXO_KO_TABLE}: {len(found)} shipment(s) at the latest import.")
     return found
 
@@ -1111,16 +1149,12 @@ CANDIDATE_FIELDS = {
 # warehouse's documents, so there is nothing for this workflow to re-try: it
 # would sit in the table being asked about for ever.
 #
-# REASSIGNED is here for a different reason: Kibo has moved the shipment to
-# another location, so this shipment number is settled and whatever is left to
-# do belongs to the shipment created in its place, on its own row. Keeping it
-# would double-count the work on the dashboard.
-#
-# This filter only governs what the monitoring table contributes. A shipment
-# that arrives through the workbook or GXO's own KO list never passes through
-# here, and is caught instead by the REASSIGNED branch in
-# build_ko_monitoring.refresh_fulfillment, which asks Kibo directly.
-EXCLUDED_STATUSES = ("BACKORDER", "CUSTOMER_CARE", "REASSIGNED")
+# REASSIGNED is deliberately NOT here. Kibo moving a shipment elsewhere does
+# not settle it: the warehouse is still holding stock against a shipment
+# nobody is going to pick, and only they can release it. Those rows belong on
+# the dashboard with "To cancel the shipment" against them, and are archived
+# by the resolve pass once GXO's CANCELLED event arrives.
+EXCLUDED_STATUSES = ("BACKORDER", "CUSTOMER_CARE")
 
 
 def fetch_monitoring_open(client: Any, log: Any) -> Optional[set]:
@@ -1181,8 +1215,8 @@ def fetch_ko_candidates(client: Any, log: Any, limit: int = 0) -> List[Dict[str,
 
     A row counts as blocked when it has a blocking_reason that is none of
     EXCLUDED_REASONS — those name things the documents API cannot fix — and
-    when its shipmentStatus is none of EXCLUDED_STATUSES: BACKORDER,
-    CUSTOMER_CARE or REASSIGNED.
+    when its shipmentStatus is none of EXCLUDED_STATUSES: BACKORDER or
+    CUSTOMER_CARE.
 
     Shipments already in the operational table are left out, because the
     merge would only update what the run already knows. Shipments in the
