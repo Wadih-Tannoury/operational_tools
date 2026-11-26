@@ -1,8 +1,8 @@
 {
-  "run": "20261126-151638",
-  "built_at": "2026-11-26T15:16:38Z",
-  "finished_at": "2026-11-26T15:25:43Z",
-  "file": "ko_monitoring-20261126-151638.csv",
+  "run": "20261126-160119",
+  "built_at": "2026-11-26T16:01:19Z",
+  "finished_at": "2026-11-26T16:12:26Z",
+  "file": "ko_monitoring-20261126-160119.csv",
   "columns": [
     "shipment_order_number",
     "oerodp",
@@ -37,65 +37,34 @@
     "api_call_date",
     "batch"
   ],
-  "rows": 822,
+  "rows": 568,
   "batches": [
     {
-      "batch": "20261126-151617",
-      "csv_file": "20261126-151617__Wadih__pending.csv",
-      "xlsx_file": "20261126-151617__Wadih__check.xlsx",
-      "shipments": 538,
-      "from_csv": 388,
-      "from_excel": 330,
-      "matched_both": 180,
-      "fixed": 222,
-      "with_warehouse_attempt": 362,
-      "with_error": 505,
-      "dry_run": false,
-      "join": "outer",
-      "truncated": false
-    },
-    {
-      "batch": "recheck-20261126-151638",
+      "batch": "recheck-20261126-160119",
       "csv_file": "",
       "xlsx_file": "",
-      "shipments": 297,
+      "shipments": 568,
       "from_csv": 0,
       "from_excel": 0,
       "matched_both": 0,
-      "fixed": 146,
-      "with_warehouse_attempt": 96,
-      "with_error": 256,
+      "fixed": 267,
+      "with_warehouse_attempt": 368,
+      "with_error": 522,
       "dry_run": false,
       "join": "table",
       "truncated": false,
       "recheck_only": true
-    },
-    {
-      "batch": "monitoring-20261126-151638",
-      "csv_file": "",
-      "xlsx_file": "",
-      "shipments": 5,
-      "from_csv": 0,
-      "from_excel": 0,
-      "matched_both": 0,
-      "fixed": 0,
-      "with_warehouse_attempt": 0,
-      "with_error": 5,
-      "dry_run": false,
-      "join": "monitoring",
-      "truncated": false,
-      "monitoring_only": true
     }
   ],
   "dry_run": false,
   "zpl_check": "printable",
   "table": {
-    "written": 822,
-    "resolved": 254,
+    "written": 568,
+    "resolved": 14,
     "before": null,
     "after": null,
     "error": "",
-    "archived": 254,
-    "still_open": 568
+    "archived": 14,
+    "still_open": 554
   }
 }
