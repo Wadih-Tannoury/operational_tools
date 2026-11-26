@@ -1,0 +1,74 @@
+KO monitoring run 20261126-080118
+Batches  : 0 complete, 0 incomplete
+
+  tlg-wlfs-prd.monitoring.gxo_ko: 245 shipment(s) at the latest import.
+  Every shipment in the latest gxo_ko import is already known.
+  tlg-business-intelligence-prd.til.ko_operational_table: 526 shipment(s) not resolved yet.
+Re-checking 526 shipment(s) the table still holds open.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 502 of 526 shipment(s) matched.
+  Kibo: GET https://t<tenant>.tp3.mozu.com/api/commerce/shipments?filter=externalOrderId==<number> for 526 shipment(s) — 526 for a fulfilment status, 5 for a channel.
+    e.g. WL-FF-WST191795764: 1 shipment(s) from tenant 29991, site 53613 — 'Fulfilled', 'FULFILLED'
+  Kibo: 298 ready for documents, 22 FULFILLED, 120 in another status, 86 with no status, 521 carrying a Kibo fulfilment location.
+  237 already fixed, 289 to check.
+  85 shipment(s) are at neither GXO nor MODA ((not known), CAPACITY, FIEGE, GEODIS); they are recorded, not called.
+  143 shipment(s) not asked, fulfilment status is (none), CANCELED, Validate Items In Stock, Wait for Payment Confirmation.
+  Authenticated against https://integrations.thelevelgroup.com/logistics/v1/oauth2/token
+  61 shipment(s) in 'Prepare For Shipment' go to https://integrations.thelevelgroup.com/logistics/v1/shipments/documents
+    e.g. sent     {"shipmentOrderNumber": "WF-FF-T3W191837388", "brand": "WF", "weight": 1.0, "parcelsNumber": 1, "data": {"carrierCode": "", "logisticOrderNumber": "44907"}}
+    e.g. received HTTP 404, top-level keys: eligibleForPackageClosure, errorMessage, logisticOrderNumber, orderDate, orderNumber, paperless, shipmentAssignedDate, shipmentOrderNumber
+  25/61 checked, 2 newly fixed.
+  50/61 checked, 2 newly fixed.
+  61/61 checked, 2 newly fixed.
+      48 × HTTP 404: the response carries no package-closure flag
+      11 × no shipping label
+  2 of 61 checked shipment(s) were fixed; 239 of 526 now carry a ko_fix_date.
+  tlg-business-intelligence-prd.bi.wh_document_api_response: 6197 row(s) read, 356 shipment(s) matched.
+  356 shipment(s) have a warehouse attempt on record, 94 of them after the fix.
+  tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table: 261 shipment(s) sent to the warehouse and not confirmed yet.
+  action_needed_from_gxo: 117 to cancel, 214 to print.
+  ko_reason: 476 of 526 filled, 285 from the monitoring table.
+  location_provider: 479 of 526 known.
+  oerodp: 421 built from brand, channel and logistics order.
+  oerodp: 421 built from brand, channel and logistics order.
+
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 15 blocked shipment(s) not in the table yet.
+  15 shipment(s) taken from the monitoring table.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 15 of 15 shipment(s) matched.
+  Kibo: GET https://t<tenant>.tp3.mozu.com/api/commerce/shipments?filter=externalOrderId==<number> for 15 shipment(s) — 15 for a fulfilment status, 1 for a channel.
+    e.g. DJ-USA00041754: 1 shipment(s) from tenant 30018, site 53592 — 'Wait for Payment Confirmation', 'READY'
+  Kibo: 6 ready for documents, 8 in another status, 1 with no status, 1 given a channel, 15 carrying a Kibo fulfilment location.
+  9 shipment(s) not asked, fulfilment status is CANCELED, Validate Items In Stock, Wait for Payment Confirmation.
+  Authenticated against https://integrations.thelevelgroup.com/logistics/v1/oauth2/token
+  6 shipment(s) in 'Prepare For Shipment' go to https://integrations.thelevelgroup.com/logistics/v1/shipments/documents
+    e.g. sent     {"shipmentOrderNumber": "DG-FF-DWH191850281", "brand": "DG", "weight": 1.0, "parcelsNumber": 1, "data": {"carrierCode": "", "logisticOrderNumber": "777125"}}
+    e.g. received HTTP 200, top-level keys: additionalDocuments, data, eligibleForPackageClosure, errorMessage, invoiceDocuments, labelDocuments, locationCode, logisticOrderNumber, orderDate, orderNumber, paperless, shipmentAssignedDate, shipmentOrderNumber, shipping
+  6/6 checked, 2 newly fixed.
+       4 × HTTP 404: the response carries no package-closure flag
+  2 of 6 checked shipment(s) were fixed; 2 of 15 now carry a ko_fix_date.
+  tlg-business-intelligence-prd.bi.wh_document_api_response: 7 row(s) read, 4 shipment(s) matched.
+  4 shipment(s) have a warehouse attempt on record, 0 of them after the fix.
+  tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table: 261 shipment(s) sent to the warehouse and not confirmed yet.
+  action_needed_from_gxo: 1 to cancel, 2 to print.
+  ko_reason: 15 of 15 filled, 15 from the monitoring table.
+  location_provider: 15 of 15 known.
+  oerodp: 14 built from brand, channel and logistics order (14 differ from what was stored).
+  oerodp: 14 built from brand, channel and logistics order.
+
+  tlg-business-intelligence-prd.til.ko_operational_table: 541 row(s) merged.
+  tlg-business-intelligence-prd.til.ko_operational_table: 541 shipment(s) not resolved yet.
+  tlg-business-intelligence-prd.til.prd_fulfillment_monitoring_table: 330 shipment(s) still reported as blocked.
+  tlg-wlfs-prd.til.prd_shipmentStatus: the logistics order number is read from the request payload.
+  tlg-wlfs-prd.til.prd_shipmentStatus: of 435 shipment(s), 21 have a SHIPPED event and 10 a CANCELLED one.
+  117 shipment(s) GXO was asked to cancel have no CANCELLED event yet; they stay open whatever the inputs say.
+  81 shipment(s) Kibo calls CANCELED have no CANCELLED event at the warehouse yet; they stay open.
+  No workbook this run, so no GXO shipment is archived for absence.
+  24 shipment(s) resolved — 1 cancelled by GXO, 22 fulfilled in Kibo, 1 cancelled in Kibo and at the warehouse.
+  24 resolved shipment(s) archived to ko_operational_history_table and removed from ko_operational_table.
+  tlg-business-intelligence-prd.til.ko_operational_table: 517 shipment(s) still open.
+
+Dataset  : ko_monitoring/output/ko_monitoring-20261126-080118.csv (541 row(s)), and output/latest.csv
+
+Records  : 541 shipment(s) over 2 batch(es), 0 batch(es) failed
+Fixed    : 241
+Table    : 541 merged, 24 resolved, 24 archived
+Finished : 2026-11-26T08:09:50Z

@@ -1,8 +1,8 @@
 {
-  "run": "20261125-173102",
-  "built_at": "2026-11-25T17:31:02Z",
-  "finished_at": "2026-11-25T17:39:35Z",
-  "file": "ko_monitoring-20261125-173102.csv",
+  "run": "20261126-080118",
+  "built_at": "2026-11-26T08:01:18Z",
+  "finished_at": "2026-11-26T08:09:50Z",
+  "file": "ko_monitoring-20261126-080118.csv",
   "columns": [
     "shipment_order_number",
     "oerodp",
@@ -37,34 +37,50 @@
     "api_call_date",
     "batch"
   ],
-  "rows": 529,
+  "rows": 541,
   "batches": [
     {
-      "batch": "recheck-20261125-173102",
+      "batch": "recheck-20261126-080118",
       "csv_file": "",
       "xlsx_file": "",
-      "shipments": 529,
+      "shipments": 526,
       "from_csv": 0,
       "from_excel": 0,
       "matched_both": 0,
       "fixed": 239,
-      "with_warehouse_attempt": 297,
-      "with_error": 478,
+      "with_warehouse_attempt": 356,
+      "with_error": 476,
       "dry_run": false,
       "join": "table",
       "truncated": false,
       "recheck_only": true
+    },
+    {
+      "batch": "monitoring-20261126-080118",
+      "csv_file": "",
+      "xlsx_file": "",
+      "shipments": 15,
+      "from_csv": 0,
+      "from_excel": 0,
+      "matched_both": 0,
+      "fixed": 2,
+      "with_warehouse_attempt": 4,
+      "with_error": 15,
+      "dry_run": false,
+      "join": "monitoring",
+      "truncated": false,
+      "monitoring_only": true
     }
   ],
   "dry_run": false,
   "zpl_check": "printable",
   "table": {
-    "written": 529,
-    "resolved": 3,
+    "written": 541,
+    "resolved": 24,
     "before": null,
     "after": null,
     "error": "",
-    "archived": 3,
-    "still_open": 526
+    "archived": 24,
+    "still_open": 517
   }
 }
