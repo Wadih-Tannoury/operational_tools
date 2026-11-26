@@ -26,9 +26,18 @@ from typing import Any, Dict, List
 # The query's own aliases on the left, the keys read_csv produces on the
 # right. Anything the query selects and this does not name is ignored, so the
 # query can grow columns for other readers without disturbing this one.
+# Three the query no longer supplies, and what happens instead:
+#
+#   logistic_order  came from prd_orders. refresh_fulfillment fills it from
+#                   Kibo whenever it is blank, so the documents call still
+#                   has its logisticOrderNumber.
+#   weight, parcels came from monitoring.gxo_stus. Nothing else carries
+#                   them, so a documents call for a query-sourced shipment
+#                   falls back to the one-parcel default. Say the word and
+#                   the gxo_stus join goes back in for those two columns
+#                   alone.
 QUERY_ALIASES = {
     "ship": "shipment",
-    "logord": "logistic_order",
     "oms": "oms_shipment",
     "submit": "order_date",
     "created": "shipment_created",
@@ -44,8 +53,6 @@ QUERY_ALIASES = {
     "rlblerr": "return_label_error",
     "method": "shipping_method",
     "cc": "country",
-    "peso": "weight",
-    "colli": "parcels",
     "koReason": "gxo_ko_reason",
     "lbl": "label_succeeded",
     "trk": "csv_tracking_number",
