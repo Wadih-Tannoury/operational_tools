@@ -24,22 +24,45 @@ The workbook is read from the message and parsed in memory. Nothing is
 written to disk and nothing is archived: the mailbox is the archive, and a
 copy in the repository would only go stale.
 
-Reading the mailbox is IMAP against outlook.office365.com, with the same
-SMTP_USERNAME and SMTP_PASSWORD the reporting system sends with. If the
-tenant has IMAP basic auth switched off, every call here fails the same way
-and says so, and the run carries on without the workbook.
+Three ways to get the workbook, tried in that order:
+
+  A drop bucket, when GXO_BACKLOG_BUCKET is set. A Power Automate flow owned
+  by the mailbox's owner writes the attachment to Cloud Storage, and this
+  reads it with the service account the run already has. No Entra admin and
+  no app registration: the flow runs under permissions the person already
+  holds. The object is deleted once its rows are in.
+
+  Microsoft Graph, when GRAPH_TENANT_ID, GRAPH_CLIENT_ID and
+  GRAPH_CLIENT_SECRET are set. An app registration with the Mail.Read
+  application permission, reading GRAPH_MAILBOX (defaulting to
+  SMTP_USERNAME). This is the supported route.
+
+  IMAP against outlook.office365.com with SMTP_USERNAME and SMTP_PASSWORD,
+  the same pair the reporting system sends with. Simpler, and it works only
+  where the tenant still allows IMAP basic auth — which this one does not:
+  it answers "Basic authentication is disabled." SMTP submission is
+  unaffected and keeps working, which is why the reporting system is fine.
+
+Either way, a mailbox that cannot be read is reported and the run carries on
+without the workbook.
 """
 from __future__ import annotations
 
+import base64
 import email
 import imaplib
 import io
 import os
 import re
 import zipfile
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from email.header import decode_header, make_header
 from typing import Any, Dict, List, Optional, Tuple
+
+try:
+    import requests
+except ImportError:  # pragma: no cover - Graph is simply unavailable
+    requests = None  # type: ignore
 
 try:
     from openpyxl import load_workbook
@@ -70,6 +93,14 @@ IMAP_FOLDER = _setting("IMAP_FOLDER", "INBOX")
 SEARCH_DAYS = int(_setting("IMAP_SEARCH_DAYS", "7"))
 
 EXCEL_SUFFIXES = (".xlsx", ".xlsm", ".xls")
+
+GRAPH_ROOT = "https://graph.microsoft.com/v1.0"
+GRAPH_LOGIN = "https://login.microsoftonline.com"
+
+# The bucket a Power Automate flow drops the workbook into, for tenants where
+# reading the mailbox directly is not on the table.
+GCS_ROOT = "https://storage.googleapis.com/storage/v1/b"
+GCS_SCOPE = "https://www.googleapis.com/auth/devstorage.read_write"
 
 # The two columns wanted out of the workbook, however they are spelled.
 VCVAIC_NAMES = ("vcvaic",)
@@ -102,17 +133,313 @@ def credentials() -> Tuple[str, str, str]:
     return username, password, ""
 
 
+def bucket_settings() -> Dict[str, str]:
+    """The drop bucket, or {} when it is not configured."""
+    bucket = _setting("GXO_BACKLOG_BUCKET", "")
+    if not bucket:
+        return {}
+    return {
+        "bucket": bucket,
+        "prefix": _setting("GXO_BACKLOG_PREFIX", ""),
+        # Its own service account if there is one, otherwise one the run
+        # already carries. BI first: the bucket is a drop box rather than
+        # warehouse data, and the BI account is the one that reads most of
+        # what this workflow touches. Any of the three works — the bucket's
+        # IAM decides, not this list.
+        "creds": (os.getenv("GXO_BACKLOG_CREDS")
+                  or os.getenv("BI_BIGQUERY_CREDS")
+                  or os.getenv("WLFS_BIGQUERY_CREDS") or ""),
+        # Delete the object once its rows are in. The workbook is not to be
+        # archived, and the bucket is a letterbox rather than a filing
+        # cabinet: left alone it would accumulate a copy a day for ever.
+        "delete": _setting("GXO_BACKLOG_DELETE", "1").lower()
+                  not in ("0", "false", "no"),
+    }
+
+
+# The service account the bucket calls were made with, for the error message.
+_BUCKET_IDENTITY: Dict[str, str] = {"email": ""}
+
+
+def _bucket_token(settings: Dict[str, str]) -> Tuple[str, str]:
+    """(token, error) for the bucket's service account."""
+    if requests is None:
+        return "", "the requests package is not installed"
+    try:
+        import json as _json
+        from google.auth.transport.requests import Request
+        from google.oauth2 import service_account as _sa
+    except ImportError as exc:
+        return "", f"google-auth is not available: {exc}"
+    raw = (settings.get("creds") or "").strip()
+    if not raw:
+        return "", ("neither GXO_BACKLOG_CREDS nor WLFS_BIGQUERY_CREDS is "
+                    "set, so the bucket cannot be read")
+    try:
+        info = _json.loads(raw)
+        credentials = _sa.Credentials.from_service_account_info(
+            info, scopes=[GCS_SCOPE])
+        credentials.refresh(Request())
+    except Exception as exc:  # noqa: BLE001
+        return "", f"the bucket sign-in failed: {exc}"
+    # Remembered so a refusal can name the account that was refused. Working
+    # out which of a project's service accounts a secret holds is otherwise a
+    # hunt through IAM, and the answer is right here in the key.
+    _BUCKET_IDENTITY["email"] = str(info.get("client_email", "") or "")
+    return credentials.token, ""
+
+
+def find_workbook_bucket(log: Any) -> Tuple[str, Optional[bytes], str]:
+    """
+    The newest workbook in the drop bucket, downloaded and then removed.
+
+    A Power Automate flow owned by the mailbox's owner writes the attachment
+    here. That keeps the whole thing inside permissions the person already
+    has: the flow runs as them, and this end reads with the service account
+    the run already uses for BigQuery.
+    """
+    settings = bucket_settings()
+    token, error = _bucket_token(settings)
+    if error:
+        return "", None, error
+    headers = {"Authorization": f"Bearer {token}"}
+    bucket = settings["bucket"]
+    if _BUCKET_IDENTITY["email"]:
+        log(f"  Reading gs://{bucket} as {_BUCKET_IDENTITY['email']}.")
+
+    from urllib.parse import quote
+    url = (f"{GCS_ROOT}/{quote(bucket, safe='')}/o"
+           "?fields=items(name,updated,size)&maxResults=200")
+    if settings["prefix"]:
+        url += f"&prefix={quote(settings['prefix'], safe='')}"
+    try:
+        listed = requests.get(url, headers=headers, timeout=120)
+    except Exception as exc:  # noqa: BLE001
+        return "", None, f"the bucket could not be listed: {exc}"
+    if listed.status_code == 403:
+        who = _BUCKET_IDENTITY["email"] or "the service account"
+        return "", None, (
+            f"{who} cannot read gs://{bucket} (HTTP 403). Grant it Storage "
+            "Object Admin on the bucket — Viewer is not enough, because the "
+            "object is removed once it has been read:\n"
+            f"    gcloud storage buckets add-iam-policy-binding gs://{bucket} "
+            f'--member="serviceAccount:{who}" '
+            '--role="roles/storage.objectAdmin"')
+    if listed.status_code != 200:
+        return "", None, (f"listing gs://{bucket} returned HTTP "
+                          f"{listed.status_code}: {listed.text[:200]}")
+
+    items = [item for item in (listed.json() or {}).get("items", [])
+             if item.get("name", "").lower().endswith(EXCEL_SUFFIXES + (".zip",))]
+    if not items:
+        log(f"  Nothing to collect in gs://{bucket}"
+            + (f"/{settings['prefix']}" if settings["prefix"] else "") + ".")
+        return "", None, ""
+    items.sort(key=lambda item: item.get("updated", ""), reverse=True)
+    newest = items[0]
+    name = newest["name"]
+
+    try:
+        got = requests.get(
+            f"{GCS_ROOT}/{quote(bucket, safe='')}/o/{quote(name, safe='')}?alt=media",
+            headers=headers, timeout=300)
+    except Exception as exc:  # noqa: BLE001
+        return "", None, f"{name} could not be downloaded: {exc}"
+    if got.status_code != 200:
+        return "", None, (f"downloading {name} returned HTTP "
+                          f"{got.status_code}: {got.text[:200]}")
+    payload = got.content
+    log(f"  gs://{bucket}/{name} ({len(payload)} bytes, "
+        f"written {newest.get('updated')}).")
+
+    if name.lower().endswith(".zip"):
+        inner_name, inner = _excel_in_zip(payload, name, log)
+        if inner is None:
+            return "", None, f"{name} holds no Excel file"
+        found_name, blob = inner_name, inner
+    else:
+        found_name, blob = name.rsplit("/", 1)[-1], payload
+
+    if settings["delete"]:
+        # Only now, with the bytes in hand: a delete before the download
+        # would lose the day's workbook to a transient failure.
+        try:
+            gone = requests.delete(
+                f"{GCS_ROOT}/{quote(bucket, safe='')}/o/{quote(name, safe='')}",
+                headers=headers, timeout=120)
+            if gone.status_code in (200, 204):
+                log(f"  gs://{bucket}/{name} removed; the bucket is a "
+                    "letterbox, not an archive.")
+            else:
+                log(f"  gs://{bucket}/{name} could not be removed: HTTP "
+                    f"{gone.status_code}. It will be read again tomorrow, and "
+                    "the shipments it holds are already in, so nothing is "
+                    "inserted twice.")
+        except Exception as exc:  # noqa: BLE001
+            log(f"  gs://{bucket}/{name} could not be removed: {exc}")
+    return found_name, blob, ""
+
+
+def graph_settings() -> Dict[str, str]:
+    """The app registration, or {} when it is not configured."""
+    tenant = _setting("GRAPH_TENANT_ID", "")
+    client = _setting("GRAPH_CLIENT_ID", "")
+    secret = os.getenv("GRAPH_CLIENT_SECRET") or ""
+    if not (tenant and client and secret):
+        return {}
+    return {"tenant": tenant, "client": client, "secret": secret,
+            # Whose mailbox to read. With application permissions the app can
+            # reach any mailbox the tenant lets it, so it has to be named.
+            "mailbox": _setting("GRAPH_MAILBOX", _setting("SMTP_USERNAME", ""))}
+
+
+def graph_token(settings: Dict[str, str]) -> Tuple[str, str]:
+    """(token, error) for the app registration, client-credentials flow."""
+    if requests is None:
+        return "", "the requests package is not installed"
+    try:
+        response = requests.post(
+            f"{GRAPH_LOGIN}/{settings['tenant']}/oauth2/v2.0/token",
+            data={"client_id": settings["client"],
+                  "client_secret": settings["secret"],
+                  "scope": "https://graph.microsoft.com/.default",
+                  "grant_type": "client_credentials"},
+            timeout=60,
+        )
+    except Exception as exc:  # noqa: BLE001
+        return "", f"the token request failed: {exc}"
+    if response.status_code != 200:
+        # The body names the actual problem — a wrong secret, a missing
+        # consent — and guessing from the status code alone wastes an hour.
+        return "", (f"the token request returned HTTP {response.status_code}: "
+                    f"{response.text[:300]}")
+    token = (response.json() or {}).get("access_token", "")
+    return (token, "") if token else ("", "the token response carried no token")
+
+
+def find_workbook_graph(log: Any) -> Tuple[str, Optional[bytes], str]:
+    """The newest matching email's workbook, over Microsoft Graph."""
+    settings = graph_settings()
+    token, error = graph_token(settings)
+    if error:
+        return "", None, error
+    if not settings["mailbox"]:
+        return "", None, ("GRAPH_MAILBOX is not set and SMTP_USERNAME is "
+                          "empty, so there is no mailbox to read")
+
+    headers = {"Authorization": f"Bearer {token}"}
+    since = (datetime.now(timezone.utc) - timedelta(days=SEARCH_DAYS)
+             ).strftime("%Y-%m-%dT%H:%M:%SZ")
+    # $filter rather than $search, and no $orderby: Graph refuses to sort a
+    # subject-filtered list, so the newest is picked here instead.
+    url = (f"{GRAPH_ROOT}/users/{settings['mailbox']}/messages"
+           f"?$filter=receivedDateTime ge {since}"
+           f" and subject eq '{SUBJECT}'"
+           "&$select=id,subject,receivedDateTime,hasAttachments&$top=50")
+    try:
+        response = requests.get(url, headers=headers, timeout=120)
+    except Exception as exc:  # noqa: BLE001
+        return "", None, f"the mailbox search failed: {exc}"
+    if response.status_code == 403:
+        return "", None, (
+            "Graph refused the mailbox (HTTP 403). The app registration "
+            "needs the Mail.Read application permission with admin consent, "
+            "and the mailbox must be inside any application access policy "
+            f"that is in force. Body: {response.text[:300]}")
+    if response.status_code != 200:
+        return "", None, (f"the mailbox search returned HTTP "
+                          f"{response.status_code}: {response.text[:300]}")
+
+    messages = (response.json() or {}).get("value", [])
+    if not messages:
+        log(f"  No email with subject {SUBJECT!r} in the last "
+            f"{SEARCH_DAYS} day(s).")
+        return "", None, ""
+    messages.sort(key=lambda m: m.get("receivedDateTime", ""), reverse=True)
+
+    for message in messages:
+        if not message.get("hasAttachments"):
+            continue
+        got = requests.get(
+            f"{GRAPH_ROOT}/users/{settings['mailbox']}/messages/"
+            f"{message['id']}/attachments",
+            headers=headers, timeout=120)
+        if got.status_code != 200:
+            log(f"  The attachments could not be read: HTTP {got.status_code}.")
+            continue
+        name, blob = _workbook_from_graph((got.json() or {}).get("value", []), log)
+        if blob is not None:
+            log(f"  {message.get('subject')!r} of "
+                f"{message.get('receivedDateTime')}: {name} ({len(blob)} bytes).")
+            return name, blob, ""
+    return "", None, ""
+
+
+def _workbook_from_graph(attachments: List[Dict[str, Any]],
+                         log: Any) -> Tuple[str, Optional[bytes]]:
+    """The Excel attachment, or the one inside a zipped attachment."""
+    zips: List[Tuple[str, bytes]] = []
+    for item in attachments:
+        name = _text(item.get("name"))
+        raw = item.get("contentBytes")
+        if not name or not raw:
+            continue
+        try:
+            payload = base64.b64decode(raw)
+        except Exception:  # noqa: BLE001
+            continue
+        lowered = name.lower()
+        if lowered.endswith(EXCEL_SUFFIXES):
+            return name, payload
+        if lowered.endswith(".zip"):
+            zips.append((name, payload))
+    for name, payload in zips:
+        inner_name, inner = _excel_in_zip(payload, name, log)
+        if inner is not None:
+            return inner_name, inner
+    return "", None
+
+
+def _excel_in_zip(payload: bytes, name: str,
+                  log: Any) -> Tuple[str, Optional[bytes]]:
+    """The first Excel file inside a zip, by either route."""
+    try:
+        with zipfile.ZipFile(io.BytesIO(payload)) as archive:
+            for inner in archive.namelist():
+                if inner.endswith("/") or "__MACOSX" in inner:
+                    continue
+                if inner.lower().endswith(EXCEL_SUFFIXES):
+                    with archive.open(inner) as handle:
+                        # The workbook's own name, not the zip's: it is what
+                        # goes in fileName and what the same-day check reads.
+                        return inner.rsplit("/", 1)[-1], handle.read()
+    except zipfile.BadZipFile:
+        log(f"  {name} is not a readable zip; skipped.")
+    return "", None
+
+
 def find_workbook(log: Any) -> Tuple[str, Optional[bytes], str]:
     """
     (file name, bytes, error) for the newest matching email's workbook.
+
+    Graph where it is configured, IMAP otherwise.
 
     ("", None, "") means the mailbox was readable and held no such email,
     which is not an error: a day without the report is a normal day, and the
     run goes on without it.
     """
+    if bucket_settings():
+        log("  Collecting the workbook from the drop bucket.")
+        return find_workbook_bucket(log)
+
+    if graph_settings():
+        log("  Reading the mailbox over Microsoft Graph.")
+        return find_workbook_graph(log)
+
     username, password, error = credentials()
     if error:
         return "", None, error
+    log(f"  Reading the mailbox over IMAP ({IMAP_HOST}).")
 
     try:
         box = imaplib.IMAP4_SSL(IMAP_HOST, IMAP_PORT)
@@ -185,20 +512,9 @@ def _workbook_from(message: Any, log: Any) -> Tuple[str, Optional[bytes], str]:
             zips.append((name, payload))
 
     for name, payload in zips:
-        try:
-            with zipfile.ZipFile(io.BytesIO(payload)) as archive:
-                for inner in archive.namelist():
-                    # Skip the folder entries and the junk Windows adds.
-                    if inner.endswith("/") or "__MACOSX" in inner:
-                        continue
-                    if inner.lower().endswith(EXCEL_SUFFIXES):
-                        with archive.open(inner) as handle:
-                            # The name that matters is the workbook's, not the
-                            # zip's: it is what goes in fileName, and what a
-                            # later run reads back to tell Excel from CSV.
-                            return inner.rsplit("/", 1)[-1], handle.read(), ""
-        except zipfile.BadZipFile:
-            log(f"  {name} is not a readable zip; skipped.")
+        inner_name, inner = _excel_in_zip(payload, name, log)
+        if inner is not None:
+            return inner_name, inner, ""
     return "", None, "no Excel attachment, in the message or in a zip"
 
 

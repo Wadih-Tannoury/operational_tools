@@ -128,6 +128,23 @@ jobs:
           # over IMAP rather than to send. Without them the mailbox is not
           # searched, the run says so and carries on, and the workbook has to
           # be uploaded by hand as before.
+          # The drop bucket: a Power Automate flow writes the day's
+          # workbook here and the run collects it. Set the bucket and this
+          # is used in preference to the mailbox. The service account is
+          # GXO_BACKLOG_CREDS if set, otherwise WLFS_BIGQUERY_CREDS, which
+          # the run already has.
+          GXO_BACKLOG_BUCKET: ${{ vars.GXO_BACKLOG_BUCKET }}
+          GXO_BACKLOG_PREFIX: ${{ vars.GXO_BACKLOG_PREFIX }}
+          GXO_BACKLOG_CREDS: ${{ secrets.GXO_BACKLOG_CREDS }}
+          # Set to 0 to leave the object in place after reading it.
+          GXO_BACKLOG_DELETE: ${{ vars.GXO_BACKLOG_DELETE }}
+          # Microsoft Graph, the supported way in. An app registration with
+          # the Mail.Read application permission; the mailbox defaults to
+          # SMTP_USERNAME. Set these three and Graph is used.
+          GRAPH_TENANT_ID: ${{ secrets.GRAPH_TENANT_ID }}
+          GRAPH_CLIENT_ID: ${{ secrets.GRAPH_CLIENT_ID }}
+          GRAPH_CLIENT_SECRET: ${{ secrets.GRAPH_CLIENT_SECRET }}
+          GRAPH_MAILBOX: ${{ vars.GRAPH_MAILBOX }}
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           # Only needed if the app password was copied with spaces in it.
