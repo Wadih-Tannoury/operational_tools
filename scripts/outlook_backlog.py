@@ -103,10 +103,6 @@ GCS_ROOT = "https://storage.googleapis.com/storage/v1/b"
 GCS_SCOPE = "https://www.googleapis.com/auth/devstorage.read_write"
 
 # The two columns wanted out of the workbook, however they are spelled.
-VCVAIC_NAMES = ("vcvaic",)
-UB_IMKO_NAMES = ("ub_imko", "ubimko", "ub imko")
-
-
 def _text(value: Any) -> str:
     return "" if value is None else str(value).strip()
 
@@ -520,54 +516,103 @@ def _workbook_from(message: Any, log: Any) -> Tuple[str, Optional[bytes], str]:
 
 def rows_from_workbook(blob: bytes, name: str, log: Any) -> List[Dict[str, str]]:
     """
-    [{"shipment": VCVAIC, "location": ub_imko}] for every row that has both.
+    [{"shipment", "location", "oerodp"}] for the imko sheet's wanted rows.
 
-    Every sheet is looked at, and the header row is found rather than assumed:
-    these workbooks carry a title or a blank line or two above the headings
-    often enough that fixing on row 1 would read nothing.
+    This is build_ko_monitoring.read_workbook's rules, applied to bytes rather
+    than a path: the `imko` sheet and no other, and only the ub_imko codes
+    this dashboard is about. The workbook has other sheets — `lost` carries a
+    VCVAIC column of its own holding product category names — and an earlier
+    version of this read every sheet with that heading, which put several
+    hundred rows like "WALLETS AND SMALL LEATHER GOODS" onto the dashboard.
+
+    The constants come from build_ko_monitoring rather than being repeated
+    here, so the emailed workbook and an uploaded one are read by the same
+    rules and cannot drift apart. Imported inside the function because
+    build_ko_monitoring imports this module.
     """
     if load_workbook is None:
         log("  openpyxl is not installed, so the workbook cannot be read.")
         return []
+    try:
+        from build_ko_monitoring import (ALLOWED_IMKO, SHEET_NAME, XLSX_OERODP_COLUMN,
+                                         XLSX_SHIPMENT_COLUMN, XLSX_UB_COLUMN,
+                                         cell_text, normalise_heading, normalise_imko)
+    except ImportError as exc:
+        log(f"  the workbook rules could not be loaded: {exc}")
+        return []
+
     try:
         book = load_workbook(io.BytesIO(blob), read_only=True, data_only=True)
     except Exception as exc:  # noqa: BLE001
         log(f"  {name} could not be opened: {exc}")
         return []
 
+    if SHEET_NAME not in book.sheetnames:
+        # Named, never guessed at. A workbook that has changed shape is worth
+        # a complaint; reading whatever sheet looks closest is how the
+        # category names got in.
+        log(f"  {name} has no {SHEET_NAME!r} sheet. Found: "
+            + ", ".join(book.sheetnames) + ". Nothing read.")
+        book.close()
+        return []
+
+    stream = book[SHEET_NAME].iter_rows(values_only=True)
+    try:
+        header = [cell_text(cell) for cell in next(stream)]
+    except StopIteration:
+        log(f"  {name}: the {SHEET_NAME!r} sheet is empty.")
+        book.close()
+        return []
+
+    wanted = {XLSX_SHIPMENT_COLUMN: "shipment",
+              XLSX_UB_COLUMN: "ub_imko",
+              XLSX_OERODP_COLUMN: "oerodp"}
+    index: Dict[str, int] = {}
+    for position, heading in enumerate(header):
+        for column, key in wanted.items():
+            if normalise_heading(heading) == normalise_heading(column):
+                index.setdefault(key, position)
+
+    # oerodp is taken where the sheet has it and done without where it does
+    # not: gxo_ko has no column for it, and the run rebuilds it anyway.
+    for required in ("shipment", "ub_imko"):
+        if required not in index:
+            log(f"  {name}: the {SHEET_NAME!r} sheet has no "
+                f"{XLSX_SHIPMENT_COLUMN if required == 'shipment' else XLSX_UB_COLUMN}"
+                " column. Found: " + ", ".join(header) + ". Nothing read.")
+            book.close()
+            return []
+
     found: List[Dict[str, str]] = []
     seen = set()
-    for sheet in book.worksheets:
-        rows = sheet.iter_rows(values_only=True)
-        vc = ub = None
-        header_at = -1
-        for position, row in enumerate(rows):
-            if position > 20:  # a header this far down is not a header
-                break
-            lowered = [_text(cell).lower() for cell in row]
-            for index, cell in enumerate(lowered):
-                if cell in VCVAIC_NAMES:
-                    vc = index
-                if cell in UB_IMKO_NAMES:
-                    ub = index
-            if vc is not None:
-                header_at = position
-                break
-        if vc is None:
+    total = dropped = 0
+    for row in stream:
+        if row is None or all(cell is None for cell in row):
             continue
-        log(f"  {name}: sheet {sheet.title!r}, headings on row {header_at + 1}.")
-        for row in rows:  # the iterator is already past the header
-            shipment = _text(row[vc]) if vc < len(row) else ""
-            location = _text(row[ub]) if ub is not None and ub < len(row) else ""
-            if not shipment:
-                continue
-            key = shipment.upper()
-            if key in seen:
-                continue
-            seen.add(key)
-            found.append({"shipment": shipment, "location": location})
+        total += 1
+        code = normalise_imko(row[index["ub_imko"]]
+                              if index["ub_imko"] < len(row) else "")
+        if code not in ALLOWED_IMKO:
+            dropped += 1
+            continue
+        shipment = cell_text(row[index["shipment"]]
+                             if index["shipment"] < len(row) else "")
+        if not shipment:
+            continue
+        key = shipment.upper()
+        if key in seen:
+            continue
+        seen.add(key)
+        found.append({
+            "shipment": shipment,
+            "location": code,
+            "oerodp": cell_text(row[index["oerodp"]])
+            if "oerodp" in index and index["oerodp"] < len(row) else "",
+        })
     book.close()
-    log(f"  {name}: {len(found)} shipment(s) read.")
+    log(f"  {name}: {total} row(s) on {SHEET_NAME!r}, {len(found)} shipment(s) "
+        f"after the {XLSX_UB_COLUMN} filter"
+        + (f" ({dropped} dropped)" if dropped else "") + ".")
     return found
 
 
