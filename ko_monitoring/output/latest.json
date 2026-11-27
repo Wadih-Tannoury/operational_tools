@@ -1,8 +1,8 @@
 {
-  "run": "20261127-092809",
-  "built_at": "2026-11-27T09:28:09Z",
-  "finished_at": "2026-11-27T09:36:15Z",
-  "file": "ko_monitoring-20261127-092809.csv",
+  "run": "20261127-094435",
+  "built_at": "2026-11-27T09:44:35Z",
+  "finished_at": "2026-11-27T09:51:12Z",
+  "file": "ko_monitoring-20261127-094435.csv",
   "columns": [
     "shipment_order_number",
     "oerodp",
@@ -42,17 +42,17 @@
     "api_call_date",
     "batch"
   ],
-  "rows": 780,
+  "rows": 779,
   "batches": [
     {
-      "batch": "query-20261127-092809",
+      "batch": "query-20261127-094435",
       "csv_file": "",
       "xlsx_file": "",
       "shipments": 491,
       "from_csv": 412,
       "from_excel": 256,
       "matched_both": 177,
-      "fixed": 194,
+      "fixed": 196,
       "with_warehouse_attempt": 343,
       "with_error": 491,
       "dry_run": false,
@@ -60,47 +60,31 @@
       "truncated": false
     },
     {
-      "batch": "recheck-20261127-092809",
+      "batch": "recheck-20261127-094435",
       "csv_file": "",
       "xlsx_file": "",
-      "shipments": 276,
+      "shipments": 298,
       "from_csv": 0,
       "from_excel": 0,
       "matched_both": 0,
-      "fixed": 131,
+      "fixed": 134,
       "with_warehouse_attempt": 88,
-      "with_error": 261,
+      "with_error": 283,
       "dry_run": false,
       "join": "table",
       "truncated": false,
       "recheck_only": true
-    },
-    {
-      "batch": "monitoring-20261127-092809",
-      "csv_file": "",
-      "xlsx_file": "",
-      "shipments": 23,
-      "from_csv": 0,
-      "from_excel": 0,
-      "matched_both": 0,
-      "fixed": 3,
-      "with_warehouse_attempt": 0,
-      "with_error": 23,
-      "dry_run": false,
-      "join": "monitoring",
-      "truncated": false,
-      "monitoring_only": true
     }
   ],
   "dry_run": false,
   "zpl_check": "printable",
   "table": {
-    "written": 780,
-    "resolved": 16,
+    "written": 779,
+    "resolved": 15,
     "before": null,
     "after": null,
     "error": "",
-    "archived": 16,
+    "archived": 15,
     "still_open": 764
   }
 }
