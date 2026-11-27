@@ -587,6 +587,32 @@ GXO_KO_WRITE_FIELDS = {
 }
 
 
+def _param(name: str, value: Any) -> Any:
+    """
+    A query parameter typed from the value, not guessed from the column.
+
+    gxo_ko's columns are not all the type their names suggest — reportDate is
+    a STRING while importDate is a TIMESTAMP — so the type has to come from
+    what the table actually handed back. Reading a value and writing it
+    unchanged then works whatever the column turns out to be, and a feed that
+    changes a column's type does not need a code change here.
+    """
+    from google.cloud import bigquery
+    if isinstance(value, datetime):          # before date: datetime is a date
+        kind = "TIMESTAMP"
+    elif isinstance(value, date):
+        kind = "DATE"
+    elif isinstance(value, bool):            # before int: bool is an int
+        kind = "BOOL"
+    elif isinstance(value, int):
+        kind = "INT64"
+    elif isinstance(value, float):
+        kind = "FLOAT64"
+    else:
+        kind = "STRING"
+    return bigquery.ScalarQueryParameter(name, kind, value)
+
+
 def latest_import(client: Any, table: str, columns: Dict[str, str],
                   log: Any) -> Dict[str, Any]:
     """
@@ -635,6 +661,13 @@ def already_ingested_today(latest: Dict[str, Any]) -> bool:
     stamp = latest.get("import_date")
     if stamp is None:
         return False
+    if isinstance(stamp, str):
+        # A text column, as reportDate turned out to be. Take the date off
+        # the front rather than insisting on a shape.
+        try:
+            stamp = datetime.fromisoformat(stamp.strip().replace("Z", "+00:00"))
+        except ValueError:
+            return False
     day = stamp.date() if isinstance(stamp, datetime) else stamp
     if not isinstance(day, date) or day != datetime.now(timezone.utc).date():
         return False
@@ -652,9 +685,7 @@ def existing_shipments(client: Any, table: str, columns: Dict[str, str],
     try:
         from google.cloud import bigquery  # local: the caller may have no BQ
         job = client.query(sql, job_config=bigquery.QueryJobConfig(
-            query_parameters=[bigquery.ScalarQueryParameter(
-                "import_date", "TIMESTAMP" if isinstance(import_date, datetime)
-                else "DATE", import_date)]))
+            query_parameters=[_param("import_date", import_date)]))
         return {str(row["shipment"]) for row in job.result() if row["shipment"]}
     except Exception as exc:  # noqa: BLE001
         log(f"  {table}: the import's shipments could not be read: {exc}")
@@ -688,21 +719,13 @@ def insert(client: Any, table: str, columns: Dict[str, str],
 
     values: List[str] = []
     params: List[Any] = [
-        bigquery.ScalarQueryParameter(
-            "import_date",
-            "TIMESTAMP" if isinstance(latest.get("import_date"), datetime) else "DATE",
-            latest.get("import_date")),
-        bigquery.ScalarQueryParameter(
-            "report_date",
-            "TIMESTAMP" if isinstance(latest.get("report_date"), datetime) else "DATE",
-            latest.get("report_date")),
-        bigquery.ScalarQueryParameter("file_name", "STRING", file_name),
+        _param("import_date", latest.get("import_date")),
+        _param("report_date", latest.get("report_date")),
+        _param("file_name", file_name),
     ]
     for position, row in enumerate(rows):
-        params.append(bigquery.ScalarQueryParameter(
-            f"s{position}", "STRING", row["shipment"]))
-        params.append(bigquery.ScalarQueryParameter(
-            f"l{position}", "STRING", row.get("location", "")))
+        params.append(_param(f"s{position}", row["shipment"]))
+        params.append(_param(f"l{position}", row.get("location", "")))
         cells = [f"@s{position}", "@import_date"]
         if "location" in columns:
             cells.append(f"@l{position}")
