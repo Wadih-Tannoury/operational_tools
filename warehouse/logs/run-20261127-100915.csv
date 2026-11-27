@@ -1,0 +1,2 @@
+﻿source_file,row_number,stage,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,kibo_shipment_number,outcome,status_code,error,response_excerpt
+20261127-100858__backoffice__shipment.csv,2,warehouse,BB-EUE00073530,,,,,BB90395,TLITGX0042,BB,42,5C7495EA-D2B2-4F58-B1EF-27AFF9FB86F2,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
