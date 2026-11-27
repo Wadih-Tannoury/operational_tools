@@ -1,0 +1,596 @@
+﻿stage,shipment_order_number,shipment_items,order_number,tenant_id,kibo_shipment_number,event_id,outcome,detail
+picked,BB-FF-TGK191831307,"42194726293751x1, 42194726293751x1",,33694,90350[READY],,cancelled,"picked 2026-11-25T13:27:45+00:00, cancelled 2026-11-27T09:16:57+00:00"
+picked,CA-EUA00858982,058053173909221x1,,29993,54352,,skipped,Kibo already has shipment 54352 as REASSIGNED; nothing was sent
+picked,CA-EUA00860879,058053173705021x1,,29993,55817,,skipped,Kibo already has shipment 55817 as REASSIGNED; nothing was sent
+picked,CA-EUA00860945,058055828250078x1,,29993,55740,,skipped,Kibo already has shipment 55740 as REASSIGNED; nothing was sent
+picked,CA-EUB00859254,058053173971990x1,,29993,55571,,skipped,Kibo already has shipment 55571 as REASSIGNED; nothing was sent
+picked,CA-FF-TGC191732502,058055828064989x1,,29993,55793,,skipped,Kibo already has shipment 55793 as REASSIGNED; nothing was sent
+picked,FE-EUA00140465,"484070034503583x1, 484070034503583x1, 484070034503583x1, 484070034503583x1",,30022,192374,,skipped,Kibo already has shipment 192374 as REASSIGNED; nothing was sent
+picked,FE-EUB00139112,488052591297941x1,,30022,191139,,skipped,Kibo already has shipment 191139 as REASSIGNED; nothing was sent
+picked,FE-EUB00139234,488051525641003x1,,30022,192368,,skipped,Kibo already has shipment 192368 as REASSIGNED; nothing was sent
+picked,FE-EUB00140103,484070034503583x1,,30022,192366,,skipped,Kibo already has shipment 192366 as REASSIGNED; nothing was sent
+picked,FE-EUQ00134476,484070032550510x1,,30022,192286,,skipped,Kibo already has shipment 192286 as REASSIGNED; nothing was sent
+picked,FE-USB00059214,488051525641003x1,,30022,192220,,skipped,Kibo already has shipment 192220 as REASSIGNED; nothing was sent
+picked,FE-USB00060363,484070034503590x1,,30022,192758,,skipped,Kibo already has shipment 192758 as REASSIGNED; nothing was sent
+picked,FE-USI00058846,488051525639567x1,,30022,192288,,skipped,Kibo already has shipment 192288 as REASSIGNED; nothing was sent
+picked,FE-USP00057813,484070032531762x1,,30022,192287,,skipped,Kibo already has shipment 192287 as REASSIGNED; nothing was sent
+picked,FE-USR00057643,484070032531762x1,,30022,192285,,skipped,Kibo already has shipment 192285 as REASSIGNED; nothing was sent
+picked,HE-EUA00140886,338055403567157x1,,30021,112590,,skipped,Kibo already has shipment 112590 as REASSIGNED; nothing was sent
+picked,HE-EUA00141123,338055403701339x1,,30021,112966,,skipped,Kibo already has shipment 112966 as REASSIGNED; nothing was sent
+picked,HE-EUA00141143,338055403464326x1,,30021,112993,,skipped,Kibo already has shipment 112993 as REASSIGNED; nothing was sent
+picked,HE-EUA00141411,338055403462155x1,,30021,113224,,skipped,Kibo already has shipment 113224 as REASSIGNED; nothing was sent
+picked,HE-EUA00141458,338055403483112x1,,30021,113397,,skipped,Kibo already has shipment 113397 as REASSIGNED; nothing was sent
+picked,HE-EUA00141651,338056140776758x1,,30021,113727,,skipped,Kibo already has shipment 113727 as REASSIGNED; nothing was sent
+picked,HE-EUA00141711,338055403597499x1,,30021,113763,,skipped,Kibo already has shipment 113763 as REASSIGNED; nothing was sent
+picked,HE-EUA00141841,338055403458455x1,,30021,113934,,skipped,Kibo already has shipment 113934 as REASSIGNED; nothing was sent
+picked,HE-EUB00140377,338055403582334x1,,30021,112744,,skipped,Kibo already has shipment 112744 as REASSIGNED; nothing was sent
+picked,HE-EUC00140195,338055403469963x1,,30021,112578,,skipped,Kibo already has shipment 112578 as REASSIGNED; nothing was sent
+picked,LA-FF-IK2191035878,573612457038962x1,,30019,11717,,skipped,Kibo already has shipment 11717 as REASSIGNED; nothing was sent
+picked,LN-CTA1920102947-4,511200190028856x1,,29917,689392,,skipped,Kibo already has shipment 689392 as REASSIGNED; nothing was sent
+picked,LN-CTA1920103959-4,098053195613786x1,,29917,690252,,skipped,Kibo already has shipment 690252 as REASSIGNED; nothing was sent
+picked,LN-CTA1920172540-4,098053813281298x1,,29917,688912,,skipped,Kibo already has shipment 688912 as REASSIGNED; nothing was sent
+picked,LN-CTA1920173057-4,098140843882x1,,29917,690542,,skipped,Kibo already has shipment 690542 as REASSIGNED; nothing was sent
+picked,LN-CTA1920198469-4,508056645107224x1,,29917,690912,,skipped,Kibo already has shipment 690912 as REASSIGNED; nothing was sent
+picked,LN-CTA1920218990-4,518051594843483x1,,29917,690953,,skipped,Kibo already has shipment 690953 as REASSIGNED; nothing was sent
+picked,LN-CTA1920305391-4,511200189812107x1,,29917,688216,,skipped,Kibo already has shipment 688216 as REASSIGNED; nothing was sent
+picked,LN-CTA1920388303-4,094069988712417x1,,29917,690844,,skipped,Kibo already has shipment 690844 as REASSIGNED; nothing was sent
+picked,LN-CTA1920535701-4,518055266607847x1,,29917,688802,,skipped,Kibo already has shipment 688802 as REASSIGNED; nothing was sent
+picked,LN-CTA1920538917-4,098056070390581x1,,29917,690940,,skipped,Kibo already has shipment 690940 as REASSIGNED; nothing was sent
+picked,LN-CTA1920542035-4,518055266269106x1,,29917,689795,,skipped,Kibo already has shipment 689795 as REASSIGNED; nothing was sent
+picked,LN-CTA1920573220-4,098053195560271x1,,29917,690406,,skipped,Kibo already has shipment 690406 as REASSIGNED; nothing was sent
+picked,LN-CTA1920598126-4,093700943669414x1,,29917,691105,,skipped,Kibo already has shipment 691105 as REASSIGNED; nothing was sent
+picked,LN-CTA1920605282-4,040198682635518x1,,29917,688565,,skipped,Kibo already has shipment 688565 as REASSIGNED; nothing was sent
+picked,LN-CTA1920643015-4,508052335005016x1,,29917,690478,,skipped,Kibo already has shipment 690478 as REASSIGNED; nothing was sent
+picked,LN-CTA1920658954-4,098057626205441x1,,29917,690925,,skipped,Kibo already has shipment 690925 as REASSIGNED; nothing was sent
+picked,LN-CTA1920715093-4,040198682562913x1,,29917,688675,,skipped,Kibo already has shipment 688675 as REASSIGNED; nothing was sent
+picked,LN-CTA1920763276-4,098056070388878x1,,29917,690398,,skipped,Kibo already has shipment 690398 as REASSIGNED; nothing was sent
+picked,LN-CTA1920915602-4,09198269977727x1,,29917,688112,,skipped,Kibo already has shipment 688112 as REASSIGNED; nothing was sent
+picked,LN-CTA1920938865-4,508054323638008x1,,29917,691021,,skipped,Kibo already has shipment 691021 as REASSIGNED; nothing was sent
+picked,LN-CTA1920958205-4,09198605791550x1,,29917,691170,,skipped,Kibo already has shipment 691170 as REASSIGNED; nothing was sent
+picked,LN-CTA1920988488-4,093666656221496x1,,29917,690882,,skipped,Kibo already has shipment 690882 as REASSIGNED; nothing was sent
+picked,LN-CTA1929071604-4,174260461381360x1,,29917,683879,,skipped,Kibo already has shipment 683879 as REASSIGNED; nothing was sent
+picked,LN-CTA1929096779-4,174260399529957x1,,29917,686979,,skipped,Kibo already has shipment 686979 as REASSIGNED; nothing was sent
+picked,LN-CTA1929162133-4,174260461375369x1,,29917,680939,,skipped,Kibo already has shipment 680939 as REASSIGNED; nothing was sent
+picked,LN-CTA1929240264-4,174260461144736x1,,29917,683495,,skipped,Kibo already has shipment 683495 as REASSIGNED; nothing was sent
+picked,LN-CTA1929491598-4,174260461427891x1,,29917,683757,,skipped,Kibo already has shipment 683757 as REASSIGNED; nothing was sent
+picked,LN-CTA1929577818-4,174260461296459x1,,29917,682726,,skipped,Kibo already has shipment 682726 as REASSIGNED; nothing was sent
+picked,LN-CTA1929608284-4,174260461361713x1,,29917,682242,,skipped,Kibo already has shipment 682242 as REASSIGNED; nothing was sent
+picked,LN-CTA1929749910-4,174260461377974x1,,29917,685740,,skipped,Kibo already has shipment 685740 as REASSIGNED; nothing was sent
+picked,LN-CTB1920413605-4,508059915558016x1,,29917,691059,,skipped,Kibo already has shipment 691059 as REASSIGNED; nothing was sent
+picked,LN-CTB1920505775-4,508059915414664x1,,29917,691067,,skipped,Kibo already has shipment 691067 as REASSIGNED; nothing was sent
+picked,LN-CTB1920594986-4,097323336791538x1,,29917,687917,,skipped,Kibo already has shipment 687917 as REASSIGNED; nothing was sent
+picked,LN-CTB1920715396-4,508059915307805x1,,29917,691071,,skipped,Kibo already has shipment 691071 as REASSIGNED; nothing was sent
+picked,LN-CTB1929085801-4,511200193321862x1,,29917,687595,,skipped,Kibo already has shipment 687595 as REASSIGNED; nothing was sent
+picked,LN-EUA01697741,094068584580352x1,,29917,690323,,skipped,Kibo already has shipment 690323 as REASSIGNED; nothing was sent
+picked,LN-EUA01697822,094068584610745x1,,29917,690265,,skipped,Kibo already has shipment 690265 as REASSIGNED; nothing was sent
+picked,LN-EUA01697824,098050889641728x1,,29917,690288,,skipped,Kibo already has shipment 690288 as REASSIGNED; nothing was sent
+picked,LN-EUA01697844,094068817110622x1,,29917,690582,,skipped,Kibo already has shipment 690582 as REASSIGNED; nothing was sent
+picked,LN-EUA01697981,094068817122441x1,,29917,691144,,skipped,Kibo already has shipment 691144 as REASSIGNED; nothing was sent
+picked,LN-EUB01697255,09195292731104x1,,29917,689860,,skipped,Kibo already has shipment 689860 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191480392,098050889278849x1,,29917,689655,,skipped,Kibo already has shipment 689655 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191485398,09198605316135x1,,29917,689666,,skipped,Kibo already has shipment 689666 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191486291,09198605277443x1,,29917,689674,,skipped,Kibo already has shipment 689674 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191487377,098054492743459x1,,29917,689677,,skipped,Kibo already has shipment 689677 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191488565,098057626033709x1,,29917,689682,,skipped,Kibo already has shipment 689682 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191662397,09198960022351x1,,29917,687912,,skipped,Kibo already has shipment 687912 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191666181,09198605791598x1,,29917,687961,,skipped,Kibo already has shipment 687961 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191666672,098053819046143x1,,29917,687978,,skipped,Kibo already has shipment 687978 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191666987,098053195614202x1,,29917,687975,,skipped,Kibo already has shipment 687975 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191667625,098050994165874x1,,29917,687983,,skipped,Kibo already has shipment 687983 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191671445,098058427067146x1,,29917,688050,,skipped,Kibo already has shipment 688050 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191679397,09195149331907x1,,29917,688165,,skipped,Kibo already has shipment 688165 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191684048,095715897118862x1,,29917,688219,,skipped,Kibo already has shipment 688219 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191684813,097300000670153x1,,29917,688226,,skipped,Kibo already has shipment 688226 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191691617,09198605296697x1,,29917,688297,,skipped,Kibo already has shipment 688297 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191700125,094068818614525x1,,29917,688388,,skipped,Kibo already has shipment 688388 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191709631,09198488546063x1,,29917,688523,,skipped,Kibo already has shipment 688523 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191737026,098059525440145x1,,29917,688865,,skipped,Kibo already has shipment 688865 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191751484,098053819655307x1,,29917,689077,,skipped,Kibo already has shipment 689077 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191761284,098053195581412x1,,29917,689216,,skipped,Kibo already has shipment 689216 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191806747,09198685073935x1,,29917,689950,,skipped,Kibo already has shipment 689950 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191829157,098059791058563x1,,29917,690271,,skipped,Kibo already has shipment 690271 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191830353,09198605319419x1,,29917,690285,,skipped,Kibo already has shipment 690285 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191836737,09198605296703x1,,29917,690377,,skipped,Kibo already has shipment 690377 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191836931,093700943659385x1,,29917,690378[READY],,cancelled,"picked 2026-11-25T14:48:32+00:00, cancelled 2026-11-27T09:56:47+00:00"
+picked,LN-FF-NTP191858421,095059107516063x1,,29917,690726[READY],,cancelled,"picked 2026-11-26T09:49:15+00:00, cancelled 2026-11-27T09:55:45+00:00"
+picked,LN-FF-NTP191866594,09198605791598x1,,29917,690866,,skipped,Kibo already has shipment 690866 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191870743,09198685073942x1,,29917,690895,,skipped,Kibo already has shipment 690895 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191872573,098053195381586x1,,29917,690928[READY],,cancelled,"picked 2026-11-26T10:32:52+00:00, cancelled 2026-11-27T09:55:46+00:00"
+picked,LN-FF-NTP191879237,09198605270383x1,,29917,691004,,skipped,Kibo already has shipment 691004 as REASSIGNED; nothing was sent
+picked,LN-FF-NTP191889351,09198605725289x1,,29917,691171,,skipped,Kibo already has shipment 691171 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191643967,584255622760634x1,,29917,687689,,skipped,Kibo already has shipment 687689 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191666162,581000000130959x1,,29917,687959,,skipped,Kibo already has shipment 687959 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191693724,58840213257125x1,,29917,688316,,skipped,Kibo already has shipment 688316 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191697830,585059107948826x1,,29917,688361,,skipped,Kibo already has shipment 688361 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191697830,585059107948826x1,,29917,691035,,skipped,Kibo already has shipment 691035 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191697831,585059107948826x1,,29917,688360,,skipped,Kibo already has shipment 688360 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191697831,585059107948826x1,,29917,691046,,skipped,Kibo already has shipment 691046 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191698947,585059107924424x1,,29917,688372,,skipped,Kibo already has shipment 688372 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191699288,585059107847686x1,,29917,688376,,skipped,Kibo already has shipment 688376 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191699872,585059107948949x1,,29917,688381,,skipped,Kibo already has shipment 688381 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191700236,585059107957033x1,,29917,688393,,skipped,Kibo already has shipment 688393 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191700911,585059107847662x1,,29917,688399,,skipped,Kibo already has shipment 688399 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191701166,585061107364407x1,,29917,688403,,skipped,Kibo already has shipment 688403 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191701355,585061107360638x1,,29917,688401,,skipped,Kibo already has shipment 688401 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191705219,585059107949212x1,,29917,688469,,skipped,Kibo already has shipment 688469 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191705518,585059107948826x1,,29917,688467,,skipped,Kibo already has shipment 688467 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191712575,585057890803636x1,,29917,688570,,skipped,Kibo already has shipment 688570 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191715108,585057890946388x1,,29917,688597,,skipped,Kibo already has shipment 688597 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191715205,585059107643431x1,,29917,688601,,skipped,Kibo already has shipment 688601 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191715787,585059107650149x1,,29917,688615,,skipped,Kibo already has shipment 688615 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191716810,585057890431808x1,,29917,688632,,skipped,Kibo already has shipment 688632 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191717471,585057890434144x1,,29917,688645,,skipped,Kibo already has shipment 688645 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191721418,581000000155549x1,,29917,688711,,skipped,Kibo already has shipment 688711 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191723456,585059107650125x1,,29917,688729,,skipped,Kibo already has shipment 688729 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191725672,585059107958351x1,,29917,688751,,skipped,Kibo already has shipment 688751 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191725817,585057890803520x1,,29917,688752,,skipped,Kibo already has shipment 688752 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191727163,585057890707927x1,,29917,688768,,skipped,Kibo already has shipment 688768 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191728099,585059107650057x1,,29917,688783,,skipped,Kibo already has shipment 688783 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191728099,585059107650057x1,,29917,691061,,skipped,Kibo already has shipment 691061 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191728318,585057890981617x1,,29917,688779,,skipped,Kibo already has shipment 688779 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191728598,585057890960728x1,,29917,688788,,skipped,Kibo already has shipment 688788 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191730604,585061107361604x1,,29917,688801,,skipped,Kibo already has shipment 688801 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191731753,585057890987909x1,,29917,688813,,skipped,Kibo already has shipment 688813 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191733169,585059107651320x1,,29917,688832,,skipped,Kibo already has shipment 688832 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191859946,585057890946388x1,,29917,690745,,skipped,Kibo already has shipment 690745 as REASSIGNED; nothing was sent
+picked,LN-FF-P2N191886688,585057890932169x1,,29917,691150,,skipped,Kibo already has shipment 691150 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163065,098053819502090x1,,29917,687902,,skipped,Kibo already has shipment 687902 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163066,098053819193120x1,,29917,687905,,skipped,Kibo already has shipment 687905 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163067,098053819191041x1,,29917,687903,,skipped,Kibo already has shipment 687903 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163071,098053819784526x1,,29917,687908,,skipped,Kibo already has shipment 687908 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163077,098059525448783x1,,29917,687907,,skipped,Kibo already has shipment 687907 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163134,098059525448349x1,,29917,687918,,skipped,Kibo already has shipment 687918 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163299,098059525444877x1,,29917,687933,,skipped,Kibo already has shipment 687933 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163599,09195149443358x1,,29917,687955,,skipped,Kibo already has shipment 687955 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112163787,098053819295268x1,,29917,687962,,skipped,Kibo already has shipment 687962 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112164413,098059525294564x1,,29917,688024,,skipped,Kibo already has shipment 688024 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112164532,098053819191188x1,,29917,688040,,skipped,Kibo already has shipment 688040 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112164648,098142590566x1,,29917,688060,,skipped,Kibo already has shipment 688060 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112165302,098055770196158x1,,29917,688181,,skipped,Kibo already has shipment 688181 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112266661,098059525445515x1,,29917,688386,,skipped,Kibo already has shipment 688386 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112371849,098059525444907x1,,29917,689092,,skipped,Kibo already has shipment 689092 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112373069,040198682721266x1,,29917,689194,,skipped,Kibo already has shipment 689194 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112474739,098056035847631x1,,29917,689550,,skipped,Kibo already has shipment 689550 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112477222,040198682720429x1,,29917,689863,,skipped,Kibo already has shipment 689863 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112581567,098056035800100x1,,29917,690287,,skipped,Kibo already has shipment 690287 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112686156,098053819138572x1,,29917,690869,,skipped,Kibo already has shipment 690869 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112688893,098053819522661x1,,29917,691134,,skipped,Kibo already has shipment 691134 as REASSIGNED; nothing was sent
+picked,LN-IMAP26112689417,098053819733869x1,,29917,691191,,skipped,Kibo already has shipment 691191 as REASSIGNED; nothing was sent
+picked,LN-MTANO4BBC29A02FE3,09198605319471x1,,29917,690282,,skipped,Kibo already has shipment 690282 as REASSIGNED; nothing was sent
+picked,LN-MTAPL1741EFD9F3DD,09198605742767x1,,29917,688537,,skipped,Kibo already has shipment 688537 as REASSIGNED; nothing was sent
+picked,LN-NAA00001767,098098675401x1,,29917,688894,,skipped,Kibo already has shipment 688894 as REASSIGNED; nothing was sent
+picked,MA-EUA00013044,528055384143418x1,,33693,82799,,skipped,Kibo already has shipment 82799 as REASSIGNED; nothing was sent
+picked,MA-EUA00013161,528055384143074x1,,33693,83712,,skipped,Kibo already has shipment 83712 as REASSIGNED; nothing was sent
+picked,MA-EUB00012966,528055384129252x1,,33693,83173,,skipped,Kibo already has shipment 83173 as REASSIGNED; nothing was sent
+picked,MA-EUB00013248,528055384142015x1,,33693,84332,,skipped,Kibo already has shipment 84332 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191491621,"511200190039425x1, 511200190039432x1",,30016,108918,,skipped,Kibo already has shipment 108918 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191491907,511200190039425x1,,30016,108920,,skipped,Kibo already has shipment 108920 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191661982,518055266373582x1,,30016,111155,,skipped,Kibo already has shipment 111155 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191663540,518721137228724x1,,30016,111187,,skipped,Kibo already has shipment 111187 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191682308,51824411009946x1,,30016,111401,,skipped,Kibo already has shipment 111401 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191703149,511200193320599x1,,30016,111673,,skipped,Kibo already has shipment 111673 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191719367,518055266612018x1,,30016,111867,,skipped,Kibo already has shipment 111867 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191727420,518055266269069x1,,30016,111980,,skipped,Kibo already has shipment 111980 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191730551,511200193330963x1,,30016,112064,,skipped,Kibo already has shipment 112064 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191730585,511200193247070x1,,30016,112070,,skipped,Kibo already has shipment 112070 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191731153,511200193246103x1,,30016,112067,,skipped,Kibo already has shipment 112067 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191731322,518721137234480x1,,30016,112069,,skipped,Kibo already has shipment 112069 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191731861,518055266303510x1,,30016,112076,,skipped,Kibo already has shipment 112076 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191731878,518051594409412x1,,30016,112077,,skipped,Kibo already has shipment 112077 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191732464,511200189728934x1,,30016,112081,,skipped,Kibo already has shipment 112081 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191732467,518051594700649x1,,30016,112082,,skipped,Kibo already has shipment 112082 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191732869,514894626351891x1,,30016,112088,,skipped,Kibo already has shipment 112088 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191732909,511200190008414x1,,30016,112086,,skipped,Kibo already has shipment 112086 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191732916,518055266610472x1,,30016,112085,,skipped,Kibo already has shipment 112085 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191733179,511200190010073x1,,30016,112089,,skipped,Kibo already has shipment 112089 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191733217,511200190024032x1,,30016,112087,,skipped,Kibo already has shipment 112087 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191741046,511200189768633x1,,30016,112201,,skipped,Kibo already has shipment 112201 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191767799,518055266381235x1,,30016,112564,,skipped,Kibo already has shipment 112564 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191782649,511200193246257x1,,30016,112838,,skipped,Kibo already has shipment 112838 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191802391,"518051594409436x1, 518055266269199x1",,30016,113131,,skipped,Kibo already has shipment 113131 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191802730,511200193321558x1,,30016,113140[READY],,cancelled,"picked 2026-11-24T20:58:13+00:00, cancelled 2026-11-27T09:20:05+00:00"
+picked,OW-FF-OW7191828228,511200193252081x1,,30016,113540,,skipped,Kibo already has shipment 113540 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191833517,511200190020782x1,,30016,113596,,skipped,Kibo already has shipment 113596 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191833517,511200190020782x1,,30016,114317[READY],,cancelled,"picked 2026-11-26T17:48:19+00:00, cancelled 2026-11-27T09:24:15+00:00"
+picked,OW-FF-OW7191877194,511200193318756x1,,30016,114218,,skipped,Kibo already has shipment 114218 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191877562,511200190008414x1,,30016,114219,,skipped,Kibo already has shipment 114219 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191877630,518721137242935x1,,30016,114217,,skipped,Kibo already has shipment 114217 as REASSIGNED; nothing was sent
+picked,OW-FF-OW7191883937,518055266303138x1,,30016,114301[READY],,cancelled,"picked 2026-11-26T17:33:02+00:00, cancelled 2026-11-27T09:23:11+00:00"
+picked,OW-FF-OW7191890141,518055266624561x1,,30016,114414[READY],,cancelled,"picked 2026-11-26T19:02:17+00:00, cancelled 2026-11-27T07:46:09+00:00"
+picked,OW-FF-OW7191891768,518051594408071x1,,30016,114439,,skipped,Kibo already has shipment 114439 as REASSIGNED; nothing was sent
+picked,PJ-EUA01022228,358059382795457x1,,30475,153979,,skipped,Kibo already has shipment 153979 as REASSIGNED; nothing was sent
+picked,PJ-EUA01023960,358059382853751x1,,30475,155750,,skipped,Kibo already has shipment 155750 as REASSIGNED; nothing was sent
+picked,RC-EUA00016343,468051205451953x1,,29990,73783,,skipped,Kibo already has shipment 73783 as REASSIGNED; nothing was sent
+picked,RC-EUA00016582,468051817503040x1,,29990,74054,,skipped,Kibo already has shipment 74054 as REASSIGNED; nothing was sent
+picked,RC-USA00021219,468051817344704x1,,29990,73813,,skipped,Kibo already has shipment 73813 as REASSIGNED; nothing was sent
+picked,RC-USA00021302,468051817501428x1,,29990,73839,,skipped,Kibo already has shipment 73839 as REASSIGNED; nothing was sent
+picked,RC-USA00021391,468051817347989x1,,29990,74045,,skipped,Kibo already has shipment 74045 as REASSIGNED; nothing was sent
+picked,RC-USA00021476,468051817425540x1,,29990,74080,,skipped,Kibo already has shipment 74080 as REASSIGNED; nothing was sent
+picked,SC-NPA1074101715-000,174260461141018x1,,29989,320262,,skipped,Kibo already has shipment 320262 as REASSIGNED; nothing was sent
+picked,SW-EUA00829094,"040198682644374x1, 040198682783004x1",,29992,71729,,skipped,Kibo already has shipment 71729 as REASSIGNED; nothing was sent
+picked,SW-EUA00829219,040198682584465x1,,29992,71911,,skipped,Kibo already has shipment 71911 as REASSIGNED; nothing was sent
+picked,SW-EUA00829343,040198682562487x1,,29992,72374,,skipped,Kibo already has shipment 72374 as REASSIGNED; nothing was sent
+picked,SW-EUA00829385,040198683034440x1,,29992,72164,,skipped,Kibo already has shipment 72164 as REASSIGNED; nothing was sent
+picked,SW-EUA00829542,040199690272344x1,,29992,72734,,skipped,Kibo already has shipment 72734 as REASSIGNED; nothing was sent
+picked,SW-FF-SW5191498101,040199690500515x1,,29992,72341,,skipped,Kibo already has shipment 72341 as REASSIGNED; nothing was sent
+picked,SW-FF-SW5191732566,040199689288189x1,,29992,72735,,skipped,Kibo already has shipment 72735 as REASSIGNED; nothing was sent
+picked,SW-FF-SW5191733178,040198682749796x1,,29992,72736,,skipped,Kibo already has shipment 72736 as REASSIGNED; nothing was sent
+picked,WF-EUA00021929,"569010352840026x1, 569010352840026x1, 569010352840026x1",,32147,40051,,skipped,Kibo already has shipment 40051 as REASSIGNED; nothing was sent
+picked,WF-EUA00023916,569010968161782x1,,32147,45364,,skipped,Kibo already has shipment 45364 as REASSIGNED; nothing was sent
+picked,WF-EUG00019249,569010352841542x1,,32147,40006,,skipped,Kibo already has shipment 40006 as REASSIGNED; nothing was sent
+picked,WF-EUP00014844,569010352841566x1,,32147,40005,,skipped,Kibo already has shipment 40005 as REASSIGNED; nothing was sent
+picked,WF-EUQ00015192,"569008731994521x1, 569008731994569x1",,32147,40019,,skipped,Kibo already has shipment 40019 as REASSIGNED; nothing was sent
+picked,WF-EUR00013381,569008731994569x1,,32147,40003,,skipped,Kibo already has shipment 40003 as REASSIGNED; nothing was sent
+picked,WF-FF-T3W191649967,569010968135523x1,,32147,41609,,skipped,Kibo already has shipment 41609 as REASSIGNED; nothing was sent
+picked,WF-FF-T3W191731217,569010968147823x1,,32147,43324,,skipped,Kibo already has shipment 43324 as REASSIGNED; nothing was sent
+picked,WF-FF-T3W191811060,569010968145904x1,,32147,44572,,skipped,Kibo already has shipment 44572 as REASSIGNED; nothing was sent
+picked,WF-FF-T3W191855865,569010968083763x1,,32147,45217,,skipped,Kibo already has shipment 45217 as REASSIGNED; nothing was sent
+picked,WF-ZLA10101749366512,569010968097487x1,,32147,44938,,skipped,Kibo already has shipment 44938 as REASSIGNED; nothing was sent
+picked,WF-ZLA10103749166732,569009752964845x1,,32147,44613,,skipped,Kibo already has shipment 44613 as REASSIGNED; nothing was sent
+picked,WF-ZLA10103749378568,569010968039821x1,,32147,44963,,skipped,Kibo already has shipment 44963 as REASSIGNED; nothing was sent
+picked,WF-ZLA10203212755176,569009752400329x1,,32147,41788,,skipped,Kibo already has shipment 41788 as REASSIGNED; nothing was sent
+picked,WF-ZLA10203213206062,569010352101783x1,,32147,44978,,skipped,Kibo already has shipment 44978 as REASSIGNED; nothing was sent
+picked,WF-ZLA10203213247054,569010968081646x1,,32147,45203,,skipped,Kibo already has shipment 45203 as REASSIGNED; nothing was sent
+picked,WF-ZLA10208213249490,569010352102360x1,,32147,45218,,skipped,Kibo already has shipment 45218 as REASSIGNED; nothing was sent
+picked,WF-ZLA10213213192799,569010352938228x1,,32147,44919,,skipped,Kibo already has shipment 44919 as REASSIGNED; nothing was sent
+picked,WF-ZLA10311219077371,569010352791908x1,,32147,44796,,skipped,Kibo already has shipment 44796 as REASSIGNED; nothing was sent
+picked,WF-ZLA10404244268148,569010352102469x1,,32147,44957,,skipped,Kibo already has shipment 44957 as REASSIGNED; nothing was sent
+picked,WF-ZLA10703208645599,569010352963886x1,,32147,41774,,skipped,Kibo already has shipment 41774 as REASSIGNED; nothing was sent
+picked,WF-ZLA11303065080866,569008133044824x1,,32147,45357,,skipped,Kibo already has shipment 45357 as REASSIGNED; nothing was sent
+picked,WF-ZLA11303065084895,569010968030606x1,,32147,45425,,skipped,Kibo already has shipment 45425 as REASSIGNED; nothing was sent
+picked,WF-ZLA11312065038479,569010352102346x1,,32147,44753,,skipped,Kibo already has shipment 44753 as REASSIGNED; nothing was sent
+picked,WF-ZLA11401100540397,569010352234603x1,,32147,44809,,skipped,Kibo already has shipment 44809 as REASSIGNED; nothing was sent
+picked,WL-EUA00592125,125713551011030x1,,29991,184713,,skipped,Kibo already has shipment 184713 as REASSIGNED; nothing was sent
+picked,WL-EUA00592305,128059607035887x1,,29991,183727,,skipped,Kibo already has shipment 183727 as REASSIGNED; nothing was sent
+picked,WL-EUA00592416,129781649805867x1,,29991,186798,,skipped,Kibo already has shipment 186798 as REASSIGNED; nothing was sent
+picked,WL-EUB00592152,128031638068164x1,,29991,185561,,skipped,Kibo already has shipment 185561 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191746582,129781614289456x1,,29991,186765,,skipped,Kibo already has shipment 186765 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191746582,129781614289456x1,,29991,187016,,skipped,Kibo already has shipment 187016 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191746582,129781614289456x1,,29991,187218,,skipped,Kibo already has shipment 187218 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191839618,129781614289456x1,,29991,187227,,skipped,Kibo already has shipment 187227 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191876910,129781649802385x1,,29991,187411,,skipped,Kibo already has shipment 187411 as REASSIGNED; nothing was sent
+picked,WL-FF-WST191877920,129781649802408x1,,29991,187417,,skipped,Kibo already has shipment 187417 as REASSIGNED; nothing was sent
+confirm,SC-FF-TGA191908063,174260383347901,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,SW-MTADKA10A582F3A94,040199690226934,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-CTA1920542035-4,098055266269106,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1920395626-4,090199690528656,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-CTA1920218990-4,098051594843483,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,FE-EUB00137341,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-MTAUK750201A42EDB,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SW-EUD00828053,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLB1300463750885,118053682355755,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DJ-GLA1300463359004,118053682267454,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DJ-GLB1300463570352,118053682361268,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,PA-FF-PA7191772179,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7191749743,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA1920332346-4,091200193321688,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-CTA1920192351-4,094260461405806,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,RC-USA00021433,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7191660647,511200193246929,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191644698,51824411009595,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-FF-P2N191757376,585061107360638,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191453666,511200190030514,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191448784,121200000178160;121200000178191,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191362205,128032397057260,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191646993,511200190024025,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191765659,518055266029618;518055266268895,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-FF-P2N191679817,585057890803612,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WF-FF-T3W191792950,569010968142521,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,SC-USA00009527,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7191658354,511200193247056,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191643949,511200193246561,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191654804,511200193324146,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191585820,124251501407607;124251501413202;125063081348442;125420000777897;125600413615997;125704444093417;128718142049826;129180015980823,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191646510,511200193327833,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191378863,128720812133841;128720812138082,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,CA-FF-TGC191647910,058053173705083,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,SC-USA00009505,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SW-FF-SW5191651698,040199690413877,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH191659150,158056810179469,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH191647001,158054802716333,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-CTA1920442797-4,090196036571475,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTB1929158240-4,094260461342781,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1920592748-4,098055167661351,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTB1929840462-4,094260461387997,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1920542765-4,098055167661351,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,HE-EUB00137654,338055403580545,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-EUA01689168,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-EUF0189434506,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00120956,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-EUF0189810822,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLA1300463059448,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-EUA00025115,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190432073,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,BB-EUA00073447,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0188444522,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA88990903-4,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189952773,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUB00126014,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190563558,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7189489343,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLB1300462671527,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA1929171346-4,091200193320599,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,DJ-GLA1300463059890,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190609741,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-FF-NTP190205371,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA1926638756-4,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,PA-FF-PA7190295095,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7189507622,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLA1300463101095,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0190012649,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-MTASEA2FFD2D9E6AA,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SC-MTAPLB95040693C1F,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189812068,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-USA11603346,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SC-FF-TGA190379039,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUB0012TSTGQ2,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,BB-EUA00068736,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-FF-LDJ190100785,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190288579,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7189505899,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00120954,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-USB00035434,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SC-MTAPL8E3506568BE8,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189681836,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190324412,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189635299,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-EUB00365195,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7189538616,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7190393889,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,PA-EUF0183380392,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-EUF0188942475,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,BB-EUA00067647,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00128782,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-USA11607626,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUA01677688,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUB01678772,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST189911192,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,CA-EUC00859181,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WF-FF-T3W190601223,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUA01679053,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLB1300462707383,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SC-MTBFR0D235F14C991,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA1929954198-4,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,BB-EUA00068288,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-EUF0189432590,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SW-FF-SW5190748251,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-EUF2177325053,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,BB-EUA00068868,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-EUA00044066,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUA01676184,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-FF-LDJ190452813,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-USA00054257,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7190536304,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-FF-LDJ189583747,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190469548,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTB1929088062-4,094260461193802,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,DJ-GLB1300462608867,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-FF-LDJ190215366,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190056580,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7189551176,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,PA-FF-PA7190615960,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189900239,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTB1929518262-4,094260461333604,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,DG-EUC01678571,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0188667541,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-USB00050519,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST189913310,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189638635,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-USA00050519,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUA01675498,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189513539,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00127057,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7189523133,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00130566,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00120798,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,BB-EUA00068872,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0188365364,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190337587,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189393288,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00126452,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-FF-LDJ190302544,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WF-FF-T3W190061346,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0187991190,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUB01690361,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-FF-LDJ188803691,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-EUA00044918,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,FE-EUA00124011,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7190511533,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTB1929247586-4,091200190021383,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,FE-USC00050519,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0188750394,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7190768129,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUA01687270,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA1924944305-4,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-FF-WST190209854,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-EUF2177468950,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DJ-GLA1300463155071,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-EUA01680037,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WL-EUF0189215344,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0188532777,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SW-FF-SW5190748948,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-EUF0189566228,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,OW-FF-OW7191715342,511200193247193,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191656115,511200190008391;518055266607120,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191658665,511200193316912;511200193339973,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-IMAP26111639216,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA1920902394-4,094260461405806,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,OW-FF-OW7191047637,518051594699721,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,HE-FF-TH5191085896,338055403541713;338055403541720,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,CA-FF-TGC190671618,058053173415210,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191068167,129781614288534;129781649800435;129781649803399;129781649804471,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WF-FF-T3W191434649,569010352660181;569010968125067,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190674814,514894626351334,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH190951903,158057001090358,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191013950,125710441275862,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190682967,511200193157638,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,SC-FF-TGA191507957,174260461324381,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190659097,518055266619604,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH190823533,158059579694464,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190988008,518051594721354,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST190949014,129783836502931,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,SW-FF-SW5191515971,040197073327629,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190989181,514894626351587,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191073207,121200000144936,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190757871,518051594408194,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191160455,125600413638958,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH191062899,158056262866108,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191602547,511200193340689,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191189540,125600413632697,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191079893,511200190020355,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190969915,518055266619567,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WF-FF-T3W190903152,569010352371605,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DJ-FF-LDJ190970740,118053682409694,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,HE-FF-TH5191077354,338055403458615;338055403458622,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH191193878,158056810157962,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH190987028,158053286386445,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191108000,518721137251173,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191039003,514894626352096,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191120476,514894626351884,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DG-FF-DWH191181493,158059579705696,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190927322,518051594721354,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7190927345,511200190020478,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191086664,518051594408149,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,OW-FF-OW7191609005,511200193244130,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,DJ-FF-LDJ191452246,118053682346210;118053682346234,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,CA-FF-TGC191111280,058053173728655,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-CTA1920435036-4,098055828332811,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1920212310-4,094260461287242,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929231769-4,090900112444870;093607935429202,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,SW-MTAUK95C709254B98,04196036571475,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191627542,128053147781464;128059037131975,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LA-EUA10000004,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,LN-CTA1929090605-4,094260461293212,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,SW-EUG00828299,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,CA-EUC00859254,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,WF-MKA032805-3118708,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,CV-EUC00084838,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SW-EUE00828053,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,DG-FF-DWH191125486,158056810409603,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,CV-USA00044668,,,,,,skipped,"the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed"
+confirm,SC-USB00009597,174260461331631,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191325611,125400959027076,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-CTA1929949125-4,098059915964503,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929678113-4,094260461277946,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929340614-4,090199690527222,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,BB-MTAIT07516B3B88C5,42500011612075,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,WL-FF-WST191057470,128718142078277,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929226662-4,091200190038879,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929130824-4,094260461342781,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929850047-4,094260461245815,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,DG-FF-DWH191090938,158057576191962;158057576475413,,,,,skipped,no CANCELLED event in prd_shipmentStatus
+confirm,LN-CTA1929779766-4,098055167759768,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929143761-4,098055266529743,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-CTA1929713001-4,091200190029457,,,,,skipped,"1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items"
+confirm,LN-FF-NTP191836931,093700943659385,,,,,confirmed,confirmed from the CANCELLED event of 2026-11-27T09:56:47+00:00
+confirm,BB-FF-TGK191831307,42194726293751,,,,,confirmed,confirmed from the CANCELLED event of 2026-11-27T09:16:57+00:00
+confirm,OW-FF-OW7191802730,511200193321558,,,,,confirmed,confirmed from the CANCELLED event of 2026-11-27T09:20:05+00:00
+kibo,OW-FF-OW7191563500,511200190030514,OW-FF-OW7191563500,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-FF-T3W191542641,569009752700740,WF-FF-T3W191542641,32147,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191613442,518051594700656,OW-FF-OW7191613442,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,SW-FF-SW5191555874,040199690623092,SW-FF-SW5191555874,29992,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191555924,518721137244137,OW-FF-OW7191555924,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191556936,511200190029433,OW-FF-OW7191556936,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191637776,158058990825495,DG-FF-DWH191637776,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191551328,511200193244130,OW-FF-OW7191551328,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191565378,158057996242879,DG-FF-DWH191565378,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191602976,518051594895093,OW-FF-OW7191602976,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191606895,511200190031535,OW-FF-OW7191606895,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191580032,158056810035567,DG-FF-DWH191580032,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-FF-T3W191456445,569010352504782;569010352915809,WF-FF-T3W191456445,32147,,,skipped,"none of the 3 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191552032,158051200936615,DG-FF-DWH191552032,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191138283,158056265355340,DG-FF-DWH191138283,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191155650,158057576370527,DG-FF-DWH191155650,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191377104,158057996628802,DG-FF-DWH191377104,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191552514,158051200936196;158056810179407,DG-FF-DWH191552514,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,CV-MTANO75605F17D563,508059915494659,CV-MT-NO75605F17D563,30014,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-MTANOB800864985B3,569009752904063,WF-MT-NOB800864985B3,32147,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-MTAPL9BDEA4FA6878,569010968114368;569010968167609,WF-MT-PL9BDEA4FA6878,32147,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-EUB00011993,569010352897303;569010352897402,WF-EU-00011993,32147,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DJ-USD00032514,118053682409243,DJ-US-00032514,30018,,,skipped,"none of the 6 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-USA00014318,569009752803847,WF-US-00014318,32147,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-USA00014222,569009752803847,WF-US-00014222,32147,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-USA00014220,569009752803908,WF-US-00014220,32147,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-USA00014317,569009752803847,WF-US-00014317,32147,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191810800,511200190029167,OW-FF-OW7191810800,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191736895,125415198124707,WL-FF-WST191736895,29991,,,skipped,"none of the 3 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191826956,511200190030514,OW-FF-OW7191826956,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191810956,511200193247407,OW-FF-OW7191810956,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191812037,518051594926179,OW-FF-OW7191812037,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,MA-FF-TM8191315622,528055384141537,MA-FF-TM8191315622,33693,,,skipped,"none of the 7 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191839758,518055266303145,OW-FF-OW7191839758,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191433789,128033050341719,WL-FF-WST191433789,29991,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191808773,518051594408194,OW-FF-OW7191808773,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191837490,511200193247490,OW-FF-OW7191837490,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191839376,511200193246578,OW-FF-OW7191839376,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-FF-T3W191817334,569010968140084,WF-FF-T3W191817334,32147,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191818293,514894626351235,OW-FF-OW7191818293,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191814578,518721137242928,OW-FF-OW7191814578,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191787161,123397690009244,WL-FF-WST191787161,29991,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,HE-FF-TH5191837251,338055403458448,HE-FF-TH5191837251,30021,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191833938,511200193316400;51824411007287,OW-FF-OW7191833938,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-FF-T3W191836352,569008133044923;569009752221962;569009752222204;569009752222228;569009752223188;569010968122585;569010968122707,WF-FF-T3W191836352,32147,,,skipped,"1 shipment(s) in a cancellable status, none carrying exactly 569008133044923;569009752221962;569009752222204;569009752222228;569009752223188;569010968122585;569010968122707 — 44866[BACKORDER]=569009752602020;569010352504706"
+kibo,PA-FF-PA7191811410,536295155306341,PA-FF-PA7191811410,33693,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,CV-FF-T9R191827555,508059915784286,CV-FF-T9R191827555,30014,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-FF-NTP191846401,098053195659920,LN-FF-NTP191846401,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-FF-NTP191826371,09198605212383,LN-FF-NTP191826371,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-FF-NTP191837568,097626222121168,LN-FF-NTP191837568,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-FF-NTP191839423,09198605723919,LN-FF-NTP191839423,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-CTA1920978555-4,098057626229911,LN-CT-1920978555-4,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,SC-FF-TGA191804421,174260461432741,SC-FF-TGA191804421,29989,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191741961,128008215141503,WL-FF-WST191741961,29991,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,HE-FF-TH5191828829,338055403463275,HE-FF-TH5191828829,30021,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191798641,518721137244229,OW-FF-OW7191798641,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WF-FF-T3W191768641,569010352504768;569010352673266,WF-FF-T3W191768641,32147,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191745564,511200193327116,OW-FF-OW7191745564,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191715352,511200193246165,OW-FF-OW7191715352,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191816107,518055266029601,OW-FF-OW7191816107,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-CTA1920413021-4,090900112445129,LN-CT-1920413021-4,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-CTA1920248555-4,098056263283362,LN-CT-1920248555-4,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-FF-P2N191761996,585057890991241,LN-FF-P2N191761996,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191717331,124251501416166;124251501416173,WL-FF-WST191717331,29991,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191769985,124251501416166;124251501416173,WL-FF-WST191769985,29991,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191732171,128718142036482,WL-FF-WST191732171,29991,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191802309,511200190029211,OW-FF-OW7191802309,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191746353,511200193332080,OW-FF-OW7191746353,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191734840,511200193327765,OW-FF-OW7191734840,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,SC-FF-TGA191834201,174260461278523,SC-FF-TGA191834201,29989,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191752867,128718142078277,WL-FF-WST191752867,29991,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191769518,120850073262399,WL-FF-WST191769518,29991,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191821892,514894626350764;518055266619352,OW-FF-OW7191821892,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191785640,125414780449082,WL-FF-WST191785640,29991,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191737248,511200189730753,OW-FF-OW7191737248,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191743023,511200193243300;511200193243317;511200193246585;511200193247421;511200193247506,OW-FF-OW7191743023,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-FF-P2N191845869,585061107364537,LN-FF-P2N191845869,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,SW-MTADE38A70C7B89CD,040199690296234,SW-MT-DE38A70C7B89CD,29992,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191697152,511200189728880,OW-FF-OW7191697152,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191603145,158054802811731,DG-FF-DWH191603145,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,PA-FF-PA7191702748,536295155308611;536295155365713,PA-FF-PA7191702748,33693,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191616507,511200193238023;511200193246172;511200193247421;511200193340085,OW-FF-OW7191616507,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191508810,158059579237333,DG-FF-DWH191508810,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191494021,158058990966105,DG-FF-DWH191494021,29916,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191494020,158058990242988,DG-FF-DWH191494020,29916,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191484355,158056810039091,DG-FF-DWH191484355,29916,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,SW-FF-SW5191188422,040198682569424,SW-FF-SW5191188422,29992,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191524935,511200190010141;511200193246585,OW-FF-OW7191524935,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191076321,128008215228181,WL-FF-WST191076321,29991,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191075597,128008215229119,WL-FF-WST191075597,29991,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-CTA1920672499-4,098139414510,LN-CT-1920672499-4,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191520959,511200193244147,OW-FF-OW7191520959,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-FF-P2N191480512,585059107644896,LN-FF-P2N191480512,29917,,,skipped,"none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DJ-FF-LDJ191839990,118053682458012,DJ-FF-LDJ191839990,30018,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191726903,518055266345336,OW-FF-OW7191726903,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191843827,158057155231362,DG-FF-DWH191843827,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,BB-FF-TGK191831307,42194726293751,BB-FF-TGK191831307,33694,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191802730,511200193321558,OW-FF-OW7191802730,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-FF-NTP191836931,093700943659385,LN-FF-NTP191836931,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191386132,158054802769131;158056810798905;158056810799988,DG-FF-DWH191386132,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,CV-MTAPL44BC256B37F1,508054323747083,CV-MT-PL44BC256B37F1,30014,,,skipped,"none of the 4 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,FE-EUA00120259,484070032317434,FE-EU-00120259,30022,,,skipped,"none of the 3 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-CTA1920653555-4,098053195262847,LN-CT-1920653555-4,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,WL-FF-WST191085579,12810009646631,WL-FF-WST191085579,29991,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-CTA1920358535-4,098051209057458,LN-CT-1920358535-4,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,OW-FF-OW7191582617,511200189387735,OW-FF-OW7191582617,30016,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,SC-USA00009368,174260461257184,SC-US-00009368,29989,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,LN-CTA1929956875-4,098053195614288,LN-CT-1929956875-4,29917,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
+kibo,DG-FF-DWH191117181,158056597048903;158057576989477,DG-FF-DWH191117181,29916,,,skipped,"none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY"
