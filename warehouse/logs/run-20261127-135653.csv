@@ -1,0 +1,2 @@
+﻿source_file,row_number,stage,shipment_order_number,product_id,order_number,tenant_id,gate,logistic_order_number,location_name,brand,brand_code,event_id,kibo_shipment_number,outcome,status_code,error,response_excerpt
+20261127-135635__backoffice__shipment.csv,2,warehouse,SC-FF-TGA191907494,,,,,SC320883,TLITGX0017,SC,17,08181DC6-3B6D-4AC0-9641-D21F82B3E678,,success,200,,"{""success"": true,""data"": {""errorMessage"": """"}}"
