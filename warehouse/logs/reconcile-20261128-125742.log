@@ -1,0 +1,640 @@
+Run started   : 2026-11-28T12:57:42+00:00
+Run finished  : 2026-11-28T12:58:54+00:00
+Mode          : LIVE
+Ledger        : tlg-business-intelligence-prd.til.warehouse_orders_cancellation_table
+Resend after  : 24.0h without a CANCELLED event
+Kibo targets  : READY,BACKORDER,CUSTOMER_CARE
+
+Counts: cancelled=17, confirmed=7, sent=14, skipped=593
+
+[picked] SKIPPED   BB-BSA2312094525-1 items=42888782314405x1 order=- shipment=90402 :: Kibo already has shipment 90402 as REASSIGNED; nothing was sent
+[picked] SKIPPED   BB-BSA2312251349-1 items=42500011308688x1 order=- shipment=90661 :: Kibo already has shipment 90661 as REASSIGNED; nothing was sent
+[picked] SKIPPED   BB-BSB2311713049-1 items=42196781587622x1 order=- shipment=90507 :: Kibo already has shipment 90507 as REASSIGNED; nothing was sent
+[picked] CANCELLED CA-FF-TGC191647910 items=058053173705083x1 order=- shipment=55710[READY] :: picked 2026-11-22T07:11:09+00:00, cancelled 2026-11-28T08:39:00+00:00
+[picked] SKIPPED   DG-EUA01691361 items=158054797648008x1 order=- shipment=777429 :: Kibo already has shipment 777429 as REASSIGNED; nothing was sent
+[picked] CANCELLED DG-FF-DWH191355894 items=158051200915023x1, 158051200915030x1, 158051200915030x1, 158051200915047x1, 158051200915054x1, 158051200915061x1, 158051200915085x1, 158051200915085x1, 158051200915085x1, 158051200915108x1, 158051200915108x1, 158051200915108x1, 158051200915108x1, 158051200915108x1, 158051200915108x1, 158051200915115x1, 158051200915115x1, 158051200915122x1, 158051200915122x1, 158057576189716x1 order=- shipment=770737[READY] :: picked 2026-11-13T17:43:15+00:00, cancelled 2026-11-28T07:42:52+00:00
+[picked] SKIPPED   DG-FF-DWH191896239 items=158058990943915x1 order=- shipment=777613 :: Kibo already has shipment 777613 as REASSIGNED; nothing was sent
+[picked] SKIPPED   DG-FF-DWH191913785 items=158056810989754x1 order=- shipment=777784 :: Kibo already has shipment 777784 as REASSIGNED; nothing was sent
+[picked] SKIPPED   DJ-USA00042795 items=118053682536147x1 order=- shipment=153782 :: Kibo already has shipment 153782 as REASSIGNED; nothing was sent
+[picked] SKIPPED   DJ-USGST0000124454 items=118053682089407x1 order=- shipment=153765 :: Kibo already has shipment 153765 as REASSIGNED; nothing was sent
+[picked] CANCELLED HE-EUB00137654 items=338055403580545x1 order=- shipment=112873[READY] :: picked 2026-11-13T17:50:11+00:00, cancelled 2026-11-28T08:58:32+00:00
+[picked] SKIPPED   HE-FF-TH5191931129 items=338055403459636x1 order=- shipment=114084 :: Kibo already has shipment 114084 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LA-EUA00001674 items=573612456971109x1 order=- shipment=12187 :: Kibo already has shipment 12187 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LA-FF-IK2191035878 items=573612457038962x1 order=- shipment=11717 :: Kibo already has shipment 11717 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920037977-4 items=040198682614391x1 order=- shipment=691687 :: Kibo already has shipment 691687 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920057485-4 items=093666656144313x1 order=- shipment=691609 :: Kibo already has shipment 691609 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920102947-4 items=511200190028856x1 order=- shipment=689392 :: Kibo already has shipment 689392 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920103959-4 items=098053195613786x1 order=- shipment=690252 :: Kibo already has shipment 690252 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920172540-4 items=098053813281298x1 order=- shipment=688912 :: Kibo already has shipment 688912 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920173057-4 items=098140843882x1 order=- shipment=690542 :: Kibo already has shipment 690542 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920198469-4 items=508056645107224x1 order=- shipment=690912 :: Kibo already has shipment 690912 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920218990-4 items=518051594843483x1 order=- shipment=690953 :: Kibo already has shipment 690953 as REASSIGNED; nothing was sent
+[picked] CANCELLED LN-CTA1920268085-4 items=174260461422872x1 order=- shipment=691270[READY] :: picked 2026-11-27T09:06:45+00:00, cancelled 2026-11-28T08:28:51+00:00
+[picked] SKIPPED   LN-CTA1920305391-4 items=511200189812107x1 order=- shipment=688216 :: Kibo already has shipment 688216 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920348118-4 items=174260461335615x1 order=- shipment=691120 :: Kibo already has shipment 691120 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920388303-4 items=094069988712417x1 order=- shipment=690844 :: Kibo already has shipment 690844 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920535701-4 items=518055266607847x1 order=- shipment=688802 :: Kibo already has shipment 688802 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920538917-4 items=098056070390581x1 order=- shipment=690940 :: Kibo already has shipment 690940 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920542035-4 items=518055266269106x1 order=- shipment=689795 :: Kibo already has shipment 689795 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920573220-4 items=098053195560271x1 order=- shipment=690406 :: Kibo already has shipment 690406 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920587472-4 items=508052672734600x1 order=- shipment=691601 :: Kibo already has shipment 691601 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920598126-4 items=093700943669414x1 order=- shipment=691105 :: Kibo already has shipment 691105 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920605282-4 items=040198682635518x1 order=- shipment=688565 :: Kibo already has shipment 688565 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920627871-4 items=174260461384149x1 order=- shipment=691742 :: Kibo already has shipment 691742 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920643015-4 items=508052335005016x1 order=- shipment=690478 :: Kibo already has shipment 690478 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920658954-4 items=098057626205441x1 order=- shipment=690925 :: Kibo already has shipment 690925 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920687653-4 items=174260461378032x1 order=- shipment=691443 :: Kibo already has shipment 691443 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920715093-4 items=040198682562913x1 order=- shipment=688675 :: Kibo already has shipment 688675 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920763276-4 items=098056070388878x1 order=- shipment=690398 :: Kibo already has shipment 690398 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920915602-4 items=09198269977727x1 order=- shipment=688112 :: Kibo already has shipment 688112 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920918919-4 items=511200190031320x1 order=- shipment=690950 :: Kibo already has shipment 690950 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920938865-4 items=508054323638008x1 order=- shipment=691021 :: Kibo already has shipment 691021 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920958205-4 items=09198605791550x1 order=- shipment=691170 :: Kibo already has shipment 691170 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1920988488-4 items=093666656221496x1 order=- shipment=690882 :: Kibo already has shipment 690882 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1929071604-4 items=174260461381360x1 order=- shipment=683879 :: Kibo already has shipment 683879 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1929096779-4 items=174260399529957x1 order=- shipment=686979 :: Kibo already has shipment 686979 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1929162133-4 items=174260461375369x1 order=- shipment=680939 :: Kibo already has shipment 680939 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1929240264-4 items=174260461144736x1 order=- shipment=683495 :: Kibo already has shipment 683495 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1929491598-4 items=174260461427891x1 order=- shipment=683757 :: Kibo already has shipment 683757 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1929577818-4 items=174260461296459x1 order=- shipment=682726 :: Kibo already has shipment 682726 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1929608284-4 items=174260461361713x1 order=- shipment=682242 :: Kibo already has shipment 682242 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTA1929749910-4 items=174260461377974x1 order=- shipment=685740 :: Kibo already has shipment 685740 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTB1920062177-4 items=174260461221062x1 order=- shipment=691062 :: Kibo already has shipment 691062 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTB1920155721-4 items=511200189728880x1 order=- shipment=691068 :: Kibo already has shipment 691068 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTB1920413605-4 items=508059915558016x1 order=- shipment=691059 :: Kibo already has shipment 691059 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTB1920505775-4 items=508059915414664x1 order=- shipment=691067 :: Kibo already has shipment 691067 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTB1920594986-4 items=097323336791538x1 order=- shipment=687917 :: Kibo already has shipment 687917 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTB1920715396-4 items=508059915307805x1 order=- shipment=691071 :: Kibo already has shipment 691071 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-CTB1929085801-4 items=511200193321862x1 order=- shipment=687595 :: Kibo already has shipment 687595 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-EUA01697741 items=094068584580352x1 order=- shipment=690323 :: Kibo already has shipment 690323 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-EUA01697822 items=094068584610745x1 order=- shipment=690265 :: Kibo already has shipment 690265 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-EUA01697824 items=098050889641728x1 order=- shipment=690288 :: Kibo already has shipment 690288 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-EUA01697949 items=09199727025325x1 order=- shipment=691725 :: Kibo already has shipment 691725 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-EUA01697981 items=094068817122441x1 order=- shipment=691144 :: Kibo already has shipment 691144 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-EUA01698106 items=098433968175824x1 order=- shipment=692231 :: Kibo already has shipment 692231 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-EUB01697844 items=094068817110622x1 order=- shipment=691872 :: Kibo already has shipment 691872 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-EUC01697255 items=09195292731104x1 order=- shipment=691875 :: Kibo already has shipment 691875 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191480392 items=098050889278849x1 order=- shipment=689655 :: Kibo already has shipment 689655 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191485398 items=09198605316135x1 order=- shipment=689666 :: Kibo already has shipment 689666 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191486291 items=09198605277443x1 order=- shipment=689674 :: Kibo already has shipment 689674 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191487377 items=098054492743459x1 order=- shipment=689677 :: Kibo already has shipment 689677 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191488565 items=098057626033709x1 order=- shipment=689682 :: Kibo already has shipment 689682 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191662397 items=09198960022351x1 order=- shipment=687912 :: Kibo already has shipment 687912 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191666181 items=09198605791598x1 order=- shipment=687961 :: Kibo already has shipment 687961 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191666672 items=098053819046143x1 order=- shipment=687978 :: Kibo already has shipment 687978 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191666987 items=098053195614202x1 order=- shipment=687975 :: Kibo already has shipment 687975 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191667625 items=098050994165874x1 order=- shipment=687983 :: Kibo already has shipment 687983 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191671445 items=098058427067146x1 order=- shipment=688050 :: Kibo already has shipment 688050 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191679397 items=09195149331907x1 order=- shipment=688165 :: Kibo already has shipment 688165 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191684048 items=095715897118862x1 order=- shipment=688219 :: Kibo already has shipment 688219 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191684813 items=097300000670153x1 order=- shipment=688226 :: Kibo already has shipment 688226 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191691617 items=09198605296697x1 order=- shipment=688297 :: Kibo already has shipment 688297 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191700125 items=094068818614525x1 order=- shipment=688388 :: Kibo already has shipment 688388 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191709631 items=09198488546063x1 order=- shipment=688523 :: Kibo already has shipment 688523 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191737026 items=098059525440145x1 order=- shipment=688865 :: Kibo already has shipment 688865 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191751484 items=098053819655307x1 order=- shipment=689077 :: Kibo already has shipment 689077 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191761284 items=098053195581412x1 order=- shipment=689216 :: Kibo already has shipment 689216 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191806747 items=09198685073935x1 order=- shipment=689950 :: Kibo already has shipment 689950 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191829157 items=098059791058563x1 order=- shipment=690271 :: Kibo already has shipment 690271 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191830353 items=09198605319419x1 order=- shipment=690285 :: Kibo already has shipment 690285 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191836737 items=09198605296703x1 order=- shipment=690377 :: Kibo already has shipment 690377 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191866594 items=09198605791598x1 order=- shipment=690866 :: Kibo already has shipment 690866 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191870743 items=09198685073942x1 order=- shipment=690895 :: Kibo already has shipment 690895 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191879237 items=09198605270383x1 order=- shipment=691004 :: Kibo already has shipment 691004 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191889351 items=09198605725289x1 order=- shipment=691171 :: Kibo already has shipment 691171 as REASSIGNED; nothing was sent
+[picked] CANCELLED LN-FF-NTP191917613 items=09197064956500x1 order=- shipment=691582[READY] :: picked 2026-11-27T09:26:23+00:00, cancelled 2026-11-28T08:38:59+00:00
+[picked] SKIPPED   LN-FF-NTP191920352 items=098053195614318x1 order=- shipment=691614 :: Kibo already has shipment 691614 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191920886 items=095715897082514x1 order=- shipment=691630 :: Kibo already has shipment 691630 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191921774 items=093700943669186x1 order=- shipment=691646 :: Kibo already has shipment 691646 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191922943 items=09840328947959x1 order=- shipment=691664 :: Kibo already has shipment 691664 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191925931 items=098053195657148x1 order=- shipment=691706 :: Kibo already has shipment 691706 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191928321 items=097330037202393x1 order=- shipment=691744 :: Kibo already has shipment 691744 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191928492 items=09195149331907x1 order=- shipment=691754 :: Kibo already has shipment 691754 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-NTP191957593 items=093700943659385x1 order=- shipment=692196 :: Kibo already has shipment 692196 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191643967 items=584255622760634x1 order=- shipment=687689 :: Kibo already has shipment 687689 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191666162 items=581000000130959x1 order=- shipment=687959 :: Kibo already has shipment 687959 as REASSIGNED; nothing was sent
+[picked] CANCELLED LN-FF-P2N191679817 items=585057890803612x1 order=- shipment=688166[READY] :: picked 2026-11-22T09:24:18+00:00, cancelled 2026-11-28T08:35:56+00:00
+[picked] SKIPPED   LN-FF-P2N191693724 items=58840213257125x1 order=- shipment=688316 :: Kibo already has shipment 688316 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191697830 items=585059107948826x1 order=- shipment=688361 :: Kibo already has shipment 688361 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191697830 items=585059107948826x1 order=- shipment=691035 :: Kibo already has shipment 691035 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191697831 items=585059107948826x1 order=- shipment=688360 :: Kibo already has shipment 688360 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191697831 items=585059107948826x1 order=- shipment=691046 :: Kibo already has shipment 691046 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191728099 items=585059107650057x1 order=- shipment=688783 :: Kibo already has shipment 688783 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191728099 items=585059107650057x1 order=- shipment=691061 :: Kibo already has shipment 691061 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191836858 items=585059107948802x1 order=- shipment=690367 :: Kibo already has shipment 690367 as REASSIGNED; nothing was sent
+[picked] CANCELLED LN-FF-P2N191852701 items=585057890974022x1 order=- shipment=690643[READY] :: picked 2026-11-26T07:59:22+00:00, cancelled 2026-11-28T08:47:14+00:00
+[picked] SKIPPED   LN-FF-P2N191859946 items=585057890946388x1 order=- shipment=690745 :: Kibo already has shipment 690745 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191886688 items=585057890932169x1 order=- shipment=691150 :: Kibo already has shipment 691150 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191893497 items=585059107961221x1 order=- shipment=691251 :: Kibo already has shipment 691251 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191918398 items=585057890932169x1 order=- shipment=691587 :: Kibo already has shipment 691587 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191918469 items=585057890975166x1 order=- shipment=691591 :: Kibo already has shipment 691591 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191938406 items=585057890974190x1 order=- shipment=691899 :: Kibo already has shipment 691899 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-FF-P2N191938999 items=585059107650897x1 order=- shipment=691906 :: Kibo already has shipment 691906 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112163065 items=098053819502090x1 order=- shipment=687902 :: Kibo already has shipment 687902 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112163066 items=098053819193120x1 order=- shipment=687905 :: Kibo already has shipment 687905 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112163067 items=098053819191041x1 order=- shipment=687903 :: Kibo already has shipment 687903 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112163071 items=098053819784526x1 order=- shipment=687908 :: Kibo already has shipment 687908 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112163077 items=098059525448783x1 order=- shipment=687907 :: Kibo already has shipment 687907 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112163134 items=098059525448349x1 order=- shipment=687918 :: Kibo already has shipment 687918 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112163299 items=098059525444877x1 order=- shipment=687933 :: Kibo already has shipment 687933 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112163599 items=09195149443358x1 order=- shipment=687955 :: Kibo already has shipment 687955 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112163787 items=098053819295268x1 order=- shipment=687962 :: Kibo already has shipment 687962 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112164413 items=098059525294564x1 order=- shipment=688024 :: Kibo already has shipment 688024 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112164532 items=098053819191188x1 order=- shipment=688040 :: Kibo already has shipment 688040 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112164648 items=098142590566x1 order=- shipment=688060 :: Kibo already has shipment 688060 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112165302 items=098055770196158x1 order=- shipment=688181 :: Kibo already has shipment 688181 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112266661 items=098059525445515x1 order=- shipment=688386 :: Kibo already has shipment 688386 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112371849 items=098059525444907x1 order=- shipment=689092 :: Kibo already has shipment 689092 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112373069 items=040198682721266x1 order=- shipment=689194 :: Kibo already has shipment 689194 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112474739 items=098056035847631x1 order=- shipment=689550 :: Kibo already has shipment 689550 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112477222 items=040198682720429x1 order=- shipment=689863 :: Kibo already has shipment 689863 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112581567 items=098056035800100x1 order=- shipment=690287 :: Kibo already has shipment 690287 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112686156 items=098053819138572x1 order=- shipment=690869 :: Kibo already has shipment 690869 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112688893 items=098053819522661x1 order=- shipment=691134 :: Kibo already has shipment 691134 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112689417 items=098053819733869x1 order=- shipment=691191 :: Kibo already has shipment 691191 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112791790 items=098053813851378x1 order=- shipment=691604 :: Kibo already has shipment 691604 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112792230 items=098059525293093x1 order=- shipment=691657 :: Kibo already has shipment 691657 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-IMAP26112792597 items=098059525293109x1 order=- shipment=691689 :: Kibo already has shipment 691689 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-MTADKA2133F0EF254 items=09198605277832x1 order=- shipment=691262 :: Kibo already has shipment 691262 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-MTANO4BBC29A02FE3 items=09198605319471x1 order=- shipment=690282 :: Kibo already has shipment 690282 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-MTAPL1741EFD9F3DD items=09198605742767x1 order=- shipment=688537 :: Kibo already has shipment 688537 as REASSIGNED; nothing was sent
+[picked] SKIPPED   LN-NAA00001767 items=098098675401x1 order=- shipment=688894 :: Kibo already has shipment 688894 as REASSIGNED; nothing was sent
+[picked] SKIPPED   MA-FF-TM8191939209 items=528055384141537x1 order=- shipment=85807 :: Kibo already has shipment 85807 as REASSIGNED; nothing was sent
+[picked] SKIPPED   MA-FF-TM8191939209 items=528055384141537x1 order=- shipment=85864 :: Kibo already has shipment 85864 as REASSIGNED; nothing was sent
+[picked] SKIPPED   MA-FF-TM8191939209 items=528055384141537x1 order=- shipment=85903 :: Kibo already has shipment 85903 as REASSIGNED; nothing was sent
+[picked] SKIPPED   MA-ZLA10401244648551 items=528055384138636x1 order=- shipment=85873 :: Kibo already has shipment 85873 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-EUC00052781 items=511200189774696x1 order=- shipment=113798 :: Kibo already has shipment 113798 as REASSIGNED; nothing was sent
+[picked] CANCELLED OW-FF-OW7191386568 items=514894626351907x1 order=- shipment=107236[READY] :: picked 2026-11-15T09:30:05+00:00, cancelled 2026-11-28T10:40:10+00:00
+[picked] CANCELLED OW-FF-OW7191453666 items=511200190030514x1 order=- shipment=107993[READY] :: picked 2026-11-16T08:33:29+00:00, cancelled 2026-11-28T08:44:10+00:00
+[picked] SKIPPED   OW-FF-OW7191491621 items=511200190039425x1, 511200190039432x1 order=- shipment=108918 :: Kibo already has shipment 108918 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191491907 items=511200190039425x1 order=- shipment=108920 :: Kibo already has shipment 108920 as REASSIGNED; nothing was sent
+[picked] CANCELLED OW-FF-OW7191658665 items=511200193316912x1, 511200193339973x1 order=- shipment=111089[READY] :: picked 2026-11-22T07:20:22+00:00, cancelled 2026-11-28T08:50:18+00:00
+[picked] SKIPPED   OW-FF-OW7191661982 items=518055266373582x1 order=- shipment=111155 :: Kibo already has shipment 111155 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191663540 items=518721137228724x1 order=- shipment=111187 :: Kibo already has shipment 111187 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191682308 items=51824411009946x1 order=- shipment=111401 :: Kibo already has shipment 111401 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191703149 items=511200193320599x1 order=- shipment=111673 :: Kibo already has shipment 111673 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191719367 items=518055266612018x1 order=- shipment=111867 :: Kibo already has shipment 111867 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191727420 items=518055266269069x1 order=- shipment=111980 :: Kibo already has shipment 111980 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191727420 items=518055266269069x1 order=- shipment=114306 :: Kibo already has shipment 114306 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191731861 items=518055266303510x1 order=- shipment=112076 :: Kibo already has shipment 112076 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191732464 items=511200189728934x1 order=- shipment=112081 :: Kibo already has shipment 112081 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191741046 items=511200189768633x1 order=- shipment=112201 :: Kibo already has shipment 112201 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191767799 items=518055266381235x1 order=- shipment=112564 :: Kibo already has shipment 112564 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191782649 items=511200193246257x1 order=- shipment=112838 :: Kibo already has shipment 112838 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191828228 items=511200193252081x1 order=- shipment=113540 :: Kibo already has shipment 113540 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191835731 items=511200190029174x1 order=- shipment=114321 :: Kibo already has shipment 114321 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191843964 items=51824411000011x1 order=- shipment=113745 :: Kibo already has shipment 113745 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191877194 items=511200193318756x1 order=- shipment=114218 :: Kibo already has shipment 114218 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191877562 items=511200190008414x1 order=- shipment=114219 :: Kibo already has shipment 114219 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191877630 items=518721137242935x1 order=- shipment=114217 :: Kibo already has shipment 114217 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191891768 items=518051594408071x1 order=- shipment=114439 :: Kibo already has shipment 114439 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191898632 items=511200189730708x1 order=- shipment=114545 :: Kibo already has shipment 114545 as REASSIGNED; nothing was sent
+[picked] CANCELLED OW-FF-OW7191909757 items=511200193246042x1 order=- shipment=114757[READY] :: picked 2026-11-27T15:00:28+00:00, cancelled 2026-11-28T08:31:52+00:00
+[picked] SKIPPED   OW-FF-OW7191917773 items=518721137239638x1 order=- shipment=114904 :: Kibo already has shipment 114904 as REASSIGNED; nothing was sent
+[picked] CANCELLED OW-FF-OW7191924469 items=518721137243048x1 order=- shipment=114984[READY] :: picked 2026-11-27T15:37:33+00:00, cancelled 2026-11-28T08:30:51+00:00
+[picked] SKIPPED   OW-FF-OW7191932102 items=518051594401089x1 order=- shipment=115087 :: Kibo already has shipment 115087 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191947297 items=511200190009930x1 order=- shipment=115364 :: Kibo already has shipment 115364 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191947639 items=511200193247094x1 order=- shipment=115363 :: Kibo already has shipment 115363 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191947751 items=518055266029618x1 order=- shipment=115365 :: Kibo already has shipment 115365 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191947789 items=511200189712681x1 order=- shipment=115370 :: Kibo already has shipment 115370 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191947842 items=514894626350764x1 order=- shipment=115362 :: Kibo already has shipment 115362 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191948089 items=518055266385523x1 order=- shipment=115377 :: Kibo already has shipment 115377 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191948655 items=518051594926209x1 order=- shipment=115378 :: Kibo already has shipment 115378 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191948694 items=511200190009190x1 order=- shipment=115376 :: Kibo already has shipment 115376 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191948699 items=511200193318022x1 order=- shipment=115381 :: Kibo already has shipment 115381 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191948996 items=518051594926179x1 order=- shipment=115388 :: Kibo already has shipment 115388 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191949104 items=511200193340627x1 order=- shipment=115375 :: Kibo already has shipment 115375 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191949181 items=511200193246578x1 order=- shipment=115391 :: Kibo already has shipment 115391 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191949332 items=518055266619574x1 order=- shipment=115390 :: Kibo already has shipment 115390 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191949354 items=511200193390905x1 order=- shipment=115389 :: Kibo already has shipment 115389 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191949432 items=518051594408095x1 order=- shipment=115380 :: Kibo already has shipment 115380 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191949467 items=511200193310521x1 order=- shipment=115387 :: Kibo already has shipment 115387 as REASSIGNED; nothing was sent
+[picked] SKIPPED   OW-FF-OW7191960451 items=518055266531234x1 order=- shipment=115612 :: Kibo already has shipment 115612 as REASSIGNED; nothing was sent
+[picked] CANCELLED PA-FF-PA7191891158 items=538055167671121x1, 538055167682448x1 order=- shipment=85567[READY] :: picked 2026-11-27T08:17:30+00:00, cancelled 2026-11-28T07:19:22+00:00
+[picked] CANCELLED PJ-FF-TGP191936793 items=358059382847163x1 order=- shipment=157415[READY] :: picked 2026-11-27T14:14:50+00:00, cancelled 2026-11-28T07:21:26+00:00
+[picked] SKIPPED   PL-FF-PL5191874485 items=498000002718529x1 order=- shipment=394687 :: Kibo already has shipment 394687 as REASSIGNED; nothing was sent
+[picked] SKIPPED   SC-BSA2312212637-1 items=174260461393387x1 order=- shipment=320869 :: Kibo already has shipment 320869 as REASSIGNED; nothing was sent
+[picked] SKIPPED   SC-NPA1074144616-000 items=174260461378018x1 order=- shipment=320306 :: Kibo already has shipment 320306 as REASSIGNED; nothing was sent
+[picked] CANCELLED SC-USB00009597 items=174260461331631x1 order=- shipment=317000[READY] :: picked 2026-11-15T13:21:09+00:00, cancelled 2026-11-28T08:56:28+00:00
+[picked] SKIPPED   SW-FF-SW5191498101 items=040199690500515x1 order=- shipment=72341 :: Kibo already has shipment 72341 as REASSIGNED; nothing was sent
+[picked] SKIPPED   SW-FF-SW5191733178 items=040198682749796x1 order=- shipment=72736 :: Kibo already has shipment 72736 as REASSIGNED; nothing was sent
+[picked] SKIPPED   SW-FF-SW5191733178 items=040198682749796x1 order=- shipment=73070 :: Kibo already has shipment 73070 as REASSIGNED; nothing was sent
+[picked] SKIPPED   SW-FF-SW5191807933 items=040198684799836x1 order=- shipment=73071 :: Kibo already has shipment 73071 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-FF-T3W191649967 items=569010968135523x1 order=- shipment=41609 :: Kibo already has shipment 41609 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-FF-T3W191811060 items=569010968145904x1 order=- shipment=44572 :: Kibo already has shipment 44572 as REASSIGNED; nothing was sent
+[picked] CANCELLED WF-FF-T3W191853767 items=569010968000388x1 order=- shipment=45177[READY] :: picked 2026-11-26T08:42:42+00:00, cancelled 2026-11-28T08:52:21+00:00
+[picked] SKIPPED   WF-FF-T3W191855865 items=569010968083763x1 order=- shipment=45217 :: Kibo already has shipment 45217 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-FF-T3W191938986 items=569008731022729x1 order=- shipment=46829 :: Kibo already has shipment 46829 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-FF-T3W191939813 items=569010968088287x1 order=- shipment=46848 :: Kibo already has shipment 46848 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-FF-T3W191947102 items=569010968104604x1 order=- shipment=46981 :: Kibo already has shipment 46981 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-MTAPL4696453BCAAC items=569010968088287x1 order=- shipment=46911 :: Kibo already has shipment 46911 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA10101749366512 items=569010968097487x1 order=- shipment=44938 :: Kibo already has shipment 44938 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA10103749166732 items=569009752964845x1 order=- shipment=44613 :: Kibo already has shipment 44613 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA10103749378568 items=569010968039821x1 order=- shipment=44963 :: Kibo already has shipment 44963 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA10203212755176 items=569009752400329x1 order=- shipment=41788 :: Kibo already has shipment 41788 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA10203213247054 items=569010968081646x1 order=- shipment=45203 :: Kibo already has shipment 45203 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA10203213334243 items=569010352102001x1 order=- shipment=45849 :: Kibo already has shipment 45849 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA10208213249490 items=569010352102360x1 order=- shipment=45218 :: Kibo already has shipment 45218 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA10213213192799 items=569010352938228x1 order=- shipment=44919 :: Kibo already has shipment 44919 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA10311219077371 items=569010352791908x1 order=- shipment=44796 :: Kibo already has shipment 44796 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA10404244268148 items=569010352102469x1 order=- shipment=44957 :: Kibo already has shipment 44957 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA11111071835724 items=569010968088744x1 order=- shipment=46238 :: Kibo already has shipment 46238 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA11303065080866 items=569008133044824x1 order=- shipment=45357 :: Kibo already has shipment 45357 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA11303065084895 items=569010968030606x1 order=- shipment=45425 :: Kibo already has shipment 45425 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA11311065089362 items=569010352102001x1, 569010352102001x1, 569010352102001x1, 569010352102001x1 order=- shipment=45537 :: Kibo already has shipment 45537 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA11312065038479 items=569010352102346x1 order=- shipment=44753 :: Kibo already has shipment 44753 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA11312065068877 items=569010352101745x1, 569010352101745x1 order=- shipment=45200 :: Kibo already has shipment 45200 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA11312065104628 items=569010352102001x1, 569010352102001x1 order=- shipment=45840 :: Kibo already has shipment 45840 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA11312065105549 items=569010352102001x1 order=- shipment=45858 :: Kibo already has shipment 45858 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLA11401100540397 items=569010352234603x1 order=- shipment=44809 :: Kibo already has shipment 44809 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WF-ZLB10203213266309 items=569009752221047x1 order=- shipment=46100 :: Kibo already has shipment 46100 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-BSB2311820384-1 items=125709262139248x1 order=- shipment=187449 :: Kibo already has shipment 187449 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-EUA00592125 items=125713551011030x1 order=- shipment=184713 :: Kibo already has shipment 184713 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-EUA00592305 items=128059607035887x1 order=- shipment=183727 :: Kibo already has shipment 183727 as REASSIGNED; nothing was sent
+[picked] CANCELLED WL-FF-WST191160455 items=125600413638958x1, 125600413638958x1 order=- shipment=184209[READY] :: picked 2026-11-06T12:41:01+00:00, cancelled 2026-11-28T11:37:15+00:00
+[picked] SKIPPED   WL-FF-WST191746582 items=129781614289456x1 order=- shipment=186765 :: Kibo already has shipment 186765 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191746582 items=129781614289456x1 order=- shipment=187016 :: Kibo already has shipment 187016 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191746582 items=129781614289456x1 order=- shipment=187218 :: Kibo already has shipment 187218 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191746582 items=129781614289456x1 order=- shipment=187283 :: Kibo already has shipment 187283 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191746582 items=129781614289456x1 order=- shipment=187760 :: Kibo already has shipment 187760 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191839618 items=129781614289456x1 order=- shipment=187227 :: Kibo already has shipment 187227 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191839618 items=129781614289456x1 order=- shipment=187284 :: Kibo already has shipment 187284 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191839618 items=129781614289456x1 order=- shipment=187761 :: Kibo already has shipment 187761 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191846953 items=120842625120677x1 order=- shipment=187260 :: Kibo already has shipment 187260 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191846953 items=120842625120677x1 order=- shipment=187762 :: Kibo already has shipment 187762 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191848309 items=128693357650329x1 order=- shipment=187267 :: Kibo already has shipment 187267 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191855174 items=129781614289456x1 order=- shipment=187310 :: Kibo already has shipment 187310 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191855174 items=129781614289456x1 order=- shipment=187763 :: Kibo already has shipment 187763 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191855671 items=125600413606025x1 order=- shipment=187315 :: Kibo already has shipment 187315 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191855671 items=125600413606025x1 order=- shipment=187764 :: Kibo already has shipment 187764 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191875124 items=128053147775944x1 order=- shipment=187401 :: Kibo already has shipment 187401 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191876910 items=129781649802385x1 order=- shipment=187411 :: Kibo already has shipment 187411 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191876910 items=129781649802385x1 order=- shipment=187424 :: Kibo already has shipment 187424 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191886062 items=129781649802385x1 order=- shipment=187463 :: Kibo already has shipment 187463 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191925327 items=129781649807182x1 order=- shipment=187618 :: Kibo already has shipment 187618 as REASSIGNED; nothing was sent
+[picked] SKIPPED   WL-FF-WST191925638 items=129781649806697x1 order=- shipment=187619 :: Kibo already has shipment 187619 as REASSIGNED; nothing was sent
+[confirm] SKIPPED   WL-EUA00592369 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   SC-FF-TGA191907494 items=174260461390966 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   LN-CTA1920542035-4 items=098055266269106 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTA1920395626-4 items=090199690528656 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   LN-CTA1920218990-4 items=098051594843483 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   FE-EUB00137341 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-MTAUK750201A42EDB items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   SW-EUD00828053 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-USA00034498 items=518051594721354 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   DJ-GLB1300463570352 items=118053682361268 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   PA-FF-PA7191772179 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-FF-OW7191749743 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-GLA1300463359004 items=118053682267454 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   DJ-GLB1300463750885 items=118053682355755 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   LN-CTA1920192351-4 items=094260461405806 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   LN-CTA1920332346-4 items=091200193321688 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   MA-EUA00012743 items=528055384136786;528055384142657;528055384176133 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   RC-USA00021433 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   SC-USA00009527 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-FF-OW7191765659 items=518055266029618;518055266268895 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   SC-USA00009505 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WF-FF-T3W191792950 items=569010968142521 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   WL-FF-WST191362205 items=128032397057260 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   WL-FF-WST191585820 items=124251501407607;124251501413202;125063081348442;125420000777897;125600413615997;125704444093417;128718142049826;129180015980823 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   LN-CTA1920442797-4 items=090196036571475 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTA1920542765-4 items=098055167661351 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTA1920592748-4 items=098055167661351 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTB1929158240-4 items=094260461342781 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTB1929840462-4 items=094260461387997 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   DG-EUA01689168 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-CTA1926638756-4 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   BB-EUA00073447 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0187991190 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   BB-EUA00068288 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-FF-LDJ189583747 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-EUF0189434506 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   CA-EUC00859181 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUC01678571 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-EUA00120954 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-EUF0189810822 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0190012649 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-FF-OW7190768129 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-EUA00044066 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-CTB1929247586-4 items=091200190021383 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   DG-EUF0189638635 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   SC-FF-TGA190379039 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-FF-WST190288579 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-CTB1929088062-4 items=094260461193802 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   WL-FF-WST190337587 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-EUB00126014 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-USB00050519 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-USB00035434 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-EUA00120956 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-CTA1929171346-4 items=091200193320599 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   DJ-GLB1300462671527 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-FF-LDJ190215366 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUA01675498 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-EUA00025115 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-FF-OW7189489343 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-FF-NTP190205371 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-FF-WST190209854 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-CTA1924944305-4 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-FF-OW7189551176 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-GLA1300463059448 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-FF-WST190324412 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0189513539 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   BB-EUA00068872 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-USA11607626 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUB01678772 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-MTASEA2FFD2D9E6AA items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-EUF0189432590 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0188444522 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-EUA01680037 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   BB-EUA00068736 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0188532777 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   PA-EUF0183380392 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-FF-WST189913310 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-EUA00128782 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   SC-MTAPLB95040693C1F items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-EUF2177325053 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WF-FF-T3W190601223 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0188667541 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-FF-WST190469548 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   SW-FF-SW5190748251 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   BB-EUA00068868 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-EUB0012TSTGQ2 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-CTB1929518262-4 items=094260461333604 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   DJ-FF-LDJ190100785 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   SC-MTAPL8E3506568BE8 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-USA11603346 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-USA00050519 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0189900239 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-FF-OW7189538616 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-GLB1300462608867 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-FF-LDJ190302544 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-FF-LDJ190452813 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-FF-WST190563558 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-EUA00126452 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUB01690361 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-GLA1300463155071 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUA01677688 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-EUB00365195 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   SC-MTBFR0D235F14C991 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-FF-OW7189507622 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-FF-OW7189523133 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-EUA00124011 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-EUA00120798 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-FF-LDJ188803691 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0189812068 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0189393288 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   PA-FF-PA7190615960 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-EUF0188942475 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0189681836 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-FF-WST190609741 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-FF-WST190056580 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUA01687270 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-EUF2177468950 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WF-FF-T3W190061346 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-EUA00127057 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-EUF0189215344 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-FF-OW7190536304 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-EUA00044918 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0189635299 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0189952773 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   SW-FF-SW5190748948 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-GLA1300463059890 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0189566228 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-FF-OW7189505899 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-USA00054257 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   BB-EUA00067647 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-FF-WST190432073 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   PA-FF-PA7190295095 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-CTA1929954198-4 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUA01676184 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-GLA1300463101095 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0188750394 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-USC00050519 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUA01679053 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-FF-WST189911192 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   FE-EUA00130566 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-CTA88990903-4 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DG-EUF0188365364 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-FF-OW7190511533 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   OW-FF-OW7190393889 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   DJ-GLB1300462707383 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-CTA1920902394-4 items=094260461405806 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-IMAP26111639216 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   CA-FF-TGC191111280 items=058053173728655 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   SW-FF-SW5191515971 items=040197073327629 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   DG-FF-DWH190951903 items=158057001090358 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7191086664 items=518051594408149 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7190674814 items=514894626351334 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7190757871 items=518051594408194 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   WL-FF-WST191073207 items=121200000144936 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   DJ-FF-LDJ190970740 items=118053682409694 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   WL-FF-WST191013950 items=125710441275862 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   WF-FF-T3W191434649 items=569010352660181;569010968125067 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   WL-FF-WST191189540 items=125600413632697 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7191079893 items=511200190020355 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   HE-FF-TH5191085896 items=338055403541713;338055403541720 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7190927322 items=518051594721354 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7191039003 items=514894626352096 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   DG-FF-DWH191181493 items=158059579705696 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7190988008 items=518051594721354 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7190989181 items=514894626351587 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   CA-FF-TGC190671618 items=058053173415210 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   DJ-FF-LDJ191452246 items=118053682346210;118053682346234 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7190927345 items=511200190020478 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7190659097 items=518055266619604 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7191108000 items=518721137251173 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   DG-FF-DWH191193878 items=158056810157962 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   DG-FF-DWH190987028 items=158053286386445 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   SC-FF-TGA191507957 items=174260461324381 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   WF-FF-T3W190903152 items=569010352371605 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7191047637 items=518051594699721 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7191120476 items=514894626351884 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   DG-FF-DWH191062899 items=158056262866108 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7191602547 items=511200193340689 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7190682967 items=511200193157638 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   WL-FF-WST191068167 items=129781614288534;129781649800435;129781649803399;129781649804471 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   DG-FF-DWH190823533 items=158059579694464 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7190969915 items=518055266619567 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   HE-FF-TH5191077354 items=338055403458615;338055403458622 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   OW-FF-OW7191609005 items=511200193244130 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   WL-FF-WST190949014 items=129783836502931 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   LN-CTA1920435036-4 items=098055828332811 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTA1920212310-4 items=094260461287242 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   SW-MTAUK95C709254B98 items=04196036571475 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   LN-CTA1929231769-4 items=090900112444870;093607935429202 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   WF-MKA032805-3118708 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   CV-EUC00084838 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   SW-EUE00828053 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   CA-EUC00859254 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LN-CTA1929090605-4 items=094260461293212 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   DG-FF-DWH191125486 items=158056810409603 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   SW-EUG00828299 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   CV-USA00044668 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   LA-EUA10000004 items=- order=- :: the row has no shipment_items, so no CANCELLED event can be matched to it; nothing was confirmed
+[confirm] SKIPPED   WL-FF-WST191325611 items=125400959027076 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   LN-CTA1929949125-4 items=098059915964503 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTA1929678113-4 items=094260461277946 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTA1929340614-4 items=090199690527222 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   BB-MTAIT07516B3B88C5 items=42500011612075 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   WL-FF-WST191057470 items=128718142078277 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTA1929130824-4 items=094260461342781 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTA1929226662-4 items=091200190038879 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTA1929850047-4 items=094260461245815 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   DG-FF-DWH191090938 items=158057576191962;158057576475413 order=- :: no CANCELLED event in prd_shipmentStatus
+[confirm] SKIPPED   LN-CTA1929713001-4 items=091200190029457 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTA1929143761-4 items=098055266529743 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] SKIPPED   LN-CTA1929779766-4 items=098055167759768 order=- :: 1 CANCELLED event(s) in prd_shipmentStatus, none carrying exactly these items
+[confirm] CONFIRMED LN-FF-P2N191679817 items=585057890803612 order=- :: confirmed from the CANCELLED event of 2026-11-28T08:35:56+00:00
+[confirm] CONFIRMED CA-FF-TGC191647910 items=058053173705083 order=- :: confirmed from the CANCELLED event of 2026-11-28T08:39:00+00:00
+[confirm] CONFIRMED OW-FF-OW7191453666 items=511200190030514 order=- :: confirmed from the CANCELLED event of 2026-11-28T08:44:10+00:00
+[confirm] CONFIRMED HE-EUB00137654 items=338055403580545 order=- :: confirmed from the CANCELLED event of 2026-11-28T08:58:32+00:00
+[confirm] CONFIRMED OW-FF-OW7191658665 items=511200193316912;511200193339973 order=- :: confirmed from the CANCELLED event of 2026-11-28T08:50:18+00:00
+[confirm] CONFIRMED WL-FF-WST191160455 items=125600413638958 order=- :: confirmed from the CANCELLED event of 2026-11-28T11:37:15+00:00
+[confirm] CONFIRMED SC-USB00009597 items=174260461331631 order=- :: confirmed from the CANCELLED event of 2026-11-28T08:56:28+00:00
+[resend] SENT      WL-EUA00592369 items=- order=WL-EU-00592369 :: resent, attempt 2; TLITGX0012: HTTP 200; the ledger was updated
+[resend] SENT      LN-CTA1920542035-4 items=098055266269106 order=LN-CT-1920542035-4 :: resent, attempt 3; TLITGX0009: HTTP 200; the ledger was updated
+[resend] SENT      LN-CTA1920395626-4 items=090199690528656 order=LN-CT-1920395626-4 :: resent, attempt 3; TLITGX0009: HTTP 200; the ledger was updated
+[resend] SENT      LN-CTA1920218990-4 items=098051594843483 order=LN-CT-1920218990-4 :: resent, attempt 3; TLITGX0009: HTTP 200; the ledger was updated
+[resend] SENT      OW-USA00034498 items=518051594721354 order=OW-US-00034498 :: resent, attempt 4; TLITGX0051: HTTP 200; the ledger was updated
+[resend] SENT      DJ-GLB1300463570352 items=118053682361268 order=DJ-GL-1300463570352 :: resent, attempt 4; TLITGX0011: HTTP 200; the ledger was updated
+[resend] SENT      PA-FF-PA7191772179 items=- order=PA-FF-PA7191772179 :: resent, attempt 4; TLITGX0053: HTTP 200; the ledger was updated
+[resend] SENT      OW-FF-OW7191749743 items=- order=OW-FF-OW7191749743 :: resent, attempt 4; TLITGX0051: HTTP 200; the ledger was updated
+[resend] SENT      DJ-GLA1300463359004 items=118053682267454 order=DJ-GL-1300463359004 :: resent, attempt 4; TLITGX0011: HTTP 200; the ledger was updated
+[resend] SENT      DJ-GLB1300463750885 items=118053682355755 order=DJ-GL-1300463750885 :: resent, attempt 4; TLITGX0011: HTTP 200; the ledger was updated
+[resend] SENT      LN-CTA1920192351-4 items=094260461405806 order=LN-CT-1920192351-4 :: resent, attempt 4; TLITGX0009: HTTP 200; the ledger was updated
+[resend] SENT      LN-CTA1920332346-4 items=091200193321688 order=LN-CT-1920332346-4 :: resent, attempt 4; TLITGX0009: HTTP 200; the ledger was updated
+[resend] SENT      LN-CTA1920442797-4 items=090196036571475 order=LN-CT-1920442797-4 :: resent, attempt 5; TLITGX0009: HTTP 200; the ledger was updated
+[resend] SENT      LN-CTA1920435036-4 items=098055828332811 order=LN-CT-1920435036-4 :: resent, attempt 7; TLITGX0009: HTTP 200; the ledger was updated
+[kibo] SKIPPED   SW-FF-SW5191555874 items=040199690623092 order=SW-FF-SW5191555874 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191551328 items=511200193244130 order=OW-FF-OW7191551328 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191613442 items=518051594700656 order=OW-FF-OW7191613442 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191565378 items=158057996242879 order=DG-FF-DWH191565378 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191555924 items=518721137244137 order=OW-FF-OW7191555924 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191563500 items=511200190030514 order=OW-FF-OW7191563500 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191552032 items=158051200936615 order=DG-FF-DWH191552032 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WF-FF-T3W191542641 items=569009752700740 order=WF-FF-T3W191542641 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191556936 items=511200190029433 order=OW-FF-OW7191556936 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191580032 items=158056810035567 order=DG-FF-DWH191580032 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191602976 items=518051594895093 order=OW-FF-OW7191602976 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191637776 items=158058990825495 order=DG-FF-DWH191637776 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191606895 items=511200190031535 order=OW-FF-OW7191606895 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WF-FF-T3W191456445 items=569010352504782;569010352915809 order=WF-FF-T3W191456445 :: none of the 3 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191552514 items=158051200936196;158056810179407 order=DG-FF-DWH191552514 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191377104 items=158057996628802 order=DG-FF-DWH191377104 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191138283 items=158056265355340 order=DG-FF-DWH191138283 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191155650 items=158057576370527 order=DG-FF-DWH191155650 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   CV-MTANO75605F17D563 items=508059915494659 order=CV-MT-NO75605F17D563 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WF-EUB00011993 items=569010352897303;569010352897402 order=WF-EU-00011993 :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WF-MTANOB800864985B3 items=569009752904063 order=WF-MT-NOB800864985B3 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WF-MTAPL9BDEA4FA6878 items=569010968114368;569010968167609 order=WF-MT-PL9BDEA4FA6878 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DJ-USD00032514 items=118053682409243 order=DJ-US-00032514 :: none of the 6 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WF-USA00014222 items=569009752803847 order=WF-US-00014222 :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WF-USA00014220 items=569009752803908 order=WF-US-00014220 :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WF-USA00014317 items=569009752803847 order=WF-US-00014317 :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WF-USA00014318 items=569009752803847 order=WF-US-00014318 :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191812037 items=518051594926179 order=OW-FF-OW7191812037 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191810800 items=511200190029167 order=OW-FF-OW7191810800 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191839758 items=518055266303145 order=OW-FF-OW7191839758 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191736895 items=125415198124707 order=WL-FF-WST191736895 :: none of the 3 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191810956 items=511200193247407 order=OW-FF-OW7191810956 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191433789 items=128033050341719 order=WL-FF-WST191433789 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   MA-FF-TM8191315622 items=528055384141537 order=MA-FF-TM8191315622 :: none of the 7 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191808773 items=518051594408194 order=OW-FF-OW7191808773 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191826956 items=511200190030514 order=OW-FF-OW7191826956 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WF-FF-T3W191817334 items=569010968140084 order=WF-FF-T3W191817334 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191839376 items=511200193246578 order=OW-FF-OW7191839376 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191787161 items=123397690009244 order=WL-FF-WST191787161 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191818293 items=514894626351235 order=OW-FF-OW7191818293 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191837490 items=511200193247490 order=OW-FF-OW7191837490 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191814578 items=518721137242928 order=OW-FF-OW7191814578 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WF-FF-T3W191836352 items=569008133044923;569009752221962;569009752222204;569009752222228;569009752223188;569010968122585;569010968122707 order=WF-FF-T3W191836352 :: 1 shipment(s) in a cancellable status, none carrying exactly 569008133044923;569009752221962;569009752222204;569009752222228;569009752223188;569010968122585;569010968122707 — 44866[BACKORDER]=569009752602020;569010352504706
+[kibo] SKIPPED   HE-FF-TH5191837251 items=338055403458448 order=HE-FF-TH5191837251 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191833938 items=511200193316400;51824411007287 order=OW-FF-OW7191833938 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-FF-NTP191826371 items=09198605212383 order=LN-FF-NTP191826371 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-FF-NTP191846401 items=098053195659920 order=LN-FF-NTP191846401 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   CV-FF-T9R191827555 items=508059915784286 order=CV-FF-T9R191827555 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-FF-NTP191837568 items=097626222121168 order=LN-FF-NTP191837568 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   PA-FF-PA7191811410 items=536295155306341 order=PA-FF-PA7191811410 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-FF-NTP191839423 items=09198605723919 order=LN-FF-NTP191839423 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   HE-FF-TH5191828829 items=338055403463275 order=HE-FF-TH5191828829 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-CTA1920978555-4 items=098057626229911 order=LN-CT-1920978555-4 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191741961 items=128008215141503 order=WL-FF-WST191741961 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   SC-FF-TGA191804421 items=174260461432741 order=SC-FF-TGA191804421 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191798641 items=518721137244229 order=OW-FF-OW7191798641 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-FF-P2N191761996 items=585057890991241 order=LN-FF-P2N191761996 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191816107 items=518055266029601 order=OW-FF-OW7191816107 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191715352 items=511200193246165 order=OW-FF-OW7191715352 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191802309 items=511200190029211 order=OW-FF-OW7191802309 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191746353 items=511200193332080 order=OW-FF-OW7191746353 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191745564 items=511200193327116 order=OW-FF-OW7191745564 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191769985 items=124251501416166;124251501416173 order=WL-FF-WST191769985 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-CTA1920413021-4 items=090900112445129 order=LN-CT-1920413021-4 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191734840 items=511200193327765 order=OW-FF-OW7191734840 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WF-FF-T3W191768641 items=569010352504768;569010352673266 order=WF-FF-T3W191768641 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191717331 items=124251501416166;124251501416173 order=WL-FF-WST191717331 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-CTA1920248555-4 items=098056263283362 order=LN-CT-1920248555-4 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191732171 items=128718142036482 order=WL-FF-WST191732171 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191752867 items=128718142078277 order=WL-FF-WST191752867 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191737248 items=511200189730753 order=OW-FF-OW7191737248 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191785640 items=125414780449082 order=WL-FF-WST191785640 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-FF-P2N191845869 items=585061107364537 order=LN-FF-P2N191845869 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191821892 items=514894626350764;518055266619352 order=OW-FF-OW7191821892 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191743023 items=511200193243300;511200193243317;511200193246585;511200193247421;511200193247506 order=OW-FF-OW7191743023 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   SC-FF-TGA191834201 items=174260461278523 order=SC-FF-TGA191834201 :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191769518 items=120850073262399 order=WL-FF-WST191769518 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191616507 items=511200193238023;511200193246172;511200193247421;511200193340085 order=OW-FF-OW7191616507 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   PA-FF-PA7191702748 items=536295155308611;536295155365713 order=PA-FF-PA7191702748 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   SW-MTADE38A70C7B89CD items=040199690296234 order=SW-MT-DE38A70C7B89CD :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191603145 items=158054802811731 order=DG-FF-DWH191603145 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191697152 items=511200189728880 order=OW-FF-OW7191697152 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191494021 items=158058990966105 order=DG-FF-DWH191494021 :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191508810 items=158059579237333 order=DG-FF-DWH191508810 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191484355 items=158056810039091 order=DG-FF-DWH191484355 :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191494020 items=158058990242988 order=DG-FF-DWH191494020 :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191524935 items=511200190010141;511200193246585 order=OW-FF-OW7191524935 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   SW-FF-SW5191188422 items=040198682569424 order=SW-FF-SW5191188422 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-CTA1920672499-4 items=098139414510 order=LN-CT-1920672499-4 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191076321 items=128008215228181 order=WL-FF-WST191076321 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191075597 items=128008215229119 order=WL-FF-WST191075597 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191520959 items=511200193244147 order=OW-FF-OW7191520959 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-FF-P2N191480512 items=585059107644896 order=LN-FF-P2N191480512 :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191726903 items=518055266345336 order=OW-FF-OW7191726903 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DJ-FF-LDJ191839990 items=118053682458012 order=DJ-FF-LDJ191839990 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191843827 items=158057155231362 order=DG-FF-DWH191843827 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191802730 items=511200193321558 order=OW-FF-OW7191802730 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   BB-FF-TGK191831307 items=42194726293751 order=BB-FF-TGK191831307 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-FF-NTP191836931 items=093700943659385 order=LN-FF-NTP191836931 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191378863 items=128720812133841;128720812138082 order=WL-FF-WST191378863 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191659150 items=158056810179469 order=DG-FF-DWH191659150 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191646993 items=511200190024025 order=OW-FF-OW7191646993 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   SW-MTADKA10A582F3A94 items=040199690226934 order=SW-MT-DKA10A582F3A94 :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191654804 items=511200193324146 order=OW-FF-OW7191654804 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191646510 items=511200193327833 order=OW-FF-OW7191646510 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-FF-P2N191757376 items=585061107360638 order=LN-FF-P2N191757376 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191448784 items=121200000178160;121200000178191 order=WL-FF-WST191448784 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191643949 items=511200193246561 order=OW-FF-OW7191643949 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191660647 items=511200193246929 order=OW-FF-OW7191660647 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191647001 items=158054802716333 order=DG-FF-DWH191647001 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   SW-FF-SW5191651698 items=040199690413877 order=SW-FF-SW5191651698 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191658354 items=511200193247056 order=OW-FF-OW7191658354 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191644698 items=51824411009595 order=OW-FF-OW7191644698 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191386132 items=158054802769131;158056810798905;158056810799988 order=DG-FF-DWH191386132 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   FE-EUA00120259 items=484070032317434 order=FE-EU-00120259 :: none of the 3 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   CV-MTAPL44BC256B37F1 items=508054323747083 order=CV-MT-PL44BC256B37F1 :: none of the 4 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-CTA1920653555-4 items=098053195262847 order=LN-CT-1920653555-4 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191085579 items=12810009646631 order=WL-FF-WST191085579 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-CTA1920358535-4 items=098051209057458 order=LN-CT-1920358535-4 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191582617 items=511200189387735 order=OW-FF-OW7191582617 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191453666 items=511200190030514 order=OW-FF-OW7191453666 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-FF-P2N191679817 items=585057890803612 order=LN-FF-P2N191679817 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   CA-FF-TGC191647910 items=058053173705083 order=CA-FF-TGC191647910 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   SC-USA00009368 items=174260461257184 order=SC-US-00009368 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191715342 items=511200193247193 order=OW-FF-OW7191715342 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191656115 items=511200190008391;518055266607120 order=OW-FF-OW7191656115 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   HE-EUB00137654 items=338055403580545 order=HE-EU-00137654 :: none of the 2 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191627542 items=128053147781464;128059037131975 order=WL-FF-WST191627542 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   WL-FF-WST191160455 items=125600413638958 order=WL-FF-WST191160455 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   OW-FF-OW7191658665 items=511200193316912;511200193339973 order=OW-FF-OW7191658665 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   LN-CTA1929956875-4 items=098053195614288 order=LN-CT-1929956875-4 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   DG-FF-DWH191117181 items=158056597048903;158057576989477 order=DG-FF-DWH191117181 :: none of the 1 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
+[kibo] SKIPPED   SC-USB00009597 items=174260461331631 order=SC-US-00009597 :: none of the 3 shipment(s) of the order is BACKORDER, CUSTOMER_CARE, READY
